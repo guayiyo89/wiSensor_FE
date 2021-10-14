@@ -1,0 +1,65 @@
+
+<div style="margin: 0 auto; vertical-align: middle;">
+    <radial-gauge
+        type="radial-gauge"
+        major-ticks="N,NE,E,SE,S,SW,W,NW,N"
+        minor-ticks="15"
+        ticks-angle="360"
+        start-angle="180"
+        width="220"
+        height="220"
+        min-value="0"
+        max-value="360"
+        stroke-ticks="false"
+        highlights="false"
+        color-plate="rgba(1,1,1,0.5)"
+        color-major-ticks="#f5f5f5"
+        color-minor-ticks="#ddd"
+        color-numbers="#ccc"
+        color-needle="#e0390b"
+        color-needle-end="#e0390b"
+        value-box="false"
+        value-text-shadow="false"
+        color-circle-inner="#fff"
+        color-needle-circle-outer="#cc7"
+        needle-circle-size="10"
+        needle-circle-outer="false"
+        animation-rule="linear"
+        needle-type="line"
+        needle-start="65"
+        needle-end="99"
+        needle-width="4"
+        borders="true"
+        border-inner-width="0"
+        border-middle-width="0"
+        border-outer-width="4"
+        color-border-outer="#eee"
+        color-border-outer-end="#eee"
+        color-needle-shadow-down="#222"
+        border-shadow-width="0"
+        animation-target="plate"
+        animation-duration="800"
+        animate-on-init="true"
+        [attr.value] = "value"
+    ></radial-gauge>
+</div>
+
+<div class="row" style="padding-bottom: 0.5em;">
+    <div class="col-6">
+        <span style="font-weight: bold;">Actual</span>
+        <span style="border-radius: 3px; font-size: 1.8em; background-color: rgb(59,59,59); padding: 5px; display: block; width: 85%; margin: 0 auto"> {{yaw}}° </span>
+    </div>
+
+    <div class="col-6">
+        <span style="font-weight: bold;">Posición Inicial</span>
+        <span style="border-radius: 3px; font-size: 1.8em; background-color: rgb(59,59,59); padding: 5px; display: block; width: 85%; margin: 0 auto"> {{inicial}}° </span>
+    </div>
+
+</div>
+
+<span style="font-weight: bold;">Diferencia</span>
+  <div style="display: block; padding-top: 0.5em; padding-bottom: 0.5em;">
+    <fa-icon *ngIf="resto <= 15" [icon]="faOk" style="transform: scale(0.7); font-size: 2em; color: rgb(50, 182, 30);"></fa-icon>
+    <fa-icon *ngIf="resto > 15" [icon]="faAlert" style="transform: scale(0.7); font-size: 2em; color: rgb(233, 50, 18);"></fa-icon>
+    <span style="font-size: 2.6em;"> {{resto}}° </span>
+  </div>

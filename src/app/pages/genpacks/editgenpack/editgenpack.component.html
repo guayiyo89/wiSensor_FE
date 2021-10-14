@@ -1,0 +1,146 @@
+
+<div class="row">
+    <h2>Editar Unidad de Energía</h2>
+    <div class="col-md-6">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                    <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" formControlName="descripcion" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+                <div *ngIf="submitted && f.descripcion.errors">
+                    <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripción es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="empresaList">
+                <label>Empresa</label>
+                <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
+                    <option *ngFor="let empresa of empresaList" value="{{empresa.ID}}">{{empresa.NOMBRE}}</option>
+                </select>
+                <div *ngIf="submitted && f.empresa_id.errors">
+                    <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Centro</label>
+                <select formControlName="centro_id" class="form-control">
+                    <option *ngFor="let centro of centroList" value="{{centro.ID}}">{{centro.NOMBRE}}</option>
+                </select>
+                <div *ngIf="submitted && f.centro_id.errors">
+                    <div *ngIf="f.centro_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Marca</label>
+                <input type="text" formControlName="marca" placeholder="Marca" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.marca.errors }">
+                <div *ngIf="submitted && f.marca.errors">
+                    <div *ngIf="f.marca.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La marca es obligatoria.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Modelo</label>
+                <input type="text" formControlName="modelo" placeholder="Modelo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modelo.errors }">
+                <div *ngIf="submitted && f.modelo.errors">
+                    <div *ngIf="f.modelo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <select formControlName="estado" class="form-control">
+                    <option value="1" selected>Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div *ngIf="submitted && f.estado.errors">
+                    <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Código</label>
+                <input type="text" formControlName="codigo" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+                <div *ngIf="submitted && f.codigo.errors">
+                    <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Voltaje Batería</label>
+                <input type="text" formControlName="volt_bateria" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.volt_bateria.errors }">
+                <div *ngIf="submitted && f.volt_bateria.errors">
+                    <div *ngIf="f.volt_bateria.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Asigne un Voltaje, por favor.</div>
+                </div>
+            </div> 
+    
+            <div style="padding-top: 1em;">
+                <button (click)="volver()" type="button" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+                <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="generadores" class="col-md-6">
+        <div *ngIf="generadores.length == 0" class="text-center">
+            <h3> No existen generadores asociados a esta unidad de energía</h3>
+            <button (click)="openNew(addGen)" class="noselect"> <fa-icon [icon]="faPlus"></fa-icon> Agregar</button>
+        </div>
+        <div *ngIf="generadores.length > 0">
+            <h3>Generadores</h3> 
+            <div *ngFor="let gen of generadores" class="card bg-dark">
+                <div class="card-header"><h5 style="display: inline; padding-right: 1em;">{{gen.NOMBRE}}</h5>
+                    <span style="border: 1px solid white; display: inline; padding: 2px; border-radius: 3px; text-align: center; width: 50%; font-size: 11pt;"> 
+                        {{gen.CODIGO}} </span>
+                </div>
+                <div class="card-body"> <div class="row">
+                    <div class="col-6"> {{gen.MARCA}} / {{gen.MODELO}}  <br>
+                        <span *ngIf="gen.ESTADO == 1" class="activo">{{gen.ESTADO | estado}}</span>
+                        <span *ngIf="gen.ESTADO == 0" class="inactivo">{{gen.ESTADO | estado}}</span> <br>
+                        <a class="btn btn-success" (click)="openEdit(editGen)"><fa-icon [icon]="faEdit"></fa-icon></a>
+                        <a href="" class="btn btn-danger" [routerLink]="['/editGenpack', _id]" (click)="delete(gen)" style="margin: 0.5em;"> <fa-icon [icon]="faTimes"></fa-icon> </a>
+                    </div>
+                    <div class="col-6">
+
+                          <div style=" display: inline-block; text-align: center; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 0.5em;"> 
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 11pt;">Capacidad</span> 
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.CAPACIDAD}} Lt.</span>
+                          </div>
+                          <div style=" display: inline-block; text-align: center; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 0.5em;"> 
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 11pt;">Potencia</span> 
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.POTENCIA}} W</span>
+                          </div>
+
+                    </div>
+                </div>
+                </div>
+
+                <ng-template #editGen let-modal>
+                    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Editar Genpack</h3> </div>
+                    <app-editgenerador [id]="gen.ID" (myEvent)="closeModal()"></app-editgenerador>
+                </ng-template>
+
+            </div>
+
+            <button (click)="openNew(addGen)" class="noselect"> <fa-icon [icon]="faPlus"></fa-icon> Agregar</button>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #addGen let-modal>
+    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Genpack</h3> </div>
+    <app-addgenerador [id_gp]="_id" (myEvent)="closeModal()"></app-addgenerador>
+</ng-template>

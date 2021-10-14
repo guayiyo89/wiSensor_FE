@@ -1,0 +1,86 @@
+<div class="row blackness" style="user-select: none; padding-top: 0.3em;">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
+          <div style="display: block; width: 80%; margin: 0 auto">
+            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
+            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
+            <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+          </div>
+        </div>
+        
+        <div class="col-5">
+          <span style="font-weight: bold; text-align: center;">Hora Actual</span>
+          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
+        </div>
+  
+        <div class="col-5">
+          <span style="font-weight: bold; text-align: center;">Último registro</span>
+          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+
+    </div>
+  </div>
+
+<div class="row blackness">
+    <div class="col-md-4">
+        <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Eventos | 1 hora | Tiempo Acumulado</h4> 
+            
+            <div class="row text-center">
+                <div class="col-6">
+                    <span style="font-weight: bold;">Eventos Acumulados</span>
+                    <span style="display: block; padding: 0.1em; font-size: 2.5em;">104</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-weight: bold;">Última hora</span>
+                    <span style="display: block; padding: 0.1em; font-size: 2.5em;">23</span>
+                </div>
+            </div>
+            <app-eventos></app-eventos>
+        </div>
+
+    <div class="col-md-4">
+        <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Actividad Última Hora</h4>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+<div class="row blackness">
+    <div class="col-md-4">
+        <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Eventos | 1 Día | Tiempo Acumulado</h4> 
+
+        <div class="row text-center">
+            <div class="col-6">
+                <span style="font-weight: bold;">Eventos Acumulados</span>
+                <span style="display: block; padding: 0.1em; font-size: 2.5em;">104</span>
+            </div>
+            <div class="col-6">
+                <span style="font-weight: bold;">Última hora</span>
+                <span style="display: block; padding: 0.1em; font-size: 2.5em;">23</span>
+            </div>
+        </div>
+        
+        <app-evento-dia></app-evento-dia>
+    </div>
+
+    <div class="col-md-5">
+        <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Actividad Última Hora</h4>
+        <app-actividad-hora></app-actividad-hora>
+    </div>
+
+    <div class="col-md-3"></div>
+</div>

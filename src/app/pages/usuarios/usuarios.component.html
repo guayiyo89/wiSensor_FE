@@ -1,0 +1,51 @@
+<div class="container">
+    <ng-template pTemplate="caption">
+        <h1>Usuarios</h1>
+    </ng-template>
+    <h1>Usuarios</h1>
+
+    <p-table [value]="userList" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+    [globalFilterFields]="['APELLIDO','EMPRESA','PERFIL_ID']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="APELLIDO"> Nombre <p-sortIcon field="APELLIDO" style="color: thistle;"></p-sortIcon> </th>
+                <th *ngIf="perfilUser == 1" pSortableColumn="EMPRESA"> Empresa <p-sortIcon field="EMPRESA"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="CORREO"> Correo <p-sortIcon field="CORREO"></p-sortIcon> </th>
+                <th pSortableColumn="ESTADO"> Estado <p-sortIcon field="ESTADO"></p-sortIcon> </th>
+                <th pSortableColumn="PERFIL_ID"> Perfil <p-sortIcon field="PERFIL_ID"></p-sortIcon> </th>
+                <th> </th>
+            </tr>
+            <tr>
+                <th style="max-width: 120px;"><p-columnFilter type="text" field="NOMBRE"></p-columnFilter></th>
+                <th *ngIf="perfilUser == 1" style="max-width: 120px;"><p-columnFilter type="text" field="EMPRESA"></p-columnFilter></th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user>
+            <tr class="rowth blackness">
+                <td style="padding-left: 1em;">{{user.NOMBRE}} {{user.APELLIDO}}</td>
+                <td *ngIf="perfilUser == 1">{{user.EMPRESA}}</td>
+                <td style="max-width: 120px;">{{user.CORREO}}</td>
+                <td><span *ngIf="user.ESTADO == 1" class="activo">{{user.ESTADO | estado}}</span>
+                    <span *ngIf="user.ESTADO == 2" class="inactivo">{{user.ESTADO | estado}}</span></td>
+                <td>{{user.PERFIL_ID | perfil}}</td>
+                <td>
+                    <a href="" class="btn btn-success" [routerLink]="['/editUser', user.ID]"><fa-icon [icon]="faEdit"></fa-icon></a>
+                    <a href="" class="btn btn-danger" [routerLink]="['/usuarios']" (click)="delete(user)" style="margin: 0.5em;">
+                        <fa-icon [icon]="faTimes"></fa-icon></a>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+    <div class="text-right" style="margin-top: 1em;">
+        <button [routerLink]="['/welcome']" class="noselect" style="margin-right: 0.5em;" type="button">
+            <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+        <button [routerLink]="['/addUser']" class="noselect" type="button">
+            <fa-icon [icon]="faUser"></fa-icon> Agregar</button>
+    </div>
+
+</div>

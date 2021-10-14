@@ -1,0 +1,41 @@
+<div *ngIf="!empresa">
+    <h2>Cargando</h2>
+</div>
+<div *ngIf="empresa" class="col-md-6">
+    <h2>Editar Empresa: {{empresa.NOMBRE}}</h2>
+
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" id="nombre" placeholder="{{empresa.NOMBRE}}" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+            <div *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Categoría</label>
+            <input type="text" formControlName="categoria" placeholder="Categoría" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoria.errors }">
+            <div *ngIf="submitted && f.categoria.errors">
+                <div *ngIf="f.categoria.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La categoría es obligatoria.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Estado</label>
+            <select formControlName="estado" class="form-control" id="" aria-placeholder="Seleccione uno:">
+                <option value="1" selected>Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+        </div>
+        <div *ngIf="submitted && f.estado.errors">
+            <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+        </div>
+
+        <div style="padding-top: 1em;">
+            <button (click)="volver()" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+            <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,60 @@
+<div class="container" style="padding-top: 1em; padding-bottom: 1em;">
+    <h1>Bienvenido a wiSensor {{username}}! </h1>
+    <div style="margin: auto;">
+        
+        <div style="margin: 0 auto;" *ngIf="_perfil == 1">
+            <li class="btnMain" [routerLink]="['/empresas']" style="cursor: pointer;">
+                <fa-icon [icon]="faFish" class="iconMenu"></fa-icon>
+            <span unselectable="on" class="btnText">Empresa</span></li>
+            <li class="btnMain" [routerLink]="['/centros']" style="cursor: pointer;">
+                <fa-icon [icon]="faMapMarker" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Centros</span></li>
+            <li class="btnMain" [routerLink]="['/estaciones']" style="cursor: pointer;">
+                <fa-icon [icon]="faChartLine" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Estaciones</span></li>
+            <li class="btnMain" [routerLink]="['/genpacks']" style="cursor: pointer;">
+                <fa-icon [icon]="faBattery" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Genpacks</span></li>
+            <li class="btnMain" [routerLink]="['/genpacks']" style="cursor: pointer;">
+                <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Generadores</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faUsers" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Usuarios</span></li>
+            <li class="btnMain" [routerLink]="['/buscador']" style="cursor: pointer;">
+                <fa-icon [icon]="faSearch" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Buscador</span></li>
+        </div>
+
+        <div style="margin: 0 auto;" *ngIf="_perfil == 2">
+            <li class="btnMain" [routerLink]="['/centros']" style="cursor: pointer;">
+                <fa-icon [icon]="faMapMarker" class="iconMenu"></fa-icon><span class="btnText">Centros</span></li>
+            <li class="btnMain" [routerLink]="['/estaciones']" style="cursor: pointer;">
+                <fa-icon [icon]="faChartLine" class="iconMenu"></fa-icon><span class="btnText">Estaciones</span></li>
+            <li class="btnMain" [routerLink]="['/genpacks']" style="cursor: pointer;">
+                <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Generadores</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faUsers" class="iconMenu"></fa-icon><span class="btnText">Usuarios</span></li>
+            <li class="btnMain" [routerLink]="['/buscador']" style="cursor: pointer;">
+                <fa-icon [icon]="faSearch" class="iconMenu"></fa-icon><span class="btnText">Buscador</span></li>
+        </div>
+
+        <div style="margin: 0 auto;" *ngIf="_perfil == 3">
+            <li class="btnMain" [routerLink]="['/estacion', itemCentro[0].ID]" style="cursor: pointer;">
+                <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faCog" class="iconMenu"></fa-icon><span class="btnText">Configuración</span></li>
+        </div>
+
+        <ul *ngIf="_perfil == 4">
+            <li class="btnMain" [routerLink]="['/estacion', itemCentro[0].ID]" style="cursor: pointer;">
+                <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
+            <li class="btnMain" [routerLink]="['/genpack', itemCentro[1].ID]" style="cursor: pointer;">
+                <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
+            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+                <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>
+        </ul>
+    </div>
+</div>

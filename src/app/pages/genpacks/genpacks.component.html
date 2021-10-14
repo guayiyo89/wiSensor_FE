@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>Genpacks - Energía </h1>
+    <table *ngIf="perfilUser == 1" class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Código</th>
+                <th>Región</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let st of pageOfItems">
+                <td style="cursor: pointer;" [routerLink]="['/genpack', st.ID]">{{st.NOMBRE}} </td>
+                <td>{{st.MARCA}} </td>
+                <td>{{st.MODELO}} </td>
+                <td> <span style="border: 1px solid white; display: block; padding: 1px; border-radius: 3px; text-align: center; width: 50%;"> {{st.CODIGO}} </span> </td>
+                <td><span *ngIf="st.ESTADO == 1" class="activo">{{st.ESTADO | estado}}</span>
+                    <span *ngIf="st.ESTADO == 0" class="inactivo">{{st.ESTADO | estado}}</span> </td>
+                <td>
+                    <a href="" class="btn btn-success" [routerLink]="['/editGenpack', st.ID]" ><fa-icon [icon]="faEdit"></fa-icon></a>
+                    <a href="" class="btn btn-danger" [routerLink]="['/genpacks']" (click)="delete(st)" style="margin: 0.5em;">
+                        <fa-icon [icon]="faTimes"></fa-icon></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <button [routerLink]="['/welcome']" class="noselect" style="margin-right: 0.5em;" type="button">
+            <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+        <button [routerLink]="['/addGenpack']" class="noselect" type="button">
+            <fa-icon [icon]="faPlus"></fa-icon> Agregar</button>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+ <div id="chartPosition" style="width: 90%; height: 250px; font-size: 8pt; margin: 0 auto"></div>
+
+ <div class="row text-center">
+    <span style="font-weight: bold;">Desplazamiento (m)</span>
+     <div class="col-4">
+        <span style="font-weight: bold;">Total</span>
+        <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(34, 73, 152); color: white; padding: 2px; display: block; width: 80%; margin: 0 auto">
+          {{dt}} </span>
+        <span *ngIf="dy > 0 && dx == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        NORTE </span>
+        <span *ngIf="dy == 0 && dx == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+            -  </span>
+        <span *ngIf="dy < 0 && dx == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        SUR </span>
+        <span *ngIf="dx > 0 && dy == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        ESTE </span>
+        <span *ngIf="dx < 0 && dy == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        OESTE </span>
+        <span *ngIf="dy > 0 && dx > 0" style="letter-spacing: 2px; border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        NE </span>
+        <span *ngIf="dy < 0 && dx < 0" style="letter-spacing: 2px; border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        SO </span>
+        <span *ngIf="dy > 0 && dx < 0" style="letter-spacing: 2px; border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        NO </span>
+        <span *ngIf="dy < 0 && dx > 0" style="letter-spacing: 2px; border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        SE </span>  
+     </div>
+
+     <div class="col-4">
+        <span style="font-weight: bold;">Horizontal</span>
+        <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(34, 73, 152); color: white; padding: 2px; display: block; width: 80%; margin: 0 auto">
+          {{dx}} </span>
+        <span *ngIf="dx > 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+          ESTE </span>
+        <span *ngIf="dx == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+            </span>
+        <span *ngIf="dx < 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+          OESTE </span>         
+     </div>
+
+     <div class="col-4">
+        <span style="font-weight: bold;">Vertical</span>
+        <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(34, 73, 152); color: white; padding: 2px; display: block; width: 80%; margin: 0 auto">
+          {{dy}} </span>
+        <span *ngIf="dy > 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        NORTE </span>
+        <span *ngIf="dy == 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+          -  </span>
+        <span *ngIf="dy < 0" style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 80%; margin: 2px auto">
+        SUR </span>         
+     </div>
+     <span style="color: slategray; font-size: 9pt;">Valores de desplazamiento aproximados utilizando un radio terrestre igual a 6366 km</span>
+ </div>

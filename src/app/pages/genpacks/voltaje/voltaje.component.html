@@ -1,0 +1,26 @@
+<div *ngIf="dataVolt" class="chart-wrapper" style="padding-bottom: 0.5em; height: 250px;">
+    <canvas baseChart 
+    [datasets]="chartVoltDataY" 
+    [labels]="chartVoltLabelY" 
+    [chartType]="chartVoltTypeY"
+    [colors]="chartVoltColorY"
+    [options]="chartVoltOptY"
+    [plugins]="chartVoltPluginsY"
+    [legend]="chartVoltLegendY">
+    </canvas>
+</div>
+<h4 class="titClima"> 
+    <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+     Potencia</h4>
+
+<div *ngIf="dataVolt" class="chart-wrapper" style="padding-bottom: 0.5em; height: 250px;">
+    <canvas baseChart 
+    [datasets]="chartPotDataY" 
+    [labels]="chartPotLabelY" 
+    [chartType]="chartPotTypeY"
+    [colors]="chartPotColorY"
+    [options]="chartPotOptY"
+    [plugins]="chartPotPluginsY"
+    [legend]="chartPotLegendY">
+    </canvas>
+</div>

@@ -1,0 +1,27 @@
+
+<div *ngIf="dataEst" class="chart-wrapper" style="padding-bottom: 0.5em; height: 250px;">
+    <canvas baseChart 
+    [datasets]="chartStateDataY" 
+    [labels]="chartStateLabelY" 
+    [chartType]="chartStateTypeY"
+    [colors]="chartStateColorY"
+    [options]="chartStateOptY"
+    [plugins]="chartStatePluginsY"
+    [legend]="chartStateLegendY">
+    </canvas>
+</div>
+<h4 class="titClima"> 
+    <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+    Estado Salida (220V AC)</h4>
+
+<div *ngIf="dataEst" class="chart-wrapper" style="padding-bottom: 0.5em; height: 250px;">
+    <canvas baseChart 
+    [datasets]="chartState1DataY" 
+    [labels]="chartState1LabelY" 
+    [chartType]="chartState1TypeY"
+    [colors]="chartState1ColorY"
+    [options]="chartState1OptY"
+    [plugins]="chartState1PluginsY"
+    [legend]="chartState1LegendY">
+    </canvas>
+</div>

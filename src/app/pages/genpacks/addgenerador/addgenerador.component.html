@@ -1,0 +1,77 @@
+<div *ngIf="id_gp" class="bg-dark" style="padding: 4px">
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+            <div *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Marca</label>
+            <input type="text" formControlName="marca" placeholder="Marca" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.marca.errors }">
+            <div *ngIf="submitted && f.marca.errors">
+                <div *ngIf="f.marca.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La marca es obligatoria.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Modelo</label>
+            <input type="text" formControlName="modelo" placeholder="Modelo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modelo.errors }">
+            <div *ngIf="submitted && f.modelo.errors">
+                <div *ngIf="f.modelo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Capacidad (Litros)</label>
+            <input type="number" formControlName="capacidad" placeholder="Capacidad" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.capacidad.errors }">
+            <div *ngIf="submitted && f.capacidad.errors">
+                <div *ngIf="f.capacidad.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Debe agregar la capacidad de combustible.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Potencia (Watts)</label>
+            <input type="number" formControlName="potencia" placeholder="Potencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.potencia.errors }">
+            <div *ngIf="submitted && f.potencia.errors">
+                <div *ngIf="f.potencia.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Debe agregar la potencia del generador.</div>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: none;">
+            <label>Genpack</label>
+            <input type="number" formControlName="id_genpack" placeholder="Potencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id_genpack.errors }">
+            <div *ngIf="submitted && f.id_genpack.errors">
+                <div *ngIf="f.id_genpack.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Debe agregar la potencia del generador.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Estado</label>
+            <select formControlName="estado" class="form-control">
+                <option value="1" selected>Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <div *ngIf="submitted && f.estado.errors">
+                <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Código</label>
+            <input type="text" formControlName="codigo" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+            <div *ngIf="submitted && f.codigo.errors">
+                <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+            </div>
+        </div>
+
+        <div style="padding-top: 1em;">
+            <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        </div>
+
+    </form>
+
+</div>

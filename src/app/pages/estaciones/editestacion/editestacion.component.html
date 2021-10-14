@@ -1,0 +1,156 @@
+
+<div *ngIf="estacion" class="row">
+    <h2>Editar Estación:  <span style="color: black;">{{estacion.NOMBRE}}</span></h2>
+    <div class="col-md-6">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                    <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" formControlName="descripcion" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+                <div *ngIf="submitted && f.descripcion.errors">
+                    <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripción es obligatoria.</div>
+                </div>
+            </div>
+
+            <div *ngIf="perfilUser == 1" class="form-group">
+                <label>Empresa</label>
+                <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
+                    <option *ngFor="let empresa of empresaList" value="{{empresa.ID}}">{{empresa.NOMBRE}}</option>
+                </select>
+                <div *ngIf="submitted && f.empresa_id.errors">
+                    <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
+                </div>
+            </div>
+    
+            <div *ngIf="perfilUser == 2 && empresaUser" class="form-group">
+                <label>Empresa</label>
+                <select formControlName="empresa_id" class="form-control">
+                    <option value="{{idEmpresa}}">{{empresaUser.NOMBRE}} </option>
+                </select>
+                <div *ngIf="submitted && f.empresa_id.errors">
+                    <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Centro</label>
+                <select formControlName="centro_id" class="form-control">
+                    <option *ngFor="let centro of centroList" value="{{centro.ID}}" selected>{{centro.NOMBRE}}</option>
+                </select>
+                <div *ngIf="submitted && f.centro_id.errors">
+                    <div *ngIf="f.centro_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                </div>
+            </div>
+    
+    
+            <div class="form-group">
+                <label>Modelo</label>
+                <input type="text" formControlName="modelo" placeholder="Modelo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modelo.errors }">
+                <div *ngIf="submitted && f.modelo.errors">
+                    <div *ngIf="f.modelo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Marca</label>
+                <input type="text" formControlName="marca" placeholder="Marca" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.marca.errors }">
+                <div *ngIf="submitted && f.marca.errors">
+                    <div *ngIf="f.marca.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Latitud</label>
+                <input type="number" formControlName="latitud" placeholder="Latitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.latitud.errors }">
+                <div *ngIf="submitted && f.latitud.errors">
+                    <div *ngIf="f.latitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La latitud es obligatoria.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Longitud</label>
+                <input type="number" formControlName="longitud" placeholder="Longitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.longitud.errors }">
+                <div *ngIf="submitted && f.longitud.errors">
+                    <div *ngIf="f.longitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La longitud es obligatoria.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Estado</label>
+                <select formControlName="estado" class="form-control">
+                    <option value="1" selected>Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div *ngIf="submitted && f.estado.errors">
+                    <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Código</label>
+                <input type="text" formControlName="codigo" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+                <div *ngIf="submitted && f.codigo.errors">
+                    <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+    
+
+            <div class="form-group">
+                <label>Región</label>
+                <select formControlName="region" class="form-control" [(ngModel)]="selectedRegion" (change)="changeComuna($event)">
+                    <option *ngFor="let reg of regionesList" value="{{reg.region}}" selected>{{reg.region}}</option>
+                </select>
+                <div *ngIf="submitted && f.region.errors">
+                    <div *ngIf="f.region.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Comuna <span style="font-size: 9pt;"> actual: {{estacion.COMUNA}}</span> </label>
+                <select formControlName="comuna" class="form-control">
+                    <option *ngFor="let comuna of comunasList" value="{{comuna}}" selected>{{comuna}}</option>
+                </select>
+                <div *ngIf="submitted && f.comuna.errors">
+                    <div *ngIf="f.comuna.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La comuna es obligatoria.</div>
+                </div>
+            </div>
+    
+            <!-- <div class="form-group">
+                <label>Comuna</label>
+                <input type="text" formControlName="comuna" placeholder="Comuna" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.comuna.errors }">
+                <div *ngIf="submitted && f.comuna.errors">
+                    <div *ngIf="f.comuna.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La comuna es obligatoria.</div>
+                </div>
+            </div> -->
+    
+    
+    
+            <div style="padding-top: 1em;">
+                <button (click)="volver()" type="button" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+                <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+            </div>
+    
+        </form>
+    </div>
+    
+    <div class="col-md-6">
+        <google-map
+        height="450px"
+        width="90%"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options"
+        (mapClick)="click($event)">
+        </google-map>
+        <span style="color: grey; font-size: 9pt; font-family: Roboto;">Haga click en el mapa para obtener una ubicación referencial. <br>
+            Se recomienda editar en los campos especificos para obtener la locación específica. </span>
+    </div>
+
+</div>
