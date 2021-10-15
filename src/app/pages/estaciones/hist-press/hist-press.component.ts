@@ -35,21 +35,26 @@ export class HistPressComponent implements OnInit {
 
   ngOnInit(){
     for(let dato of this.dataPres){
-      this.chartPresDataY[0].data?.push(dato.presion)
-      this.chartPresLabelY.push(dato.hora)
+      this.rellenar(dato)
     }
     this.intervalUpdate = setInterval(() => {
-      //add the element to the end of the array
-      this.chartPresDataY[0].data?.push(this.dataPres[0].presion)
-      this.chartPresLabelY.push(this.dataPres[0].hora)
-      //delete the first element of the data array
-      this.chartPresDataY[0].data?.shift()
-      this.chartPresLabelY.shift()
+      if(this.chartPresLabelY.length > 50){
+        //add the element to the end of the array
+        this.chartPresDataY[0].data?.shift()
+        this.chartPresLabelY.shift()
+      } else{
+        this.rellenar(this.dataPres[0])
+      }
     }, 300000)
   }
 
   ngOnDestroy(){
     clearInterval(this.intervalUpdate)
+  }
+
+  rellenar(dato: any){
+    this.chartPresDataY[0].data?.push(dato.presion)
+    this.chartPresLabelY.push(dato.hora)
   }
 
 }

@@ -4,6 +4,7 @@ import { DataEstacionGmService } from 'src/app/services/data-estacion-gm.service
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { EstacionService } from 'src/app/services/estacion.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pres-mes',
@@ -12,15 +13,18 @@ import { EstacionService } from 'src/app/services/estacion.service';
   ]
 })
 export class PresMesComponent implements OnInit {
-  @Input() dataClima: any[] = []
+  @Input() codigo: any
 
-  constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, private _route: ActivatedRoute) { }
+  constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, private _route: ActivatedRoute, private _fbuilder: FormBuilder) { }
 
   _id: any
-  _codigo: any
+  fechaForm: FormGroup;
+  submitted = false;
 
   novaFecha: string = ''
   dataPres: any[] = []
+
+  fecha_data: any
 
   public chartPresDataY: ChartDataSets[] = [
     {data: [], label: 'Promedio'},
@@ -46,31 +50,14 @@ export class PresMesComponent implements OnInit {
   ngOnInit(){
     let dateTime = new Date().toLocaleString('en-GB')
     this.novaFecha = this.fechaEnviar(dateTime)
-
-    this._route.params.subscribe(
-      params => {
-        this._id = +params['id'];
-        this._estacion.getEstacion(this._id).subscribe(
-          data => {
-            this._codigo = data.CODIGO
-            this._dataGm.getPresMes(this.novaFecha, this._codigo).subscribe(
-              res => {
-                console.log(res);
-                
-                this.dataPres = res
-                for (let s of this.dataPres){
-                  this.chartPresDataY[0].data?.push(s.presion_min)
-                  this.chartPresDataY[1].data?.push(s.presion_avg)
-                  this.chartPresDataY[2].data?.push(s.presion_max)
-
-                  this.chartPresLabelY.push(s.dia)
-                }
-              }
-            )
-          }// fin getStation
-        )
-      }// fin params
-    )
+  
+    this.fechaForm = this._fbuilder.group({
+      fecha: ['', Validators.required],
+    })
+  
+    this.fechaForm.controls['fecha'].setValue(this.novaFecha)
+  
+    this.getDataChart(this.novaFecha, this.codigo)
   }
 
   fechaEnviar(fecha:string){
@@ -79,6 +66,48 @@ export class PresMesComponent implements OnInit {
     
     let newFecha = fechaCal[2] + '-' + fechaCal[1] + '-' + fechaCal[0];
     return newFecha
+  }
+
+  getDataChart(fecha:any, codigo:any){
+    this._dataGm.getWeatherMonth(fecha, codigo).subscribe(
+      data => {
+        for(let s of data.reverse()){
+        this.chartPresDataY[0].data?.push(s.pressure_AVG)
+        this.chartPresDataY[1].data?.push(s.pressure_MIN)
+        this.chartPresDataY[2].data?.push(s.pressure_MAX)
+        this.chartPresLabelY.push(s.dia)
+        }
+      }
+    )
+  }
+
+  addDays(dias: number){
+    var futureDay = new Date()
+    futureDay.setDate(futureDay.getDate() + dias)
+    let fecha = (futureDay.toLocaleString('en-GB')).split(',')
+    return fecha[0]
+  }
+
+  onSubmit(){
+    this.submitted = true;
+    this.fecha_data = this.fechaForm.value.fecha
+
+    console.log(this.fecha_data)
+
+    if(this.fechaForm.valid){
+      this.chartPresDataY[0].data = []
+      this.chartPresDataY[1].data = []
+      this.chartPresDataY[2].data = []
+      this.chartPresLabelY = []
+      this._dataGm.getWeatherMonth(this.fecha_data, this.codigo).subscribe(
+        data => {
+          for(let s of data.reverse()){
+          this.chartPresDataY[0].data?.push(s.pressure_AVG)
+          this.chartPresDataY[1].data?.push(s.pressure_MIN)
+          this.chartPresDataY[2].data?.push(s.pressure_MAX)
+          this.chartPresLabelY.push(s.dia)}
+        })
+    }
   }
 
 }

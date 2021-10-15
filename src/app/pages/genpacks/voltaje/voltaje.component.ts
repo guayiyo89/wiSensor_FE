@@ -88,7 +88,7 @@ export class VoltajeComponent implements OnInit {
       } else {
         this.rellenar(this.dataVolt[0])
       }
-    }, 5000)
+    }, 60000)
 
   }
 

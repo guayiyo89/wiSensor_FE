@@ -416,7 +416,7 @@
 <ng-template #graphTanio let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Temperatura Año</h4> </div>
-  <app-temp-anio [dataClima]="climaYear"></app-temp-anio>
+  <app-temp-anio [codigo]="codigo"></app-temp-anio>
 </ng-template>
 
 <!-- MODALS Presion -->
@@ -424,19 +424,19 @@
 <ng-template #graphPSanio let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Presión Año</h4> </div>
-  <app-pres-anio [dataClima]="climaYear"></app-pres-anio>
+  <app-pres-anio [codigo]="codigo"></app-pres-anio>
 </ng-template>
 
 <ng-template #graphPSmes let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Presión Mes</h4> </div>
-  <app-pres-mes [dataClima]="climaMonth"></app-pres-mes>
+  <app-pres-mes [codigo]="codigo"></app-pres-mes>
 </ng-template>
 
 <ng-template #graphPSdia let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Presión Día</h4> </div>
-  <app-pres-dia [dataClima]="climaDay"></app-pres-dia>
+  <app-pres-dia [codigo]="codigo"></app-pres-dia>
 </ng-template>
 
 <!-- MODALS Precipitaciones -->
@@ -444,17 +444,17 @@
 <ng-template #graphLlanio let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Precipitaciones Año</h4> </div>
-  <app-precipitaciones-anio [dataClima]="climaYear"></app-precipitaciones-anio>
+  <app-precipitaciones-anio [codigo]="codigo"></app-precipitaciones-anio>
 </ng-template>
 
 <ng-template #graphLlmes let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Precipitaciones Mes</h4> </div>
-  <app-precipitaciones-mes [dataClima]="climaMonth"></app-precipitaciones-mes>
+  <app-precipitaciones-mes [codigo]="codigo"></app-precipitaciones-mes>
 </ng-template>
 
 <ng-template #graphLldia let-modal>
   <div class="modal-header"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Precipitaciones Día</h4> </div>
-  <app-precipitaciones-dia [dataClima]="climaDay"></app-precipitaciones-dia>
+  <app-precipitaciones-dia [codigo]="codigo"></app-precipitaciones-dia>
 </ng-template>

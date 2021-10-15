@@ -45,10 +45,19 @@ export class HistPitchComponent implements OnInit {
 
   ngOnInit(){
     console.log('PITCH', this.dataPitch)
-    for(let dato of this.dataPitch){
-      this.chartPitchDataY[0].data?.push(dato.pitch)
-      this.chartPitchLabelY.push(dato.hora)
+    for(let dato of this.dataPitch.reverse()){
+      this.rellenar(dato)
     }
+
+    this.intervalUpdate = setInterval(() => {
+      //add the element to the end of the array
+      if(this.chartPitchLabelY.length > 100){
+        this.chartPitchDataY[0].data?.shift()
+        this.chartPitchLabelY.shift()
+      } else {
+        this.rellenar(this.dataPitch[0])
+      }
+    }, 30000)
   }
 
   fechaEnviar(fecha:string){
@@ -56,6 +65,11 @@ export class HistPitchComponent implements OnInit {
     let fechaCal = splitted[0].split('/');
     let newFecha = fechaCal[2] + '-' + fechaCal[1] + '-' + fechaCal[0];
     return newFecha
+  }
+
+  rellenar(dato:any){
+    this.chartPitchDataY[0].data?.push(dato.pitch)
+    this.chartPitchLabelY.push(dato.hora)
   }
 
 }

@@ -41,18 +41,25 @@ export class HistVelcComponent implements OnInit {
       this.chartVelcLabelY.push(dato.hora)
     }
     this.intervalUpdate = setInterval(() => {
-      //add the element to the end of the array
-      let vel = Number.parseFloat((this.dataVelc[0].velc * 3.6).toFixed(2))
-      this.chartVelcDataY[0].data?.push(vel)
-      this.chartVelcLabelY.push(this.dataVelc[0].hora)
-      //delete the first element of the data array
-      this.chartVelcDataY[0].data?.shift()
-      this.chartVelcLabelY.shift()
-    }, 250000)
+
+      if(this.chartVelcLabelY.length > 50){
+        //delete the first element of the data array
+        this.chartVelcDataY[0].data?.shift()
+        this.chartVelcLabelY.shift()
+      } else {
+        this.rellenar(this.dataVelc[0])
+      }
+    }, 300000)
   }
 
   ngOnDestroy(){
     clearInterval(this.intervalUpdate)
+  }
+
+  rellenar(dato: any){
+    let vel = Number.parseFloat((dato.velc * 3.6).toFixed(2))
+    this.chartVelcDataY[0].data?.push(vel)
+    this.chartVelcLabelY.push(dato.hora)
   }
 
 }

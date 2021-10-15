@@ -12,6 +12,8 @@ import { Color, Label } from 'ng2-charts';
 export class HistRollComponent implements OnInit {
   @Input() dataRoll: any 
 
+  public intervalUpdate: any
+
   constructor(private _route: ActivatedRoute) { }
 
   _id: any
@@ -37,10 +39,24 @@ export class HistRollComponent implements OnInit {
   }];
 
   ngOnInit(){
-    for(let dato of this.dataRoll){
-      this.chartRollDataY[0].data?.push(dato.roll)
-      this.chartRollLabelY.push(dato.hora)
+    for(let dato of this.dataRoll.reverse()){
+      this.rellenar(dato)
     }
+
+    this.intervalUpdate = setInterval(() => {
+      //add the element to the end of the array
+      if(this.chartRollLabelY.length > 100){
+        this.chartRollDataY[0].data?.shift()
+        this.chartRollLabelY.shift()
+      } else {
+        this.rellenar(this.dataRoll[0])
+      }
+    }, 30000)
+  }
+
+  rellenar(dato:any){
+    this.chartRollDataY[0].data?.push(dato.roll)
+    this.chartRollLabelY.push(dato.hora)
   }
 
 }

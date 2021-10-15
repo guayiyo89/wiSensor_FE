@@ -17,6 +17,8 @@ export class PotenciaComponent implements OnInit {
   faDot = faCircle
   faBolt = faBolt
 
+  public intervalUpdate: any
+
   public chartStateDataY: ChartDataSets[] = [
     {data: [], label: 'Estado' }
   ];
@@ -69,13 +71,20 @@ export class PotenciaComponent implements OnInit {
 
   ngOnInit(){
     for(let dato of this.dataEst.reverse()){
-      this.chartStateDataY[0].data?.push(dato.in_gp)
-      let time = this.hora(dato.data_time)
-      this.chartStateLabelY.push(time)
-
-      this.chartState1DataY[0].data?.push(dato.out_gp)
-      this.chartState1LabelY.push(time)
+      this.rellenar(dato)
     }
+
+    this.intervalUpdate = setInterval(() => {
+      //add the element to the end of the array
+      if(this.chartStateLabelY.length > 50){
+        this.chartStateDataY[0].data?.shift()
+        this.chartStateLabelY.shift()
+        this.chartState1DataY[0].data?.shift()
+        this.chartState1LabelY.shift()
+      } else {
+        this.rellenar(this.dataEst[0])
+      }
+    }, 60000)
   }
 
   hora(fecha:any){
@@ -84,6 +93,15 @@ export class PotenciaComponent implements OnInit {
 
     let hora = arrayhora[0]
     return hora
+  }
+
+  rellenar(dato: any){
+    this.chartStateDataY[0].data?.push(dato.in_gp)
+    let time = this.hora(dato.data_time)
+    this.chartStateLabelY.push(time)
+
+    this.chartState1DataY[0].data?.push(dato.out_gp)
+    this.chartState1LabelY.push(time)
   }
 
 }

@@ -4,6 +4,7 @@ import { DataEstacionGmService } from 'src/app/services/data-estacion-gm.service
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { EstacionService } from 'src/app/services/estacion.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-temp-anio',
@@ -12,15 +13,19 @@ import { EstacionService } from 'src/app/services/estacion.service';
   ]
 })
 export class TempAnioComponent implements OnInit {
-  @Input() dataClima: any[] = []
+  @Input() codigo: any
 
-  constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, private _route: ActivatedRoute) { }
+  constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, private _route: ActivatedRoute, private _fbuilder: FormBuilder) { }
 
   _id: any
-  _codigo: any
+
+  fechaForm: FormGroup;
+  submitted = false;
 
   novaFecha: string = ''
   tempDay: any[] = []
+
+  fecha_data: any
 
   public chartTempDataY: ChartDataSets[] = [
     {data: [], label: 'Promedio'},
@@ -48,36 +53,18 @@ export class TempAnioComponent implements OnInit {
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
 }];
 
-  ngOnInit(){
-    let dateTime = new Date().toLocaleString('en-GB')
-    this.novaFecha = this.fechaEnviar(dateTime)
+ngOnInit(){
+  let dateTime = new Date().toLocaleString('en-GB')
+  this.novaFecha = this.fechaEnviar(dateTime)
 
-    this._route.params.subscribe(
-      params => {
-        this._id = +params['id'];
-        this._estacion.getEstacion(this._id).subscribe(
-          data => {
-            this._codigo = data.CODIGO
-            this._dataGm.getTempYear(this.novaFecha, this._codigo).subscribe(
-              res => {
-                console.log(res);
-                
-                this.tempDay = res
-                for (let s of this.tempDay){
-                  this.chartTempDataY[0].data?.push(s.temperatura_min)
-                  this.chartTempDataY[1].data?.push(s.temperatura_avg)
-                  this.chartTempDataY[2].data?.push(s.temperatura_max)
-                  let myMes = this.getMes(s.mes)
+  this.fechaForm = this._fbuilder.group({
+    fecha: ['', Validators.required],
+  })
 
-                  this.chartTempLabelY.push(myMes)
-                }
-              }
-            )
-          }// fin getStation
-        )
-      }// fin params
-    )
-  }
+  this.fechaForm.controls['fecha'].setValue(this.novaFecha)
+
+  this.getDataChart(this.novaFecha, this.codigo)
+}
 
   fechaEnviar(fecha:string){
     let splitted = fecha.split(',');
@@ -103,6 +90,51 @@ export class TempAnioComponent implements OnInit {
     if (s == '12'){mes = 'Diciembre'}
 
     return mes
+  }
+
+  getDataChart(fecha:any, codigo:any){
+
+    this._dataGm.getWeatherYear(fecha, codigo).subscribe(
+      data => {
+        for(let s of data.reverse()){
+        this.chartTempDataY[0].data?.push(s.temperature_AVG)
+        this.chartTempDataY[1].data?.push(s.temperature_MIN)
+        this.chartTempDataY[2].data?.push(s.temperature_MAX)
+        let mes = this.getMes(s.mes)
+        this.chartTempLabelY.push(mes)
+        }
+      }
+    )
+  }
+
+  addDays(dias: number){
+    var futureDay = new Date()
+    futureDay.setDate(futureDay.getDate() + dias)
+    let fecha = (futureDay.toLocaleString('en-GB')).split(',')
+    return fecha[0]
+  }
+
+  onSubmit(){
+    this.submitted = true;
+    this.fecha_data = this.fechaForm.value.fecha
+
+    console.log(this.fecha_data)
+
+    if(this.fechaForm.valid){
+      this.chartTempDataY[0].data = []
+      this.chartTempDataY[1].data = []
+      this.chartTempDataY[2].data = []
+      this.chartTempLabelY = []
+      this._dataGm.getWeatherYear(this.fecha_data, this.codigo).subscribe(
+        data => {
+          for(let s of data.reverse()){
+          this.chartTempDataY[0].data?.push(s.temperature_AVG)
+          this.chartTempDataY[1].data?.push(s.temperature_MIN)
+          this.chartTempDataY[2].data?.push(s.temperature_MAX)
+          let mes = this.getMes(s.mes)
+          this.chartTempLabelY.push(mes)}
+        })
+    }
   }
 
 }
