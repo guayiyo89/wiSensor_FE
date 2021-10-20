@@ -20,6 +20,7 @@ export class PasswordComponent implements OnInit {
 
   userPwd: Usuario
   userId: any
+  idEmpresa: any
   editForm: FormGroup;
   submitted = false
 
@@ -36,31 +37,30 @@ export class PasswordComponent implements OnInit {
   ngOnInit(){
     this.userPwd = this._user.usuario
     this.userId = this._user.usuario.ID
+    this.idEmpresa = this._user.userIds.id_empresa
 
     this.editForm = this._fbuilder.group({
-      id: [],
-        empresa_id: [{value: '', disabled: true}, Validators.required],
-        perfil_id: ['', Validators.required],
-        usuario: ['', Validators.required],
-        correo: [{value: '', disabled: true}, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        id: [],
+        email: [{value: '', disabled: true}, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPwd: ['', [Validators.required, Validators.minLength(8)]],
-        estado: ['', Validators.required],
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
-        centro_id: ['', Validators.required],
+        empresa_id: [{value: '', disabled: true}, Validators.required],
+        id_centro: ['', Validators.required],
+        id_perfil: ['', Validators.required],
+        status: ['', Validators.required],
         //validators: [validateEqual('password','confirmPwd', 'Los password no coinciden')]
     })
 
-    this.editForm.controls['empresa_id'].setValue(this.userPwd.EMPRESA_ID)
-    this.editForm.controls['perfil_id'].setValue(this.userPwd.PERFIL_ID)
-    this.editForm.controls['usuario'].setValue(this.userPwd.USUARIO)
-    this.editForm.controls['correo'].setValue(this.userPwd.CORREO)
+    this.editForm.controls['empresa_id'].setValue(this.idEmpresa)
+    this.editForm.controls['id_perfil'].setValue(this.userPwd.id_perfil)
+    this.editForm.controls['correo'].setValue(this.userPwd.email)
     this.editForm.controls['password'].setValue('')
-    this.editForm.controls['estado'].setValue(this.userPwd.ESTADO)
-    this.editForm.controls['nombre'].setValue(this.userPwd.NOMBRE)
-    this.editForm.controls['apellido'].setValue(this.userPwd.APELLIDO)
-    this.editForm.controls['centro_id'].setValue(this.userPwd.CENTRO_ID)
+    this.editForm.controls['status'].setValue(this.userPwd.status)
+    this.editForm.controls['nombre'].setValue(this.userPwd.nombre)
+    this.editForm.controls['apellido'].setValue(this.userPwd.apellido)
+    this.editForm.controls['id_centro'].setValue(this.userPwd.id_centro)
 
 
   }
@@ -80,7 +80,7 @@ export class PasswordComponent implements OnInit {
         })
         return
       }
-      this._user.editUser(this.userPwd.ID, this.editForm.getRawValue()).subscribe(
+      this._user.editUser(this.userPwd.id, this.editForm.getRawValue()).subscribe(
         (data) => {
           console.log(data)
           Swal.fire({

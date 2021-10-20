@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faArrowLeft, faEdit, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Centro } from 'src/app/interfaces/centro.model';
 import { Empresa } from 'src/app/interfaces/empresa.model';
-import { Generador } from 'src/app/interfaces/generador.model';
+import { Genpack } from 'src/app/interfaces/generador.model';
 import { CentroService } from 'src/app/services/centro.service';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { GenpackService } from 'src/app/services/genpack.service';
@@ -30,7 +30,7 @@ export class EditgenpackComponent implements OnInit {
     empresaList: Empresa[] = []
     centroList: Centro[] = []
     generadores: any[] = []
-    genpack: any
+    genpack: Genpack
 
     empresaUser: Empresa
 
@@ -63,30 +63,34 @@ export class EditgenpackComponent implements OnInit {
           descripcion: ['', Validators.required],
           marca: ['', Validators.required],
           modelo: ['', Validators.required],
-          estado: ['', Validators.required],
           codigo: ['', Validators.required],
+          estado: ['', Validators.required],
+          volt_bateria: ['', Validators.required],
           empresa_id: ['', Validators.required],
-          centro_id: ['', Validators.required],
-          volt_bateria: ['', Validators.required]
+          id_centro: ['', Validators.required],
         })
         
         this._genpack.getGenpack(this._id).subscribe(
           data => {
             this.genpack = data
-            this.codigo = data.CODIGO;
+            this.codigo = data.codigo;
 
-            this.editForm.controls['nombre'].setValue(data.NOMBRE)
-            this.editForm.controls['descripcion'].setValue(data.DESCRIPCION)
-            this.editForm.controls['marca'].setValue(data.MARCA)
-            this.editForm.controls['modelo'].setValue(data.MODELO)
-            this.editForm.controls['estado'].setValue(data.ESTADO)
-            this.editForm.controls['codigo'].setValue(data.CODIGO)
-            this.editForm.controls['empresa_id'].setValue(data.EMPRESA_ID)
-            this.editForm.controls['centro_id'].setValue(data.CENTRO_ID)
-            this.editForm.controls['volt_bateria'].setValue(data.VOLT_BATERIA)
+            this._centro.getCentro(data.id_centro).subscribe(
+              centro => {
+                this.editForm.controls['empresa_id'].setValue(centro.id_empresa)
+                this.nomCentro(centro.id_empresa);
+              }
+            )
 
-            this.nomCentro(data.EMPRESA_ID);
-            this.selectedEmp = data.EMPRESA_ID
+            this.editForm.controls['nombre'].setValue(data.nombre)
+            this.editForm.controls['descripcion'].setValue(data.descripcion)
+            this.editForm.controls['marca'].setValue(data.marca)
+            this.editForm.controls['modelo'].setValue(data.modelo)
+            this.editForm.controls['codigo'].setValue(data.codigo)
+            this.editForm.controls['estado'].setValue(data.estado)
+            this.editForm.controls['volt_bateria'].setValue(data.volt_bateria)
+            this.editForm.controls['id_centro'].setValue(data.id_centro)
+
           }
         )
         
@@ -144,12 +148,12 @@ export class EditgenpackComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.editForm.controls['centro_id'].setValue('')
+        this.editForm.controls['id_centro'].setValue('')
       },
       error => {
         console.log(error)
         this.centroList = []
-        this.editForm.controls['centro_id'].setValue('')
+        this.editForm.controls['id_centro'].setValue('')
       }
     )
   }

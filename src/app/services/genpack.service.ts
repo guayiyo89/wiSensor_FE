@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from '../config/config';
-import { Generador } from '../interfaces/generador.model';
+import { Genpack } from '../interfaces/generador.model';
 import { UsuarioService } from './usuario.service';
 
 @Injectable({
@@ -34,7 +34,7 @@ export class GenpackService {
     return this.http.post(url, genpack)
   }
 
-  editGenpack(id: any, generador: Generador){
+  editGenpack(id: any, generador: Genpack){
     let url = `${this.baseUrl}/${id}`;
     url += '?token=' + this._user.token;
     return this.http.put(url, generador)

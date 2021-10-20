@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowLeft, faEdit, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Generador } from 'src/app/interfaces/generador.model';
+import { Genpack } from 'src/app/interfaces/generador.model';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { GenpackService } from 'src/app/services/genpack.service';
 
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class GenpacksComponent implements OnInit {
 
-  generadoresList: any[] = []
+  genpacksList: any[] = []
 
   idEmpresaUser: any
   perfilUser: any
@@ -32,8 +32,8 @@ export class GenpacksComponent implements OnInit {
   constructor( public _empresa: EmpresaService, public _user: UsuarioService, public _genpack: GenpackService) { }
 
   ngOnInit(){
-    this.idEmpresaUser = this._user.usuario.EMPRESA_ID
-    this.perfilUser = this._user.usuario.PERFIL_ID
+    this.idEmpresaUser = this._user.userIds.id_empresa
+    this.perfilUser = this._user.usuario.id_perfil
 
     if(this.perfilUser == 1){
       this._genpack.getGenpackes().subscribe(
@@ -44,7 +44,7 @@ export class GenpacksComponent implements OnInit {
     }
   }
 
-  delete(generador: Generador){
+  delete(generador: Genpack){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -55,7 +55,7 @@ export class GenpacksComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._genpack.deleteGenpack(generador.ID).subscribe(
+        this._genpack.deleteGenpack(generador.id).subscribe(
           resp => {
             if(!resp.err){
               this.pageOfItems.splice(this.pageOfItems.indexOf(generador), 1)

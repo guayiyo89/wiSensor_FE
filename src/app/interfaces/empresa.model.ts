@@ -1,10 +1,11 @@
 export class Empresa{
     constructor(
-        public NOMBRE: string,
-        public CATEGORIA:string,
-        public ESTADO: number,
-        public FECHA_CREACION: string,
-        public LOGO: string,
-        public ID?: string
+        public nombre: string,
+        public categoria: string,
+        public status: number,
+        public created_at: string,
+        public updated_at: string,
+        public deleted_at: string,
+        public id?: string
     ) {}
 }

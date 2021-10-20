@@ -23,7 +23,7 @@
             <div class="form-group" *ngIf="empresaList">
                 <label>Empresa</label>
                 <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
-                    <option *ngFor="let empresa of empresaList" value="{{empresa.ID}}">{{empresa.NOMBRE}}</option>
+                    <option *ngFor="let empresa of empresaList" value="{{empresa.id}}">{{empresa.nombre}}</option>
                 </select>
                 <div *ngIf="submitted && f.empresa_id.errors">
                     <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
@@ -32,11 +32,11 @@
 
             <div class="form-group">
                 <label>Centro</label>
-                <select formControlName="centro_id" class="form-control">
-                    <option *ngFor="let centro of centroList" value="{{centro.ID}}">{{centro.NOMBRE}}</option>
+                <select formControlName="id_centro" class="form-control">
+                    <option *ngFor="let centro of centroList" value="{{centro.id}}">{{centro.nombre}}</option>
                 </select>
-                <div *ngIf="submitted && f.centro_id.errors">
-                    <div *ngIf="f.centro_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                <div *ngIf="submitted && f.id_centro.errors">
+                    <div *ngIf="f.id_centro.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
                 </div>
             </div>
     
@@ -99,14 +99,14 @@
         <div *ngIf="generadores.length > 0">
             <h3>Generadores</h3> 
             <div *ngFor="let gen of generadores" class="card bg-dark">
-                <div class="card-header"><h5 style="display: inline; padding-right: 1em;">{{gen.NOMBRE}}</h5>
+                <div class="card-header"><h5 style="display: inline; padding-right: 1em;">{{gen.nombre}}</h5>
                     <span style="border: 1px solid white; display: inline; padding: 2px; border-radius: 3px; text-align: center; width: 50%; font-size: 11pt;"> 
-                        {{gen.CODIGO}} </span>
+                        {{gen.codigo}} </span>
                 </div>
                 <div class="card-body"> <div class="row">
-                    <div class="col-6"> {{gen.MARCA}} / {{gen.MODELO}}  <br>
-                        <span *ngIf="gen.ESTADO == 1" class="activo">{{gen.ESTADO | estado}}</span>
-                        <span *ngIf="gen.ESTADO == 0" class="inactivo">{{gen.ESTADO | estado}}</span> <br>
+                    <div class="col-6"> {{gen.marca}} / {{gen.modelo}}  <br>
+                        <span *ngIf="gen.estado == 1" class="activo">{{gen.estado | estado}}</span>
+                        <span *ngIf="gen.estado == 0" class="inactivo">{{gen.estado | estado}}</span> <br>
                         <a class="btn btn-success" (click)="openEdit(editGen)"><fa-icon [icon]="faEdit"></fa-icon></a>
                         <a href="" class="btn btn-danger" [routerLink]="['/editGenpack', _id]" (click)="delete(gen)" style="margin: 0.5em;"> <fa-icon [icon]="faTimes"></fa-icon> </a>
                     </div>
@@ -114,11 +114,11 @@
 
                           <div style=" display: inline-block; text-align: center; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 0.5em;"> 
                             <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 11pt;">Capacidad</span> 
-                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.CAPACIDAD}} Lt.</span>
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.capacidad}} Lt.</span>
                           </div>
                           <div style=" display: inline-block; text-align: center; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 0.5em;"> 
                             <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 11pt;">Potencia</span> 
-                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.POTENCIA}} W</span>
+                            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">{{gen.potencia}} W</span>
                           </div>
 
                     </div>

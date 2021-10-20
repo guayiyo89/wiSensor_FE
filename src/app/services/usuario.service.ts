@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../interfaces/usuario.model';
 import { URL_SERVICIOS } from '../config/config';
-import { User } from '../interfaces/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,7 @@ export class UsuarioService {
 
   usuario: any;
   token: any;
+  userIds: any;
 
   constructor(public http: HttpClient, public router: Router) { 
     this.loadStorage();
@@ -27,21 +27,25 @@ export class UsuarioService {
     if (localStorage.getItem('token')){
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+      this.userIds = JSON.parse(localStorage.getItem('userIds') || '{}');
     } else {
       this.token = '';
       this.usuario = null;
+      this.userIds = null;
     }
   }
 
   // Guardado en LS
-  guardadoLs( id: string, token: string, usuario: Usuario ) {
+  guardadoLs( id: string, token: string, usuario: Usuario, userIds: any ) {
     
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify( usuario ));
+    localStorage.setItem('userIds', JSON.stringify( userIds ));
 
     this.usuario = usuario;
     this.token = token;
+    this.userIds = userIds;
   }
 
   // LOG OUT
@@ -50,12 +54,13 @@ export class UsuarioService {
     this.usuario = null;
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('userIds');
     this.router.navigate(['/login']);
   }
 
   login( usuario: Usuario, recordar: boolean = false){
     if (recordar){
-      localStorage.setItem('email', usuario.CORREO)
+      localStorage.setItem('email', usuario.email)
     } else {
       localStorage.removeItem('email')
     }
@@ -63,7 +68,7 @@ export class UsuarioService {
     let url = URL_SERVICIOS + '/login';
     return this.http.post(url, usuario).pipe(
       map((resp:any) => {
-        this.guardadoLs(resp.id, resp.token, resp.usuario);
+        this.guardadoLs(resp.id, resp.token, resp.usuario, resp.userIds);
         console.log(resp.usuario);
         
         return true;
@@ -80,7 +85,7 @@ export class UsuarioService {
   getUsuarios(){
     let url = URL_SERVICIOS + '/usuario';
     url += '?token=' + this.token;
-    return this.http.get(url).toPromise().then(res => <User[]> res)
+    return this.http.get(url).toPromise().then(res => <any[]> res)
   }
 
   getUser(id:any){
@@ -96,6 +101,12 @@ export class UsuarioService {
   getUserMail(mail:any){
     let url = URL_SERVICIOS + '/usuario/mail/' + mail;
     return this.http.get<Usuario>(url);
+  }
+
+  getUserIds(id: any){
+    let url = URL_SERVICIOS + '/user_ids/' + id;
+    url += '?token=' + this.token;
+    return this.http.get<any>(url);
   }
 
   addUser(usuario: Usuario){

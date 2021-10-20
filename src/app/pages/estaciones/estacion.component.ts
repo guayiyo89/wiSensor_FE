@@ -9,6 +9,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GaugeComponent } from './gauge/gauge.component';
 import { ApiWeatherService } from 'src/app/services/api-weather.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { CentroService } from 'src/app/services/centro.service';
 
 @Component({
   selector: 'app-estacion',
@@ -21,7 +22,7 @@ export class EstacionComponent implements OnInit {
 
 
   constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, public _dataApi: ApiWeatherService, public _user: UsuarioService,
-     private _route: ActivatedRoute, private _modal: NgbModal) { }
+     public _centro: CentroService, private _route: ActivatedRoute, private _modal: NgbModal) { }
 
   //fakeData DESPUES BORRAR!
   private intervalUpdate: any
@@ -35,6 +36,8 @@ export class EstacionComponent implements OnInit {
   _idPerfil: any
   _idCentroUser: any
   _idEmpresaUser: any
+
+  _idEmpresaCenter: any
 
   dataEstGm: Data_estacion_gm[] = [];
   datosClima: any
@@ -59,6 +62,8 @@ export class EstacionComponent implements OnInit {
   climaDay: any[] = []
   climaYear: any[] = []
   climaMonth: any[] = []
+  latitud: any
+  longitud: any
 
   novaFecha: string = ''
 
@@ -94,6 +99,8 @@ export class EstacionComponent implements OnInit {
     this._idPerfil = this._user.usuario.PERFIL_ID
     this._idEmpresaUser = this._user.usuario.EMPRESA_ID
 
+    console.log('IDS', this._idEmpresaCenter, this._idEmpresaUser);
+
     let dateTime = new Date().toLocaleString('en-GB')
     
     this.novaFecha = this.fechaEnviar(dateTime)
@@ -116,13 +123,9 @@ export class EstacionComponent implements OnInit {
         this._estacion.getEstacion(this._id).subscribe(
           data => {
             this.estacion = data
-            this.codigo = data.CODIGO;
+            this.codigo = data.codigo;
             
             this.showClima(this.codigo, this.novaFecha)
-
-            this.showWeatherDay(this.codigo, this.novaFecha)
-            this.showWeatherMonth(this.codigo, this.novaFecha)
-            this.showWeatherYear(this.codigo, this.novaFecha)
 
             this.getRS(this.codigo)
 
@@ -131,27 +134,14 @@ export class EstacionComponent implements OnInit {
               this.getRS(this.codigo)
             }, 5000)
 
-            let hour_mms = 1000*60*60
+            this._centro.getCentro(data.id_centro).subscribe(
+              center => {
+                this.latitud = center.latitud
+                this.longitud = center.longitud
+                this._idEmpresaCenter = center.id_empresa
+              }
+            )
 
-            this.intervalDay = setInterval(() => {
-              this.showWeatherDay(this.codigo, this.novaFecha)
-            }, hour_mms)
-
-            let day_mms = 1000*60*60*24
-
-            this.intervalMonth = setInterval(() => {
-              this.showWeatherMonth(this.codigo, this.novaFecha)
-            }, day_mms)
-
-            let week_mms = day_mms * 7
-
-            this.intervalYear = setInterval(() => {
-              this.showWeatherYear(this.codigo, this.novaFecha)
-            }, week_mms)
-
-            //clearInterval(this.intervalUpdate);
-          
-            
           }// fin de getEstacion
         )
       }//fin del params
@@ -262,28 +252,7 @@ export class EstacionComponent implements OnInit {
     this._dataGm.getFakeData().subscribe(
       val => {
         this.fake = val
-        this.gauge.showRad()
       }
-    )
-  }
-
-  showWeatherDay(codigo: any, fecha: any){
-    this._dataGm.getWeatherDay(codigo, fecha).subscribe(
-      dataDay => {
-        this.climaDay = dataDay
-        console.log('Me llamaste??')
-      })
-  }
-
-  showWeatherMonth(codigo: any, fecha: any){
-    this._dataGm.getWeatherMonth(codigo, fecha).subscribe(
-      dataMonth => this.climaMonth = dataMonth
-    )
-  }
-
-  showWeatherYear(codigo: any, fecha: any){
-    this._dataGm.getWeatherYear(codigo, fecha).subscribe(
-      dataYear => this.climaYear = dataYear
     )
   }
 

@@ -23,8 +23,8 @@
             <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>Cerrar Sesión</li>
         </ul>
     </div>
-    <div class="text-center" style="font-weight: 700; font-family: Roboto, Arial, Helvetica, sans-serif;">
-        {{centro.NOMBRE}} <br>
-        {{centro.COMUNA}}
+    <div *ngIf="centro" class="text-center" style="font-weight: 700; font-family: Roboto, Arial, Helvetica, sans-serif;">
+        {{centro.nombre}} <br>
+        {{centro.comuna}}
     </div>
 </div>

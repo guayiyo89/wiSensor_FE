@@ -5,15 +5,14 @@
     <h1>Usuarios</h1>
 
     <p-table [value]="userList" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
-    [globalFilterFields]="['APELLIDO','EMPRESA','PERFIL_ID']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+    [globalFilterFields]="['nombreEmpresa','nombreCentro']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="APELLIDO"> Nombre <p-sortIcon field="APELLIDO" style="color: thistle;"></p-sortIcon> </th>
+                <th pSortableColumn="nombre"> Nombre <p-sortIcon field="nombre" style="color: thistle;"></p-sortIcon> </th>
                 <th *ngIf="perfilUser == 1" pSortableColumn="EMPRESA"> Empresa <p-sortIcon field="EMPRESA"></p-sortIcon> </th>
                 <th style="max-width: 120px;" pSortableColumn="CORREO"> Correo <p-sortIcon field="CORREO"></p-sortIcon> </th>
-                <th pSortableColumn="ESTADO"> Estado <p-sortIcon field="ESTADO"></p-sortIcon> </th>
-                <th pSortableColumn="PERFIL_ID"> Perfil <p-sortIcon field="PERFIL_ID"></p-sortIcon> </th>
+                <th pSortableColumn="id_perfil"> Perfil <p-sortIcon field="id_perfil"></p-sortIcon> </th>
                 <th> </th>
             </tr>
             <tr>
@@ -25,14 +24,13 @@
 
         <ng-template pTemplate="body" let-user>
             <tr class="rowth blackness">
-                <td style="padding-left: 1em;">{{user.NOMBRE}} {{user.APELLIDO}}</td>
-                <td *ngIf="perfilUser == 1">{{user.EMPRESA}}</td>
-                <td style="max-width: 120px;">{{user.CORREO}}</td>
-                <td><span *ngIf="user.ESTADO == 1" class="activo">{{user.ESTADO | estado}}</span>
-                    <span *ngIf="user.ESTADO == 2" class="inactivo">{{user.ESTADO | estado}}</span></td>
-                <td>{{user.PERFIL_ID | perfil}}</td>
+                <td style="padding-left: 1em;">{{user.nombre}}</td>
+                <td *ngIf="perfilUser == 1">{{user.nombreEmpresa}}</td>
+                <td style="max-width: 120px;">{{user.nombreCentro}}</td>
+                <td style="max-width: 120px;">{{user.correo}}</td>
+                <td>{{user.id_perfil | perfil}}</td>
                 <td>
-                    <a href="" class="btn btn-success" [routerLink]="['/editUser', user.ID]"><fa-icon [icon]="faEdit"></fa-icon></a>
+                    <a href="" class="btn btn-success" [routerLink]="['/editUser', user.id_users]"><fa-icon [icon]="faEdit"></fa-icon></a>
                     <a href="" class="btn btn-danger" [routerLink]="['/usuarios']" (click)="delete(user)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>

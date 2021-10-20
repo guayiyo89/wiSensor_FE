@@ -15,7 +15,7 @@ export class JCentroGuardGuard implements CanActivate {
       console.log('Paso la Guardia!');
       console.log(this._userSvc.usuario);
       
-      if(this._userSvc.usuario.PERFIL_ID == 1 || this._userSvc.usuario.PERFIL_ID == 2 || this._userSvc.usuario.PERFIL_ID == 3){
+      if(this._userSvc.usuario.id_perfil == 1 || this._userSvc.usuario.id_perfil == 2 || this._userSvc.usuario.id_perfil == 3){
         console.log('Admin!');
         return true;
       } else {

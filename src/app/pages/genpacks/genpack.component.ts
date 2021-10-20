@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faBolt, faCheckCircle, faCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Generador } from 'src/app/interfaces/generador.model';
+import { Genpack } from 'src/app/interfaces/generador.model';
 import { GenpackService } from 'src/app/services/genpack.service';
 import { GenpackdataService } from 'src/app/services/genpackdata.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -26,7 +26,7 @@ export class GenpackComponent implements OnInit {
   dataGenpack: any[] = []
   dataGPnow: any
 
-  generador: Generador
+  genpack: Genpack
 
   generadores: any[] = []
 
@@ -39,9 +39,9 @@ export class GenpackComponent implements OnInit {
   id: any
 
   ngOnInit(): void {
-    this._idCentroUser = this._user.usuario.CENTRO_ID
-    this._idPerfil = this._user.usuario.PERFIL_ID
-    this._idEmpresaUser = this._user.usuario.EMPRESA_ID
+    this._idCentroUser = this._user.usuario.id_centro
+    this._idPerfil = this._user.usuario.id_perfil
+    this._idEmpresaUser = this._user.userIds.id_empresa
 
     this.intervalUpdate = setInterval(() => {
       this.showFecha()
@@ -52,11 +52,11 @@ export class GenpackComponent implements OnInit {
         this.id = +params['id']
         this._genpack.getGenpack(this.id).subscribe(
           data => {
-            this.generador = data
-            this.getdata_gp(data.CODIGO)
+            this.genpack = data
+            this.getdata_gp(data.codigo)
 
             this.intervalUpdate = setInterval(() => {
-              this.getdata_gp(data.CODIGO)
+              this.getdata_gp(data.codigo)
             }, 5000)
           }
         )

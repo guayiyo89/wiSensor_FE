@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   ingresar(forma: NgForm){
     if(forma.valid){
-      let usuario = new Usuario(1,1, '', forma.value.email, forma.value.password,1,'', '', '', 1);
+      let usuario = new Usuario(forma.value.email, forma.value.password, '', '', 1, '','', '', 0, 0);
 
       this._user.login(usuario, forma.value.recuerdame)
         .subscribe(resp => {          

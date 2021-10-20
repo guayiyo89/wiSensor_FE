@@ -1,15 +1,16 @@
 export class Centro{
     constructor(
-        public NOMBRE: string,
-        public DESCRIPCION: string,
-        public COMUNA: string,
-        public REGION: string,
-        public LATITUD: number,
-        public LONGITUD: number,
-        public ESTADO: number,
-        public FECHA_CREACION: string,
-        public EMPRESA_ID: number,
-        public CODIGO: number,
-        public ID?: string
+        public nombre: string,
+        public descripcion: string,
+        public comuna: string,
+        public region: string,
+        public latitud: string,
+        public longitud: string,
+        public status: number,
+        public created_at: string,
+        public updated_at: string,
+        public deleted_at: string,
+        public id_empresa: number,
+        public id?: number
     ) {}
 }

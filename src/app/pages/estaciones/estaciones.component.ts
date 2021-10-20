@@ -34,8 +34,8 @@ export class EstacionesComponent implements OnInit {
      private _route: ActivatedRoute) { }
 
   ngOnInit(){
-    this.idEmpresaUser = this._user.usuario.EMPRESA_ID
-    this.perfilUser = this._user.usuario.PERFIL_ID
+    this.idEmpresaUser = this._user.userIds.id_empresa
+    this.perfilUser = this._user.usuario.id_perfil
     if(this.perfilUser == 1){
       this._estacion.getEstaciones().then(
         data => {
@@ -66,7 +66,7 @@ export class EstacionesComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._estacion.deleteEstacion(estacion.ID).subscribe(
+        this._estacion.deleteEstacion(estacion.id).subscribe(
           resp => {
             if(!resp.err){
               this.estacionList.splice(this.estacionList.indexOf(estacion), 1)
@@ -77,7 +77,5 @@ export class EstacionesComponent implements OnInit {
       }
     })
   }
-
-
 
 }

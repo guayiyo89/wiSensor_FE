@@ -53,7 +53,7 @@ export class EmpresasComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result)=>{
       if(result.isConfirmed){
-        this._empresa.deleteEmpresa(empresaDel.ID).subscribe(
+        this._empresa.deleteEmpresa(empresaDel.id).subscribe(
           resp => {
             if(!resp.err){
               this.empresaList.splice(this.empresaList.indexOf(empresaDel),1)

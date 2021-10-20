@@ -1,6 +1,6 @@
 
 <div class="row">
-    <h2>Agregar nuevo Generador</h2>
+    <h2>Agregar nueva unidad de Energía</h2>
     <div class="col-md-6">
         <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
             
@@ -23,7 +23,7 @@
             <div class="form-group" *ngIf="empresaList.length > 0">
                 <label>Empresa</label>
                 <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
-                    <option *ngFor="let empresa of empresaList" value="{{empresa.ID}}">{{empresa.NOMBRE}}</option>
+                    <option *ngFor="let empresa of empresaList" value="{{empresa.id}}">{{empresa.nombre}}</option>
                 </select>
                 <div *ngIf="submitted && f.empresa_id.errors">
                     <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
@@ -32,11 +32,11 @@
 
             <div class="form-group">
                 <label>Centro</label>
-                <select formControlName="centro_id" class="form-control">
-                    <option *ngFor="let centro of centroList" value="{{centro.ID}}">{{centro.NOMBRE}}</option>
+                <select formControlName="id_centro" class="form-control">
+                    <option *ngFor="let centro of centroList" value="{{centro.id}}">{{centro.nombre}}</option>
                 </select>
-                <div *ngIf="submitted && f.centro_id.errors">
-                    <div *ngIf="f.centro_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                <div *ngIf="submitted && f.id_centro.errors">
+                    <div *ngIf="f.id_centro.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
                 </div>
             </div>
     
@@ -69,7 +69,7 @@
     
             <div class="form-group">
                 <label>Código</label>
-                <input type="text" formControlName="codigo" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+                <input type="text" formControlName="codigo" placeholder="GPXXX" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
                 <div *ngIf="submitted && f.codigo.errors">
                     <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
                 </div>
@@ -77,7 +77,7 @@
 
             <div class="form-group">
                 <label>Voltaje Batería</label>
-                <input type="text" formControlName="volt_bateria" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.volt_bateria.errors }">
+                <input type="number" formControlName="volt_bateria" placeholder="V" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.volt_bateria.errors }">
                 <div *ngIf="submitted && f.volt_bateria.errors">
                     <div *ngIf="f.volt_bateria.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Asigne un Voltaje, por favor.</div>
                 </div>

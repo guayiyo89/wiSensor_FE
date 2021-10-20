@@ -1,5 +1,5 @@
-<div *ngIf="empresa && empresa.ESTADO == 1" class="container">
-    <h1>{{empresa.NOMBRE}}</h1>
+<div *ngIf="empresa && empresa.status == 1" class="container">
+    <h1>{{empresa.nombre}}</h1>
     <div class="row">
         <div class="col-md-6">
             <h2>Estaciones</h2>
@@ -7,16 +7,13 @@
                 <thead>
                     <tr style="border-bottom: 2px solid gray; color: grey;">
                         <th>Nombre</th>
-                        <th>Estado</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody *ngFor="let st of listEstacion">
                     <tr style="border: none; font-size: 10pt; vertical-align: middle;">
-                        <td style="cursor: pointer;" [routerLink]="['/estacion', st.ID]">{{st.NOMBRE}} </td>
-                        <td><span *ngIf="st.ESTADO == 1" class="activo">{{st.ESTADO | estado}}</span>
-                            <span *ngIf="st.ESTADO == 0" class="inactivo">{{st.ESTADO | estado}}</span>  </td>
-                        <td><a href="" class="btn btn-success" [routerLink]="['/editEstacion', st.ID]">
+                        <td style="cursor: pointer;" [routerLink]="['/estacion', st.id]">{{st.nombre}} </td>
+                        <td><a href="" class="btn btn-success" [routerLink]="['/editEstacion', st.id]">
                             <fa-icon [icon]="faEdit" style="font-size: 11pt;"></fa-icon></a></td>
                     </tr>
                 </tbody>
@@ -28,16 +25,13 @@
                 <thead>
                     <tr style="border-bottom: 2px solid gray; color: grey;">
                         <th>Nombre</th>
-                        <th>Estado</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody *ngFor="let centro of listCentro">
                     <tr style="border: none; font-size: 10pt; vertical-align: middle;">
-                        <td style="cursor: pointer;">{{centro.NOMBRE}} </td>
-                        <td><span *ngIf="centro.ESTADO == 1" class="activo">{{centro.ESTADO | estado}}</span>
-                            <span *ngIf="centro.ESTADO == 0" class="inactivo">{{centro.ESTADO | estado}}</span>  </td>
-                        <td><a href="" class="btn btn-success" [routerLink]="['/editCentro', centro.ID]">
+                        <td style="cursor: pointer;">{{centro.nombre}} </td>
+                        <td><a href="" class="btn btn-success" [routerLink]="['/editCentro', centro.id]">
                             <fa-icon [icon]="faEdit" style="font-size: 11pt;"></fa-icon></a></td>
                     </tr>
                 </tbody>
@@ -45,9 +39,9 @@
         </div>
     </div>
 </div>
-<div *ngIf="empresa && empresa.ESTADO == 0" class="container">
-    <h1 style="color: grey;">La empresa: {{empresa.NOMBRE}} se encuentra inactiva.</h1>
-    <h4>Por favor edite el atributo 'Estado' si desea que cambie este estado.</h4>
 
+<div *ngIf="empresa && empresa.status == 0" class="container">
+    <h1 style="color: grey;">La empresa: {{empresa.nombre}} se encuentra inactiva.</h1>
+    <h4>Por favor edite el atributo 'Estado' si desea que cambie este estado.</h4>
 </div>
 

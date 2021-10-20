@@ -36,9 +36,9 @@ export class WelcomeComponent implements OnInit {
   constructor(private _route: ActivatedRoute, public _user: UsuarioService, public _centro: CentroService) { }
 
   ngOnInit(){
-    this.username = this._user.usuario.NOMBRE
-    this._centroId = this._user.usuario.CENTRO_ID
-    this._perfil = this._user.usuario.PERFIL_ID
+    this.username = this._user.usuario.nombre
+    this._centroId = this._user.usuario.id_centro
+    this._perfil = this._user.usuario.id_perfil
 
     if(this._perfil >= 3){
       this.loadItems(this._centroId)

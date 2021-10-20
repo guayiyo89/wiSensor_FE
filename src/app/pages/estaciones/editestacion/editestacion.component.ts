@@ -47,27 +47,11 @@ export class EditestacionComponent implements OnInit {
   comunasList: Array<any> = []
   selectedRegion: String = "--Elegir Region--";
 
-  //--------------------------------------------------------MAPA
-  zoom = 14
-  center: google.maps.LatLngLiteral
-
-  options: google.maps.MapOptions = {
-    mapTypeId: 'hybrid',
-    zoomControl: true,
-    scrollwheel: true,
-    disableDoubleClickZoom: true,
-    fullscreenControl: false,
-    streetViewControl: false,
-    maxZoom: 17,
-    minZoom: 9,
-  }
-
   ngOnInit(){
-
     this.nomEmpresa()
-    this.perfilUser = this._user.usuario.PERFIL_ID;
-    this.idEmpresa = this._user.usuario.EMPRESA_ID;
-    this.selectedEmp = this._user.usuario.EMPRESA_ID;
+    this.perfilUser = this._user.usuario.id_perfil;
+    this.idEmpresa = this._user.userIds.id_empresa;
+    
     this.nomEmpresaUser(this.idEmpresa);
     console.log(this.perfilUser);
 
@@ -76,63 +60,33 @@ export class EditestacionComponent implements OnInit {
       if(this.perfilUser == 1){
         this.editForm = this._fbuilder.group({
           id: [''],
-          empresa_id: ['', Validators.required],
           nombre: ['', Validators.required],
           descripcion: ['', Validators.required],
           modelo: ['', Validators.required],
           marca: ['', Validators.required],
-          estado: ['', Validators.required],
           codigo: ['', Validators.required],
-          latitud: ['', Validators.required],
-          longitud: ['', Validators.required],
-          comuna: ['', Validators.required],
-          region: ['', Validators.required],
-          centro_id: ['', Validators.required]
-        })
-      } else {
-        this.editForm = this._fbuilder.group({
-          id: [''],
-          empresa_id: [{value: '', disabled: true}, Validators.required],
-          nombre: ['', Validators.required],
-          descripcion: ['', Validators.required],
-          modelo: [{value: '', disabled: true}, Validators.required],
-          marca: [{value: '', disabled: true}, Validators.required],
-          estado: [{value: '', disabled: true}, Validators.required],
-          codigo: [{value: '', disabled: true}, Validators.required],
-          latitud: ['', Validators.required],
-          longitud: ['', Validators.required],
-          comuna: ['', Validators.required],
-          region: ['', Validators.required],
-          centro_id: [{value: '', disabled: true}, Validators.required]
+          status: ['', Validators.required],
+          empresa_id: ['', Validators.required],
+          id_centro: ['', Validators.required]
         })
       }
 
       this._estacion.getEstacion(this._id).subscribe(
         data => {
-          this.estacion = data
-          this.editForm.controls['empresa_id'].setValue(data.EMPRESA_ID)
-          this.editForm.controls['nombre'].setValue(data.NOMBRE)
-          this.editForm.controls['descripcion'].setValue(data.DESCRIPCION)
-          this.editForm.controls['modelo'].setValue(data.MODELO)
-          this.editForm.controls['marca'].setValue(data.MARCA)
-          this.editForm.controls['estado'].setValue(data.ESTADO)
-          this.editForm.controls['codigo'].setValue(data.CODIGO)
-          this.editForm.controls['latitud'].setValue(data.LATITUD)
-          this.editForm.controls['longitud'].setValue(data.LONGITUD)
-          this.editForm.controls['region'].setValue(data.REGION)
-          this.editForm.controls['comuna'].setValue(data.COMUNA)
-          this.editForm.controls['centro_id'].setValue(data.CENTRO_ID)
-
-          navigator.geolocation.getCurrentPosition((position) => {
-            this.center = {
-              lat: data.LATITUD,
-              lng: data.LONGITUD,
+          this._centro.getCentro(data.id_centro).subscribe(
+            centro => {
+              this.editForm.controls['empresa_id'].setValue(centro.id_empresa)
+              this.nomCentro(centro.id_empresa);
             }
-          })
-
-          this.selectedRegion = data.REGION
-          this.comunasList = this.regionesList.find( (regs:any) => regs.region == data.REGION ).comunas
-          this.nomCentro(data.EMPRESA_ID);
+          )
+          this.estacion = data
+          this.editForm.controls['nombre'].setValue(data.nombre)
+          this.editForm.controls['descripcion'].setValue(data.descripcion)
+          this.editForm.controls['modelo'].setValue(data.modelo)
+          this.editForm.controls['marca'].setValue(data.marca)
+          this.editForm.controls['codigo'].setValue(data.codigo)
+          this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['id_centro'].setValue(data.id_centro)
         }
         
       )
@@ -144,7 +98,7 @@ export class EditestacionComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
     if(this.editForm.valid){
-      this._estacion.editEstacion(this.estacion.ID, this.editForm.getRawValue()).subscribe(
+      this._estacion.editEstacion(this.estacion.id, this.editForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
           Swal.fire({
@@ -191,28 +145,16 @@ export class EditestacionComponent implements OnInit {
       )
   }
 
-  click(event: google.maps.MouseEvent) {
-    //this.latMap = event.latLng.lat()
-    //this.longMap = event.latLng.lng()
-    this.editForm.controls['latitud'].setValue(event.latLng.lat())
-    this.editForm.controls['longitud'].setValue(event.latLng.lng())
-  }
-
-  changeComuna(region: any) { //Angular 11
-		//this.states = this.Countries.find(cntry => cntry.name == country).states; //Angular 8
-		this.comunasList = this.regionesList.find( (regs:any) => regs.region == region.target.value! ).comunas
-	}
-
   changeCentros(id: any){
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.editForm.controls['centro_id'].setValue('')
+        this.editForm.controls['id_centro'].setValue('')
       },
       error => {
         console.log(error)
         this.centroList = []
-        this.editForm.controls['centro_id'].setValue('')
+        this.editForm.controls['id_centro'].setValue('')
       }
     )
   }

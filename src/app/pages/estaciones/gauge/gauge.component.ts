@@ -54,7 +54,7 @@ export class GaugeComponent implements OnInit {
         this._id =+ params['id']
         this._estacion.getEstacion(this._id).subscribe(
           data => {
-            this._codigo = data.CODIGO
+            this._codigo = data.codigo
             
             this.browserOnly( () => {
               am4core.useTheme(am4themes_animated)

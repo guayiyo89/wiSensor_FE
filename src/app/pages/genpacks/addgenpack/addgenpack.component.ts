@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faArrowLeft, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Centro } from 'src/app/interfaces/centro.model';
@@ -17,6 +17,7 @@ import { GenpackService } from 'src/app/services/genpack.service';
   ]
 })
 export class AddgenpackComponent implements OnInit {
+  @Input() id_emp: any
 
   constructor(public _genpack: GenpackService, public _empresa: EmpresaService, private _location: Location,
     private _fbuilder: FormBuilder, public _user: UsuarioService, public _centro: CentroService) { }
@@ -38,9 +39,9 @@ export class AddgenpackComponent implements OnInit {
 
 
   ngOnInit(){
-    this.idEmpresa = this._user.usuario.EMPRESA_ID
+    this.idEmpresa = this._user.userIds.id_empresa
 
-    this.selectedEmp = this._user.usuario.EMPRESA_ID;
+    this.selectedEmp = this._user.userIds.id_empresa
     this.nomCentro(this.idEmpresa);
     this.nomEmpresa()
     
@@ -50,11 +51,11 @@ export class AddgenpackComponent implements OnInit {
       descripcion: ['', Validators.required],
       marca: ['', Validators.required],
       modelo: ['', Validators.required],
-      estado: ['', Validators.required],
       codigo: ['', Validators.required],
+      estado: ['', Validators.required],
+      volt_bateria: ['', Validators.required],
       empresa_id: ['', Validators.required],
-      centro_id: ['', Validators.required],
-      volt_bateria: ['', Validators.required]
+      id_centro: ['', Validators.required],
     })
 
     this.addForm.controls['estado'].setValue(1)
@@ -103,12 +104,12 @@ export class AddgenpackComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.addForm.controls['centro_id'].setValue('')
+        this.addForm.controls['id_centro'].setValue('')
       },
       error => {
         console.log(error)
         this.centroList = []
-        this.addForm.controls['centro_id'].setValue('')
+        this.addForm.controls['id_centro'].setValue('')
       }
     )
   }

@@ -34,15 +34,15 @@ export class EditempresaComponent implements OnInit {
         id: [],
         nombre: ['', Validators.required],
         categoria: ['', Validators.required],
-        estado: ['', Validators.required],
+        status: ['', Validators.required],
         logo: []
       })
       this._empresaSvc.getEmpresa(this._id).subscribe(
         data =>{
           this.empresa = data;
-          this.editForm.controls['nombre'].setValue(data.NOMBRE)
-          this.editForm.controls['categoria'].setValue(data.CATEGORIA)
-          this.editForm.controls['estado'].setValue(data.ESTADO)
+          this.editForm.controls['nombre'].setValue(data.nombre)
+          this.editForm.controls['categoria'].setValue(data.categoria)
+          this.editForm.controls['status'].setValue(data.status)
           
         }
       )
@@ -56,7 +56,7 @@ export class EditempresaComponent implements OnInit {
 
     if(this.editForm.valid){
       this.editForm.value.archivos = [];
-      this._empresaSvc.editEmpresa(this.empresa.ID ,this.editForm.value).subscribe(
+      this._empresaSvc.editEmpresa(this.empresa.id ,this.editForm.value).subscribe(
         data => {
           console.log(data)
           Swal.fire({

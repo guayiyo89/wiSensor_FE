@@ -33,8 +33,8 @@ export class CentrosComponent implements OnInit {
     public _user: UsuarioService) { }
 
   ngOnInit(){
-    this.perfilUser = this._user.usuario.PERFIL_ID
-    this.idEmpresaUser = this._user.usuario.EMPRESA_ID
+    this.perfilUser = this._user.usuario.id_perfil
+    this.idEmpresaUser = this._user.userIds.id_empresa
     if(this.perfilUser === 1){
       this._centro.getCentros().then(
         data => {
@@ -68,7 +68,7 @@ export class CentrosComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result)=>{
       if(result.isConfirmed){
-        this._centro.deleteCentro(centro.ID).subscribe(
+        this._centro.deleteCentro(centro.id).subscribe(
           resp => {
             if(!resp.err){
               this.listCentro.splice(this.listCentro.indexOf(centro),1)

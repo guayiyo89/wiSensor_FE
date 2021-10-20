@@ -21,13 +21,13 @@
 
         <div class="form-group">
             <label>Estado</label>
-            <select formControlName="estado" class="form-control" id="">
+            <select formControlName="status" class="form-control" id="">
                 <option value="1" selected>Activo</option>
                 <option value="0">Inactivo</option>
             </select>
         </div>
-        <div *ngIf="submitted && f.estado.errors">
-            <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+        <div *ngIf="submitted && f.status.errors">
+            <div *ngIf="f.status.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un status.</div>
         </div>
         
         <div style="padding-top: 1em;">

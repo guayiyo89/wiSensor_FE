@@ -5,31 +5,28 @@
     <h1>Empresas</h1>
 
     <p-table [value]="empresaList" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
-    [globalFilterFields]="['NOMBRE, CATEGORIA']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+    [globalFilterFields]="['nombre, categoria']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 120px;" pSortableColumn="NOMBRE"> Nombre <p-sortIcon field="NOMBRE" style="color: thistle;"></p-sortIcon> </th>
-                <th pSortableColumn="CATEGORIA"> Descripción <p-sortIcon field="CATEGORIA"></p-sortIcon> </th>
-                <th style="max-width: 120px;" pSortableColumn="CORREO"> Correo <p-sortIcon field="CORREO"></p-sortIcon> </th>
-                <th pSortableColumn="ESTADO"> Estado <p-sortIcon field="ESTADO"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="nombre"> Nombre <p-sortIcon field="nombre" style="color: thistle;"></p-sortIcon> </th>
+                <th pSortableColumn="categoria"> Descripción <p-sortIcon field="categoria"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="email"> Correo <p-sortIcon field="email"></p-sortIcon> </th>
                 <th> </th>
             </tr>
             <tr>
-                <th style="max-width: 120px;"><p-columnFilter type="text" field="NOMBRE"></p-columnFilter></th>
+                <th style="max-width: 120px;"><p-columnFilter type="text" field="nombre"></p-columnFilter></th>
                 <th></th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-empresa>
             <tr class="rowth blackness">
-                <td style="padding-left: 1em; cursor: pointer; max-width: 150px;" [routerLink]="['/empresa', empresa.ID]">{{empresa.NOMBRE}}</td>
-                <td>{{empresa.CATEGORIA}}</td>
+                <td style="padding-left: 1em; cursor: pointer; max-width: 150px;" [routerLink]="['/empresa', empresa.id]">{{empresa.nombre}}</td>
+                <td>{{empresa.categoria}}</td>
                 <td style="max-width: 120px;"></td>
-                <td><span *ngIf="empresa.ESTADO == 1" class="activo">{{empresa.ESTADO | estado}}</span>
-                    <span *ngIf="empresa.ESTADO == 0" class="inactivo">{{empresa.ESTADO | estado}}</span></td>
                 <td>
-                    <a href="" class="btn btn-success" [routerLink]="['/editEmpresa', empresa.ID]"><fa-icon [icon]="faEdit"></fa-icon></a>
+                    <a href="" class="btn btn-success" [routerLink]="['/editEmpresa', empresa.id]"><fa-icon [icon]="faEdit"></fa-icon></a>
                     <a href="" class="btn btn-danger" [routerLink]="['/empresas']" (click)="delete(empresa)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>

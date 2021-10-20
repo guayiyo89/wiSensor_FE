@@ -26,11 +26,11 @@ export class AddempresaComponent implements OnInit {
     this.addForm = this._fbuilder.group({
       nombre: ['', Validators.required],
       categoria: ['', Validators.required],
-      estado: ['', Validators.required],
+      status: ['', Validators.required],
       logo: []
     })
     
-    this.addForm.controls['estado'].setValue(1)
+    this.addForm.controls['status'].setValue(1)
   }
 
   onSubmit(){

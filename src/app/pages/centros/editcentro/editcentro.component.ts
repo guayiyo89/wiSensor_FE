@@ -57,9 +57,9 @@ export class EditcentroComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.nomEmpresa();
-    this.perfilUser = this._user.usuario.PERFIL_ID;
-    this.idEmpresa = this._user.usuario.EMPRESA_ID;
+    this.nomEmpresa()
+    this.perfilUser = this._user.usuario.id_perfil;
+    this.idEmpresa = this._user.userIds.id_empresa;
     this.nomEmpresaUser(this.idEmpresa);
 
     this._id = this._route.params.subscribe(params => {
@@ -72,31 +72,29 @@ export class EditcentroComponent implements OnInit {
         region: ['', Validators.required],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
-        estado: ['', Validators.required],
-        empresa_id: ['', Validators.required],
-        codigo: ['', Validators.required]
+        status: ['', Validators.required],
+        id_empresa: ['', Validators.required]
       })
    
       this._centro.getCentro(this._id).subscribe(
         data =>{
           this.centro = data
-          this.editForm.controls['nombre'].setValue(data.NOMBRE)
-          this.editForm.controls['descripcion'].setValue(data.DESCRIPCION)
-          this.editForm.controls['comuna'].setValue(data.COMUNA)
-          this.editForm.controls['region'].setValue(data.REGION)
-          this.editForm.controls['latitud'].setValue(data.LATITUD)
-          this.editForm.controls['longitud'].setValue(data.LONGITUD)
-          this.editForm.controls['estado'].setValue(data.ESTADO)
-          this.editForm.controls['empresa_id'].setValue(data.EMPRESA_ID)
-          this.editForm.controls['codigo'].setValue(data.CODIGO)
+          this.editForm.controls['nombre'].setValue(data.nombre)
+          this.editForm.controls['descripcion'].setValue(data.descripcion)
+          this.editForm.controls['comuna'].setValue(data.comuna)
+          this.editForm.controls['region'].setValue(data.region)
+          this.editForm.controls['latitud'].setValue(data.latitud)
+          this.editForm.controls['longitud'].setValue(data.longitud)
+          this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['id_empresa'].setValue(data.id_empresa)
 
-          this.selectedRegion = data.REGION
-          this.comunasList = this.regionesList.find( (regs:any) => regs.region == data.REGION ).comunas
+          this.selectedRegion = data.region
+          this.comunasList = this.regionesList.find( (regs:any) => regs.region == data.region ).comunas
 
           navigator.geolocation.getCurrentPosition((position) => {
             this.center = {
-              lat: data.LATITUD,
-              lng: data.LONGITUD,
+              lat: parseFloat(data.latitud),
+              lng: parseFloat(data.longitud),
             }
           })
         }
@@ -109,7 +107,7 @@ export class EditcentroComponent implements OnInit {
     this.submitted = true;
 
     if(this.editForm.valid){
-      this._centro.editCentro(this.centro.ID, this.editForm.value).subscribe(
+      this._centro.editCentro(this.centro.id, this.editForm.value).subscribe(
         data => console.log(data)
         )
         Swal.fire({
@@ -139,7 +137,7 @@ export class EditcentroComponent implements OnInit {
     )
   }
 
-  click(event: google.maps.MouseEvent) {
+  click(event: google.maps.MapMouseEvent) {
     //this.latMap = event.latLng.lat()
     //this.longMap = event.latLng.lng()
     this.editForm.controls['latitud'].setValue(event.latLng.lat())

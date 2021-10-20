@@ -6,7 +6,6 @@ import { LazyLoadEvent } from 'primeng/api'
 import { PrimeNGConfig } from 'primeng/api';
 import { faArrowLeft, faEdit, faTimes, faUserPlus, faUserTimes } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { User } from 'src/app/interfaces/user.model';
 
 @Component({
   selector: 'app-usuarios',
@@ -40,8 +39,11 @@ export class UsuariosComponent implements OnInit {
   constructor(public _user: UsuarioService, public _empresa: EmpresaService, private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(){
-    this.idEmpresaUser = this._user.usuario.EMPRESA_ID
-    this.perfilUser = this._user.usuario.PERFIL_ID
+    this.idEmpresaUser = this._user.userIds.id_empresa
+    this.perfilUser = this._user.usuario.id_perfil
+
+    console.log(this._user.usuario);
+    console.log(this._user.userIds)
 
     if(this.perfilUser == 1){
       this._user.getUsuarios().then(data => {
@@ -73,7 +75,7 @@ export class UsuariosComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._user.deleteUser(usuario.ID).subscribe(
+        this._user.deleteUser(usuario.id).subscribe(
           resp => {
             if(!resp.err){
               this.userList.splice(this.userList.indexOf(usuario),1)
@@ -103,5 +105,7 @@ export class UsuariosComponent implements OnInit {
     // update current page of items
     this.pageOfItems = pageOfItems;
   }
+
+  getEmpresaUser(){}
 
 }

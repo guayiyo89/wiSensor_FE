@@ -1,16 +1,16 @@
 export class Usuario{
     constructor(
-        public EMPRESA_ID: number,
-        public PERFIL_ID: number,
-        public USUARIO: string,
-        public CORREO: string,
-        public PASSWORD: string,
-        public ESTADO: number,
-        public FECHA_CREACION: string,
-        public NOMBRE: string,
-        public APELLIDO:string,
-        public CENTRO_ID: number,
-        public ID?: string
+        public email: string,
+        public password: string,
+        public nombre: string,
+        public apellido: string,
+        public status: number,
+        public created_at: string,
+        public updated_at: string,
+        public deleted_at: string,
+        public id_centro: number,
+        public id_perfil: number,
+        public id?: string
     ) {}
 }
 // export class Usuario{

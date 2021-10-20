@@ -51,10 +51,9 @@ export class AddusuarioComponent implements OnInit {
   ]
 
   ngOnInit(){
-    this.userGod = (localStorage.getItem('usuario'));
-    let user = JSON.parse(this.userGod);
-    this.idEmpresa = user.EMPRESA_ID;
-    this.perfilUser = user.PERFIL_ID;
+    let user = this._user.usuario;
+    this.idEmpresa = this._user.userIds.id_empresa;
+    this.perfilUser = user.id_perfil;
 
     this.nomCentro(this.idEmpresa);
     this.nomEmpresaUser(this.idEmpresa);
@@ -63,18 +62,17 @@ export class AddusuarioComponent implements OnInit {
 
     this.addForm = this._fbuilder.group({
       id: [],
-      empresa_id: ['', Validators.required],
-      perfil_id: ['', Validators.required],
-      usuario: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', Validators.required],
-      estado: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
-      centro_id: ['', Validators.required]
+      status: ['', Validators.required],
+      empresa_id: ['', Validators.required],
+      id_perfil: ['', Validators.required],
+      id_centro: ['', Validators.required]
     })
 
-    this.addForm.controls['estado'].setValue(1)
+    this.addForm.controls['status'].setValue(1)
     this.addForm.controls['empresa_id'].setValue(this.idEmpresa)
 
   }

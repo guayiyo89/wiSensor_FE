@@ -52,7 +52,7 @@ export class GraficoD3Component implements OnInit {
         this._id =+ params['id']
         this._estacion.getEstacion(this._id).subscribe(
           data => {
-            this._codigo = data.CODIGO
+            this._codigo = data.codigo
             console.log(this.novaFecha)
             this._dataGm.getWinds(this._codigo, '2021-10-12').subscribe(
               winds => {

@@ -13,7 +13,6 @@
                 <th pSortableColumn="EMPRESA"> Empresa <p-sortIcon field="EMPRESA"></p-sortIcon> </th>
                 <th style="max-width: 120px;" pSortableColumn="COMUNA"> Comuna <p-sortIcon field="COMUNA"></p-sortIcon> </th>
                 <th style="max-width: 120px;" pSortableColumn="REGION"> Región <p-sortIcon field="REGION"></p-sortIcon> </th>
-                <th pSortableColumn="ESTADO"> Estado <p-sortIcon field="ESTADO"></p-sortIcon> </th>
                 <th> </th>
             </tr>
             <tr>
@@ -25,14 +24,12 @@
 
         <ng-template pTemplate="body" let-centro>
             <tr class="rowth blackness">
-                <td style="padding-left: 1em; cursor: pointer; max-width: 150px;" [routerLink]="['/centro', centro.ID]">{{centro.NOMBRE}}</td>
-                <td>{{centro.EMPRESA}}</td>
-                <td style="max-width: 120px;">{{centro.COMUNA}}</td>
-                <td>{{centro.REGION}}</td>
-                <td><span *ngIf="centro.ESTADO == 1" class="activo">{{centro.ESTADO | estado}}</span>
-                    <span *ngIf="centro.ESTADO == 0" class="inactivo">{{centro.ESTADO | estado}}</span></td>
+                <td style="padding-left: 1em; cursor: pointer; max-width: 150px;" [routerLink]="['/centro', centro.id_centro]">{{centro.nombreCentro}}</td>
+                <td>{{centro.nombreEmpresa}}</td>
+                <td style="max-width: 120px;">{{centro.ComunaCentro}}</td>
+                <td>{{centro.regionCentro}}</td>
                 <td>
-                    <a href="" class="btn btn-success" [routerLink]="['/editCentro', centro.ID]"><fa-icon [icon]="faEdit"></fa-icon></a>
+                    <a href="" class="btn btn-success" [routerLink]="['/editCentro', centro.id_centro]"><fa-icon [icon]="faEdit"></fa-icon></a>
                     <a href="" class="btn btn-danger" [routerLink]="['/centros']" (click)="delete(centro)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>

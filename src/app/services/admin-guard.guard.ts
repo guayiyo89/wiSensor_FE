@@ -14,8 +14,10 @@ export class AdminGuardGuard implements CanActivate {
     if(this._userSvc.isLogin()){
       console.log('Paso la Guardia!');
       console.log(this._userSvc.usuario);
+      console.log(this._userSvc.userIds);
       
-      if(this._userSvc.usuario.PERFIL_ID == 1){
+      
+      if(this._userSvc.usuario.id_perfil == 1){
         console.log('Admin!');
         return true;
       } else {

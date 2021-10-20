@@ -60,8 +60,8 @@ export class AddcentroComponent implements OnInit {
     })
 
     this.nomEmpresa()
-    this.perfilUser = this._user.usuario.PERFIL_ID;
-    this.idEmpresa = this._user.usuario.EMPRESA_ID;
+    this.perfilUser = this._user.usuario.id_perfil;
+    this.idEmpresa = this._user.userIds.id_empresa;
     this.nomEmpresaUser(this.idEmpresa);
  
     this.addForm = this._fbuilder.group({
@@ -72,13 +72,12 @@ export class AddcentroComponent implements OnInit {
       region: ['', Validators.required],
       latitud: ['', Validators.required],
       longitud: ['', Validators.required],
-      estado: ['', Validators.required],
-      empresa_id: ['', Validators.required],
-      codigo: ['', Validators.required]
+      status: ['', Validators.required],
+      id_empresa: ['', Validators.required]
     })
 
-    this.addForm.controls['empresa_id'].setValue(this.idEmpresa)
-    this.addForm.controls['estado'].setValue(1)
+    this.addForm.controls['id_empresa'].setValue(this.idEmpresa)
+    this.addForm.controls['status'].setValue(1)
     
   }
 
@@ -117,7 +116,7 @@ export class AddcentroComponent implements OnInit {
     )
   }
 
-  click(event: google.maps.MouseEvent) {
+  click(event: google.maps.MapMouseEvent) {
     this.addForm.controls['latitud'].setValue(event.latLng.lat())
     this.addForm.controls['longitud'].setValue(event.latLng.lng())
   }

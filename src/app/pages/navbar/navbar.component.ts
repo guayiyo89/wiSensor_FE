@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
 
   _idPerfil: any
   _idCentro: any
-  _idEmpresa: any
 
   _idEstacion: any
   _idGenpack: any
@@ -44,9 +43,8 @@ export class NavbarComponent implements OnInit {
   faCog = faCog
 
   ngOnInit(){
-    this._idCentro = this._user.usuario.CENTRO_ID
-    this._idEmpresa = this._user.usuario.EMPRESA_ID
-    this._idPerfil = this._user.usuario.PERFIL_ID
+    this._idCentro = this._user.usuario.id_centro
+    this._idPerfil = this._user.usuario.id_perfil
 
     this.loadCentro(this._idCentro)
     this.loadItems(this._idCentro)

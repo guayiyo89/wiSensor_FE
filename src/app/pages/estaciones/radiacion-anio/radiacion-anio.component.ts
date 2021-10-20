@@ -51,7 +51,7 @@ export class RadiacionAnioComponent implements OnInit {
         this._id = +params['id'];
         this._estacion.getEstacion(this._id).subscribe(
           data => {
-            this._codigo = data.CODIGO
+            this._codigo = data.codigo
             this._dataGm.getLluviaYear(this.novaFecha, this._codigo).subscribe(
               res => {
                 console.log(res);

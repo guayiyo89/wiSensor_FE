@@ -22,19 +22,11 @@
                 </div>
     
                 <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" formControlName="usuario" placeholder="Username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }">
-                    <div *ngIf="submitted && f.usuario.errors">
-                        <div *ngIf="f.usuario.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El username es obligatorio.</div>
-                    </div>
-                </div>
-    
-                <div class="form-group">
                     <label>Correo Electrónico</label>
-                    <input type="email" formControlName="correo" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correo.errors }">
-                    <div *ngIf="submitted && f.correo.errors">
-                        <div *ngIf="f.correo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El correo es obligatorio.</div>
-                        <div *ngIf="f.correo.errors.pattern" style="font-size: 9px; color: rgb(187, 18, 18)">El correo debe ser de la forma ejemplo@tucorreo.cl.</div>
+                    <input type="email" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                    <div *ngIf="submitted && f.email.errors">
+                        <div *ngIf="f.email.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El email es obligatorio.</div>
+                        <div *ngIf="f.email.errors.pattern" style="font-size: 9px; color: rgb(187, 18, 18)">El email debe ser de la forma ejemplo@tuemail.cl.</div>
                     </div>
                 </div>
 
@@ -49,29 +41,29 @@
     
                 <div *ngIf="perfilUser == 1" class="form-group">
                     <label>Perfil Usuario</label>
-                    <select formControlName="perfil_id" class="form-control" [value]='1'>
+                    <select formControlName="id_perfil" class="form-control" [value]='1'>
                         <option *ngFor="let perfil of perfilesAST" value="{{ perfil.id }}">{{ perfil.nombre }} </option>
                     </select>
-                    <div *ngIf="submitted && f.perfil_id.errors">
-                        <div *ngIf="f.perfil_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El perfil es obligatorio.</div>
+                    <div *ngIf="submitted && f.id_perfil.errors">
+                        <div *ngIf="f.id_perfil.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El perfil es obligatorio.</div>
                     </div>
                 </div>
 
                 <div *ngIf="perfilUser == 2" class="form-group">
                     <label>Perfil Usuario</label>
-                    <select formControlName="perfil_id" class="form-control" [value]='1' placeholder="Seleccione un Centro">
+                    <select formControlName="id_perfil" class="form-control" [value]='1' placeholder="Seleccione un Centro">
                         <option *ngFor="let perfil of perfiles" value="{{ perfil.id }}" placeholder="Hola">{{ perfil.nombre }} </option>
                     </select>
-                    <div *ngIf="submitted && f.perfil_id.errors">
-                        <div *ngIf="f.perfil_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El perfil es obligatorio.</div>
+                    <div *ngIf="submitted && f.id_perfil.errors">
+                        <div *ngIf="f.id_perfil.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El perfil es obligatorio.</div>
                     </div>
                 </div>
 
                 <div *ngIf="perfilUser == 1" class="form-group">
                     <label>Empresa</label>
                     <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
-                        <option *ngFor="let empresa of empresaList" value="{{empresa.ID}}" [selected]="empresa.ID == '1'">
-                            {{empresa.NOMBRE}}</option>
+                        <option *ngFor="let empresa of empresaList" value="{{empresa.id}}" [selected]="empresa.id == '1'">
+                            {{empresa.nombre}}</option>
                     </select>
                     <div *ngIf="submitted && f.empresa_id.errors">
                         <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
@@ -81,7 +73,7 @@
                 <div *ngIf="perfilUser == 2 && empresaUser" class="form-group">
                     <label>Empresa</label>
                     <select formControlName="empresa_id" class="form-control">
-                        <option value="{{idEmpresa}}">{{empresaUser.NOMBRE}} </option>
+                        <option value="{{idEmpresa}}">{{empresaUser.nombre}} </option>
                     </select>
                     <div *ngIf="submitted && f.empresa_id.errors">
                         <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
@@ -90,22 +82,22 @@
 
                 <div class="form-group">
                     <label>Centro</label>
-                    <select formControlName="centro_id" class="form-control" aria-placeholder="Seleccione un Centro">
-                        <option *ngFor="let centro of centroList" value="{{centro.ID}}">{{centro.NOMBRE}}</option>
+                    <select formControlName="id_centro" class="form-control" aria-placeholder="Seleccione un Centro">
+                        <option *ngFor="let centro of centroList" value="{{centro.id}}">{{centro.nombre}}</option>
                     </select>
-                    <div *ngIf="submitted && f.centro_id.errors">
-                        <div *ngIf="f.centro_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                    <div *ngIf="submitted && f.id_centro.errors">
+                        <div *ngIf="f.id_centro.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Estado</label>
-                    <select formControlName="estado" class="form-control">
+                    <select formControlName="status" class="form-control">
                         <option value="1" selected>Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
-                    <div *ngIf="submitted && f.estado.errors">
-                        <div *ngIf="f.estado.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+                    <div *ngIf="submitted && f.status.errors">
+                        <div *ngIf="f.status.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un status.</div>
                     </div>
                 </div>
     

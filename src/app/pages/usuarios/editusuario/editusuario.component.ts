@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,6 @@ export class EditusuarioComponent implements OnInit {
     private router: Router, private _fbuilder: FormBuilder, private _route: ActivatedRoute, private _location: Location) { }
 
   // variables de entrada
-  userGod: any
   idEmpresa: any
   perfilUser: any
 
@@ -56,10 +55,9 @@ export class EditusuarioComponent implements OnInit {
   ]
 
   ngOnInit(){
-    this.userGod = (localStorage.getItem('usuario'));
-    let user = JSON.parse(this.userGod);
-    this.idEmpresa = user.EMPRESA_ID;
-    this.perfilUser = user.PERFIL_ID;
+    let user = this._user.usuario;
+    this.idEmpresa = this._user.userIds.id_empresa;
+    this.perfilUser = user.id_perfil;
 
     this.nomEmpresaUser(this.idEmpresa);
     this.nomEmpresa();
@@ -68,31 +66,32 @@ export class EditusuarioComponent implements OnInit {
       this._id = +params['id'];
       this.editForm = this._fbuilder.group({
         id: [],
-        empresa_id: [{value: '', disabled: true}, Validators.required],
-        perfil_id: ['', Validators.required],
-        usuario: ['', Validators.required],
-        correo: [{value: '', disabled: true}, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         password: ['', Validators.required],
-        estado: ['', Validators.required],
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
-        centro_id: ['', Validators.required]
+        status: ['', Validators.required],
+        empresa_id: ['', Validators.required],
+        id_perfil: ['', Validators.required],
+        id_centro: ['', Validators.required]
       })
 
       this._user.getUser(this._id).subscribe(
         data => {
+          this._centro.getCentro(data.id_centro).subscribe(
+            centro => {
+              this.editForm.controls['empresa_id'].setValue(centro.id_empresa)
+              this.nomCentro(centro.id_empresa)
+            }
+          )
           this.usuario = data
-          this.editForm.controls['empresa_id'].setValue(data.EMPRESA_ID)
-          this.editForm.controls['perfil_id'].setValue(data.PERFIL_ID)
-          this.editForm.controls['usuario'].setValue(data.USUARIO)
-          this.editForm.controls['correo'].setValue(data.CORREO)
+          this.editForm.controls['email'].setValue(data.email)
           this.editForm.controls['password'].setValue('')
-          this.editForm.controls['estado'].setValue(data.ESTADO)
-          this.editForm.controls['nombre'].setValue(data.NOMBRE)
-          this.editForm.controls['apellido'].setValue(data.APELLIDO)
-          this.editForm.controls['centro_id'].setValue(data.CENTRO_ID)
-
-          this.nomCentro(data.EMPRESA_ID);
+          this.editForm.controls['nombre'].setValue(data.nombre)
+          this.editForm.controls['apellido'].setValue(data.apellido)
+          this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['id_perfil'].setValue(data.id_perfil)
+          this.editForm.controls['id_centro'].setValue(data.id_centro)
         }
       )
 
@@ -105,7 +104,7 @@ export class EditusuarioComponent implements OnInit {
     this.submitted = true;
 
     if(this.editForm.valid){
-      this._user.editUser(this.usuario.ID, this.editForm.getRawValue()).subscribe(
+      this._user.editUser(this.usuario.id, this.editForm.getRawValue()).subscribe(
         (data) => {
           console.log(data)
           Swal.fire({

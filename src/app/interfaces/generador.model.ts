@@ -1,13 +1,16 @@
-export class Generador{
+export class Genpack{
     constructor(
-        public NOMBRE: string,
-        public DESCRIPCION: string,
-        public MARCA: string,
-        public MODELO: string,
-        public CODIGO: string,
-        public ESTADO: number,
-        public EMPRESA_ID: string,
-        public CENTRO_ID: string,
-        public ID?: string
+        public nombre: string,
+        public descripcion: string,
+        public marca: string,
+        public modelo: string,
+        public codigo: string,
+        public status: number,
+        public volt_bateria: number,
+        public created_at: string,
+        public updated_at: string,
+        public deleted_at: string,
+        public id_centro: number,
+        public id?: number
     ) {}
 }
