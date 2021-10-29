@@ -10,14 +10,14 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="nombre"> Nombre <p-sortIcon field="nombre" style="color: thistle;"></p-sortIcon> </th>
-                <th *ngIf="perfilUser == 1" pSortableColumn="EMPRESA"> Empresa <p-sortIcon field="EMPRESA"></p-sortIcon> </th>
-                <th style="max-width: 120px;" pSortableColumn="CORREO"> Correo <p-sortIcon field="CORREO"></p-sortIcon> </th>
+                <th *ngIf="perfilUser == 1" pSortableColumn="nombreEmpresa"> Empresa <p-sortIcon field="nombreEmpresa"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="correo"> Correo <p-sortIcon field="correo"></p-sortIcon> </th>
                 <th pSortableColumn="id_perfil"> Perfil <p-sortIcon field="id_perfil"></p-sortIcon> </th>
                 <th> </th>
             </tr>
             <tr>
-                <th style="max-width: 120px;"><p-columnFilter type="text" field="NOMBRE"></p-columnFilter></th>
-                <th *ngIf="perfilUser == 1" style="max-width: 120px;"><p-columnFilter type="text" field="EMPRESA"></p-columnFilter></th>
+                <th style="max-width: 120px;"><p-columnFilter type="text" field="nombre"></p-columnFilter></th>
+                <th *ngIf="perfilUser == 1" style="max-width: 120px;"><p-columnFilter type="text" field="nombreEmpresa"></p-columnFilter></th>
                 <th></th>
             </tr>
         </ng-template>

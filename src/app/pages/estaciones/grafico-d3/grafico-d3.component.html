@@ -1,1 +1,38 @@
 <div id="chartdiv" style="width: 90%; height: 300px; font-size: 9pt;"></div>
+
+<div style="margin: 0 auto; padding-top: 5px;">
+    <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTable(tableWind)">Ver Resumen</button>
+</div>
+
+
+<ng-template #tableWind let-modal>
+    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Precipitaciones Día</h4> </div>
+
+      <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">angulo</th>
+              <th scope="col"> < 3 </th>
+              <th scope="col"> 3 < 6 </th>
+              <th scope="col">6 < 9</th>
+              <th scope="col">9 < 13</th>
+              <th scope="col">13 < 18</th>
+              <th scope="col"> > 18</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let wind of valAngles">
+              <th scope="row">{{wind.angulo}}</th>
+              <td>{{wind.val1}}</td>
+              <td>{{wind.val2}}</td>
+              <td>{{wind.val3}}</td>
+              <td>{{wind.val4}}</td>
+              <td>{{wind.val5}}</td>
+              <td>{{wind.val6}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+    
+</ng-template>

@@ -36,7 +36,7 @@ export class BateriaComponent implements OnInit {
   _codigo: any
   novaFecha: string = ''
 
-  voltMax = 11.8
+  voltMax = 88
 
   ngOnInit(){
 
@@ -50,6 +50,10 @@ export class BateriaComponent implements OnInit {
     }, 5000)
 
     let color: any
+
+    if (valor < 0){
+      valor = 0
+    }
 
     if(valor < 25){
       color = '#f0410c'
@@ -144,6 +148,10 @@ export class BateriaComponent implements OnInit {
     let valAct = parseFloat(volt) - valMin
 
     let porcentaje = (valAct * 100) / totVolt
+
+    if(porcentaje < 0){
+      porcentaje = 0
+    }
 
     return porcentaje
   }

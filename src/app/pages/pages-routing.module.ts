@@ -17,14 +17,16 @@ import { AddestacionComponent } from "./estaciones/addestacion/addestacion.compo
 import { EditestacionComponent } from "./estaciones/editestacion/editestacion.component";
 import { EstacionComponent } from "./estaciones/estacion.component";
 import { EstacionesComponent } from "./estaciones/estaciones.component";
-import { GraficoD3Component } from "./estaciones/grafico-d3/grafico-d3.component";
 import { AddgenpackComponent } from "./genpacks/addgenpack/addgenpack.component";
 import { EditgenpackComponent } from "./genpacks/editgenpack/editgenpack.component";
 import { GenpackComponent } from "./genpacks/genpack.component";
 import { GenpacksComponent } from "./genpacks/genpacks.component";
 import { NoPageFoundComponent } from "./no-page-found/no-page-found.component";
 import { PagesComponent } from "./pages.component";
+import { AddRadarComponent } from "./radares/add-radar/add-radar.component";
+import { EditRadarComponent } from "./radares/edit-radar/edit-radar.component";
 import { RadarComponent } from "./radares/radar.component";
+import { RadaresComponent } from "./radares/radares.component";
 import { AddusuarioComponent } from "./usuarios/addusuario/addusuario.component";
 import { EditusuarioComponent } from "./usuarios/editusuario/editusuario.component";
 import { PasswordComponent } from "./usuarios/password/password.component";
@@ -55,11 +57,14 @@ const pagesRoutes: Routes = [
             {path: 'editUser/:id', component:EditusuarioComponent, canActivate:[LoginGuardGuard]},
             {path: 'password', component:PasswordComponent, canActivate:[LoginGuardGuard]},
             {path: 'welcome', component:WelcomeComponent, canActivate:[LoginGuardGuard]},
-            {path: 'genpacks', component:GenpacksComponent, canActivate:[UserGuardGuard]},
+            {path: 'genpacks', component:GenpacksComponent, canActivate:[UserGuardGuard]}, // genpacks
             {path: 'genpack/:id', component:GenpackComponent, canActivate:[LoginGuardGuard]},
             {path: 'addGenpack', component:AddgenpackComponent, canActivate:[AdminGuardGuard]},
             {path: 'editGenpack/:id', component:EditgenpackComponent, canActivate:[AdminGuardGuard]},
-            {path: 'radar', component:RadarComponent, canActivate:[AdminGuardGuard]},
+            {path: 'radares', component:RadaresComponent, canActivate:[AdminGuardGuard]}, // radares
+            {path: 'radar/:id', component:RadarComponent, canActivate:[LoginGuardGuard]},
+            {path: 'addRadar', component:AddRadarComponent, canActivate:[AdminGuardGuard]},
+            {path: 'editRadar/:id', component:EditRadarComponent, canActivate:[AdminGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

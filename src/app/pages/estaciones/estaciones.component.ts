@@ -27,9 +27,6 @@ export class EstacionesComponent implements OnInit {
   faBack = faArrowLeft
   faPlus = faPlus
 
-  //pagination
-  pageOfItems: Array<any>;
-
   constructor(public _estacion: EstacionService, public _empresa: EmpresaService, public _user: UsuarioService,
      private _route: ActivatedRoute) { }
 

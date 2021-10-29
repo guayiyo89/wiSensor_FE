@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 export class GenpacksComponent implements OnInit {
 
   genpacksList: any[] = []
+  totalRecords = 0
 
   idEmpresaUser: any
   perfilUser: any
@@ -27,8 +28,6 @@ export class GenpacksComponent implements OnInit {
   faBack = faArrowLeft
   faPlus = faPlus
 
-  pageOfItems: Array<any>;
-
   constructor( public _empresa: EmpresaService, public _user: UsuarioService, public _genpack: GenpackService) { }
 
   ngOnInit(){
@@ -38,7 +37,7 @@ export class GenpacksComponent implements OnInit {
     if(this.perfilUser == 1){
       this._genpack.getGenpackes().subscribe(
         (data:any )=> {
-        this.pageOfItems = data
+        this.genpacksList = data
         }
       )
     }
@@ -58,18 +57,13 @@ export class GenpacksComponent implements OnInit {
         this._genpack.deleteGenpack(generador.id).subscribe(
           resp => {
             if(!resp.err){
-              this.pageOfItems.splice(this.pageOfItems.indexOf(generador), 1)
+              this.genpacksList.splice(this.genpacksList.indexOf(generador), 1)
             }
           }
         )
         Swal.fire('Eliminado!', '', 'info');
       }
     })
-  }
-
-  onChangePage(pageOfItems: Array<any>) {
-    // update current page of items
-    this.pageOfItems = pageOfItems;
   }
 
 }

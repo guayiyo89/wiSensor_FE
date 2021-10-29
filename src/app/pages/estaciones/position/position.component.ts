@@ -149,6 +149,7 @@ export class PositionComponent implements OnInit {
 
   haversin(lat1: any, lon1: any, lat2: any, lon2: any){
     // convert to radians
+    this.distances = []
 
     let R = 6365
     let deltaLon = (lon1 - lon2) * Math.PI / 180

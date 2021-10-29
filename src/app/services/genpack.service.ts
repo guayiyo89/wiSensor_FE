@@ -27,9 +27,7 @@ export class GenpackService {
   }
 
   addGenpack(genpack: any){
-    let url = this.baseUrl
-    console.log('SIIIII');
-    
+    let url = this.baseUrl  
     url += '?token=' + this._user.token;
     return this.http.post(url, genpack)
   }

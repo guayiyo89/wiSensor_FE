@@ -36,7 +36,9 @@ export class UsuariosComponent implements OnInit {
   //pagination
   pageOfItems: Array<any>;
 
-  constructor(public _user: UsuarioService, public _empresa: EmpresaService, private primengConfig: PrimeNGConfig) { }
+  constructor(public _user: UsuarioService, public _empresa: EmpresaService, private primengConfig: PrimeNGConfig) {
+
+  }
 
   ngOnInit(){
     this.idEmpresaUser = this._user.userIds.id_empresa

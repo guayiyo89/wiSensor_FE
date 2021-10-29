@@ -6,7 +6,7 @@
             <li class="item" [routerLink]="['/estaciones']"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>Estaciones</li>
             <li class="item" [routerLink]="['/genpacks']"><fa-icon [icon]="faBattery" class="iconList"></fa-icon>Genpacks</li>
             <li class="item" [routerLink]="['/genpacks']"><fa-icon [icon]="faBolt" class="iconList"></fa-icon>Generadores</li>
-            <li class="item" [routerLink]="['/seguridad']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
+            <li class="item" [routerLink]="['/radares']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
             <li class="item" [routerLink]="['/seguridad']"><fa-icon [icon]="faCog" class="iconList"></fa-icon>Configuración</li>
             <li class="item" [routerLink]="['/alertas']"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>Alertas</li>
             <li class="item" [routerLink]="['/usuarios']"><fa-icon [icon]="faUsers" class="iconList"></fa-icon>Usuarios</li>
@@ -15,9 +15,9 @@
     </div>
     <div *ngIf="_idPerfil >= 3" style="width: 100%; padding-top: 85px;">
         <ul class="lat-menu">
-            <li class="item" [routerLink]="['/estacion', itemCentro[0].ID]"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>Clima</li>
-            <li class="item" [routerLink]="['/genpack', itemCentro[1].ID]"><fa-icon [icon]="faBolt" class="iconList"></fa-icon>Energía</li>
-            <li class="item"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
+            <li class="item" [routerLink]="['/estacion', itemCentro.id_estacion]"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>Clima</li>
+            <li class="item" [routerLink]="['/genpack', itemCentro.id_genpack]"><fa-icon [icon]="faBolt" class="iconList"></fa-icon>Energía</li>
+            <li class="item" [routerLink]="['/radar', itemCentro.id_radar]"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
             <li class="item"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>Alertas</li>
             <li class="item" *ngIf="_idPerfil == 3"><fa-icon [icon]="faCog" class="iconList"></fa-icon>Configuración</li>
             <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>Cerrar Sesión</li>

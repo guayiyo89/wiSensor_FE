@@ -111,6 +111,8 @@ import { AddgeneradorComponent } from './pages/genpacks/addgenerador/addgenerado
 import { GeneradorComponent } from './pages/genpacks/generador/generador.component';
 import { CombustibleDiasComponent } from './pages/genpacks/combustible-dias/combustible-dias.component';
 import { CombustibleActualComponent } from './pages/genpacks/combustible-actual/combustible-actual.component';
+import { AddRadarComponent } from './pages/radares/add-radar/add-radar.component';
+import { EditRadarComponent } from './pages/radares/edit-radar/edit-radar.component';
 
 @NgModule({
   declarations: [
@@ -186,7 +188,9 @@ import { CombustibleActualComponent } from './pages/genpacks/combustible-actual/
     AddgeneradorComponent,
     GeneradorComponent,
     CombustibleDiasComponent,
-    CombustibleActualComponent
+    CombustibleActualComponent,
+    AddRadarComponent,
+    EditRadarComponent
   ],
   imports: [
     BrowserModule,

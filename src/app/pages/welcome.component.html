@@ -12,8 +12,8 @@
                 <fa-icon [icon]="faChartLine" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Estaciones</span></li>
             <li class="btnMain" [routerLink]="['/genpacks']" style="cursor: pointer;">
                 <fa-icon [icon]="faBattery" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Genpacks</span></li>
-            <li class="btnMain" [routerLink]="['/genpacks']" style="cursor: pointer;">
-                <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Generadores</span></li>
+            <li class="btnMain" [routerLink]="['/radares']" style="cursor: pointer;">
+                <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span unselectable="on" class="btnText" style="letter-spacing: 1.5px !important;">Seguridad</span></li>
             <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
                 <fa-icon [icon]="faUsers" class="iconMenu"></fa-icon><span unselectable="on" class="btnText">Usuarios</span></li>
             <li class="btnMain" [routerLink]="['/buscador']" style="cursor: pointer;">
@@ -34,11 +34,11 @@
         </div>
 
         <div style="margin: 0 auto;" *ngIf="_perfil == 3">
-            <li class="btnMain" [routerLink]="['/estacion', itemCentro[0].ID]" style="cursor: pointer;">
+            <li class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
                 <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
-            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+            <li class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
                 <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
-            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+            <li class="btnMain" [routerLink]="['/radar', itemCentro.id_radar]" style="cursor: pointer;">
                 <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
             <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
                 <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>
@@ -46,12 +46,12 @@
                 <fa-icon [icon]="faCog" class="iconMenu"></fa-icon><span class="btnText">Configuración</span></li>
         </div>
 
-        <ul *ngIf="_perfil == 4">
-            <li class="btnMain" [routerLink]="['/estacion', itemCentro[0].ID]" style="cursor: pointer;">
+        <ul *ngIf="_perfil == 4 && itemCentro">
+            <li class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
                 <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
-            <li class="btnMain" [routerLink]="['/genpack', itemCentro[1].ID]" style="cursor: pointer;">
+            <li class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
                 <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
-            <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
+            <li class="btnMain" [routerLink]="['/radar', itemCentro.id_radar]" style="cursor: pointer;">
                 <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
             <li class="btnMain" [routerLink]="['/usuarios']" style="cursor: pointer;">
                 <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>

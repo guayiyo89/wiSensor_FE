@@ -1,0 +1,93 @@
+<div class="row">
+    <h2>Agregar nueva estación</h2>
+    <div class="col-md-6">
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                    <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" formControlName="descripcion" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+                <div *ngIf="submitted && f.descripcion.errors">
+                    <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripción es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Empresa</label>
+                <select formControlName="empresa_id" class="form-control" (change)="changeCentros($event)">
+                    <option *ngFor="let empresa of empresaList" value="{{empresa.id}}">{{empresa.nombre}}</option>
+                </select>
+                <div *ngIf="submitted && f.empresa_id.errors">
+                    <div *ngIf="f.empresa_id.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar una empresa.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Centro</label>
+                <select formControlName="id_centro" class="form-control">
+                    <option *ngFor="let centro of centroList" value="{{centro.id}}">{{centro.nombre}}</option>
+                </select>
+                <div *ngIf="submitted && f.id_centro.errors">
+                    <div *ngIf="f.id_centro.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un centro.</div>
+                </div>
+            </div>
+    
+    
+            <div class="form-group">
+                <label>Modelo</label>
+                <input type="text" formControlName="modelo" placeholder="Modelo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modelo.errors }">
+                <div *ngIf="submitted && f.modelo.errors">
+                    <div *ngIf="f.modelo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Marca</label>
+                <input type="text" formControlName="marca" placeholder="Marca" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.marca.errors }">
+                <div *ngIf="submitted && f.marca.errors">
+                    <div *ngIf="f.marca.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Estado</label>
+                <select formControlName="status" class="form-control">
+                    <option value="1" selected>Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div *ngIf="submitted && f.status.errors">
+                    <div *ngIf="f.status.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un estado.</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Código</label>
+                <input type="text" formControlName="codigo" placeholder="Código" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+                <div *ngIf="submitted && f.codigo.errors">
+                    <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+    
+            <!-- <div class="form-group">
+                <label>Comuna</label>
+                <input type="text" formControlName="comuna" placeholder="Comuna" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.comuna.errors }">
+                <div *ngIf="submitted && f.comuna.errors">
+                    <div *ngIf="f.comuna.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La comuna es obligatoria.</div>
+                </div>
+            </div> -->
+
+            <div style="padding-top: 1em;">
+                <button (click)="volver()" type="button" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+                <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+            </div>
+    
+        </form>
+    </div>
+
+</div>

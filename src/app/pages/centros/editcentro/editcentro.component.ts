@@ -93,8 +93,8 @@ export class EditcentroComponent implements OnInit {
 
           navigator.geolocation.getCurrentPosition((position) => {
             this.center = {
-              lat: parseFloat(data.latitud),
-              lng: parseFloat(data.longitud),
+              lat: data.latitud,
+              lng: data.longitud,
             }
           })
         }

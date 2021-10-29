@@ -16,8 +16,8 @@ export class DataEstacionGmService {
 
   baseUrl = URL_SERVICIOS + '/data_est_gm';
 
-  getData(id:string){
-    let url = `${this.baseUrl}/${id}`;
+  getData(id:string, limit: number){
+    let url = `${this.baseUrl}/${id}/${limit}`;
     url += '?token=' + this._user.token;
     return this.http.get<Data_estacion_gm[]>(url)
   }
@@ -45,71 +45,6 @@ export class DataEstacionGmService {
     return this.http.get<any[]>(url)
   }
 
-  //Temperature
-  getTempYear(fecha:any, codigo:any){
-    let url = `${URL_SERVICIOS}/temp_anio/${codigo}/${fecha}`;
-    url += '?token=' + this._user.token;
-    return this.http.get<any[]>(url)
-  }
-
-  getTempdia(fecha:any, codigo:any){
-    let url = `${URL_SERVICIOS}/temp_dia/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getTempmes(fecha:any, codigo:any){
-    let url = `${URL_SERVICIOS}/temp_mes/${codigo}/${fecha}`;
-    url += '?token=' + this._user.token;
-    return this.http.get<any[]>(url)
-  }
-
-  //Pressure
-  getPresYear(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/presion_anio/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getPresDia(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/presion_dia/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getPresMes(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/presion_mes/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  //Lluvia
-  getLluviaYear(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/precipitacion_anio/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getLluviaDia(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/precipitacion_dia/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getLluviaMes(fecha:any, codigo: any){
-    let url = `${URL_SERVICIOS}/precipitacion_mes/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  //Radiacion
-  getRadiacionDia(fecha: any, codigo: any){
-    let url = `${URL_SERVICIOS}/radiacion_dia/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getRadiacionMes(fecha: any, codigo: any){
-    let url = `${URL_SERVICIOS}/radiacion_mes/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
-
-  getRadiacionAnio(fecha: any, codigo: any){
-    let url = `${URL_SERVICIOS}/radiacion_anio/${codigo}/${fecha}`;
-    return this.http.get<any[]>(url)
-  }
 
   //=============================================================================================================
 
@@ -130,6 +65,8 @@ export class DataEstacionGmService {
     return this.http.get<any[]>(url)
   }
 
+  //-------------------------------------------------------------------------------------
+
   // positional data
   getRSdata(codigo:any): Observable<any>{
     let url = `${URL_SERVICIOS}/airmar200rs/${codigo}`;
@@ -137,9 +74,20 @@ export class DataEstacionGmService {
     return this.http.get<any[]>(url)
   }
 
+  getRSlimit(codigo:any, limit:number){
+    let url = `${URL_SERVICIOS}/airmar200rs/${codigo}/${limit}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
   // wind and pressure data. Maybe this will be deleted
   getSpeedPress(codigo:any): Observable<any>{
     let url = `${URL_SERVICIOS}/wind_press/${codigo}`;
+    return this.http.get<any[]>(url)
+  }
+
+  getRSmaxMin(codigo:any, fecha:any): Observable<any>{
+    let url = `${URL_SERVICIOS}/airmar200rs_maxmin/${codigo}/${fecha}`;
     return this.http.get<any[]>(url)
   }
 

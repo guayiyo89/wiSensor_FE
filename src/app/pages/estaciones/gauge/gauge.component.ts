@@ -68,45 +68,52 @@ export class GaugeComponent implements OnInit {
 
               let axis = chart.xAxes.push(new am4charts.ValueAxis<any>());
               axis.min = 0;
-              axis.max = 1000;
+              axis.max = 1500;
               axis.strictMinMax = true;
               axis.renderer.grid.template.stroke = new am4core.InterfaceColorSet().getFor("background");
               axis.renderer.grid.template.strokeOpacity = 0.3;
 
               let range0 = axis.axisRanges.create();
               range0.value = 0;
-              range0.endValue = 200;
+              range0.endValue = 250;
               range0.axisFill.fillOpacity = 1;
               range0.axisFill.fill = am4core.color('#0fa814')
               range0.axisFill.zIndex = - 1;
 
               let range1 = axis.axisRanges.create();
-              range1.value = 200;
-              range1.endValue = 400;
+              range1.value = 250;
+              range1.endValue = 500;
               range1.axisFill.fillOpacity = 1;
               range1.axisFill.fill = am4core.color('#72de0d')
               range1.axisFill.zIndex = -1;
 
               let range2 = axis.axisRanges.create();
-              range2.value = 400;
-              range2.endValue = 600;
+              range2.value = 500;
+              range2.endValue = 750;
               range2.axisFill.fillOpacity = 1;
               range2.axisFill.fill = am4core.color('#dedb0d')
               range2.axisFill.zIndex = -1;
 
               let range3 = axis.axisRanges.create();
-              range3.value = 600;
-              range3.endValue = 800;
+              range3.value = 750;
+              range3.endValue = 1000;
               range3.axisFill.fillOpacity = 1
               range3.axisFill.fill = am4core.color('#de8a0d')
               range3.axisFill.zIndex = -1;
 
               let range4 = axis.axisRanges.create();
-              range4.value = 800;
-              range4.endValue = 1000;
+              range4.value = 1000;
+              range4.endValue = 1250;
               range4.axisFill.fillOpacity = 1
               range4.axisFill.fill = am4core.color('#de4c0d')
               range4.axisFill.zIndex = -1;
+
+              let range5 = axis.axisRanges.create();
+              range5.value = 1250;
+              range5.endValue = 1500;
+              range5.axisFill.fillOpacity = 1
+              range5.axisFill.fill = am4core.color('#7d52c7')
+              range5.axisFill.zIndex = -1;
 
               let hand = chart.hands.push(new am4charts.ClockHand());
               

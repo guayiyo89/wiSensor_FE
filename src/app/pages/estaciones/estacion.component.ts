@@ -4,12 +4,16 @@ import { Data_estacion_gm } from 'src/app/interfaces/data_estacion_gm.model';
 import { Estacion } from 'src/app/interfaces/estacion.model';
 import { DataEstacionGmService } from 'src/app/services/data-estacion-gm.service';
 import { EstacionService } from 'src/app/services/estacion.service';
-import { faCheckCircle, faCircle, faCloudShowersHeavy, faCompass, faExclamationTriangle, faSun, faTemperatureLow, faThermometer, faThermometerEmpty, faThermometerFull, faThermometerHalf, faThermometerQuarter, faThermometerThreeQuarters, faTint, faUmbrella, faWind } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCircle, faCloudShowersHeavy, faCompass, faExclamationTriangle, faFileDownload, faSun, faTemperatureLow, faThermometer, faThermometerEmpty, faThermometerFull, faThermometerHalf, faThermometerQuarter, faThermometerThreeQuarters, faTint, faUmbrella, faWind } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GaugeComponent } from './gauge/gauge.component';
 import { ApiWeatherService } from 'src/app/services/api-weather.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { CentroService } from 'src/app/services/centro.service';
+import { ExcelServiceService } from 'src/app/services/excel-service.service';
+import { IncidenteService } from 'src/app/services/incidente.service';
+import { Alerta } from 'src/app/interfaces/alerta.model';
+import { AlertasService } from 'src/app/services/alertas.service';
 
 @Component({
   selector: 'app-estacion',
@@ -20,18 +24,82 @@ import { CentroService } from 'src/app/services/centro.service';
 export class EstacionComponent implements OnInit {
   @ViewChild(GaugeComponent) gauge:GaugeComponent
 
+  excel_anio: any[] = []
+  excel_2anio: any[] = []
+  excel_3mes: any[] = []
+  excel_6mes: any[] = []
+
+  excel_rs_anio: any[] = []
+  excel_rs_2anio: any[] = []
+  excel_rs_6mes: any[] = []
+  excel_rs_3mes: any[] = []
 
   constructor(public _dataGm: DataEstacionGmService, public _estacion: EstacionService, public _dataApi: ApiWeatherService, public _user: UsuarioService,
-     public _centro: CentroService, private _route: ActivatedRoute, private _modal: NgbModal) { }
+     public _centro: CentroService, private _route: ActivatedRoute, private _modal: NgbModal, private _excel: ExcelServiceService, public _incidente: IncidenteService,
+     public _alerta: AlertasService) { 
+      let dateTime = new Date().toLocaleString('en-GB')
+      let fecha = this.fechaEnviar(dateTime)
+
+      this._route.params.subscribe(
+        params => {
+          this._id = +params['id'];
+          this._estacion.getEstacion(this._id).subscribe(
+            est => {
+              this._dataGm.getData(est.codigo, 105000).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_2anio.push(row)
+                });
+              })
+              this._dataGm.getData(est.codigo, 52500).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_anio.push(row)
+                });
+              })
+              this._dataGm.getData(est.codigo, 26250).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_6mes.push(row)
+                });
+              })
+              this._dataGm.getData(est.codigo, 13125).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_3mes.push(row)
+                });
+              })
+
+              this._dataGm.getRSlimit(est.codigo, 13125).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_3mes.push(row)
+                });
+              })
+              this._dataGm.getRSlimit(est.codigo, 26250).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_6mes.push(row)
+                });
+              })
+              this._dataGm.getRSlimit(est.codigo, 52500).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_anio.push(row)
+                });
+              })
+              this._dataGm.getRSlimit(est.codigo, 105000).subscribe( data => {
+                data.forEach((row:any) => {
+                  this.excel_2anio.push(row)
+                });
+              })
+            })
+        }
+      )
+
+
+     }
 
   //fakeData DESPUES BORRAR!
   private intervalUpdate: any
   private intervalSec: any
-  private intervalDay: any
-  private intervalMonth: any
-  private intervalYear: any
 
   public fake: any
+
+  horaRegistro_clima: any
 
   _idPerfil: any
   _idCentroUser: any
@@ -69,6 +137,10 @@ export class EstacionComponent implements OnInit {
 
   dataRs: any[] = []
   dataRsNow: any
+  maxPitch: any
+  maxRoll: any
+  minPitch: any
+  minRoll: any
   
   predictedApi: any // forecast data from the API
 
@@ -81,6 +153,7 @@ export class EstacionComponent implements OnInit {
 
   faWind = faWind
   faCompass = faCompass
+  faExcel = faFileDownload
 
   faRain = faCloudShowersHeavy
   faThermo = faThermometer
@@ -127,12 +200,38 @@ export class EstacionComponent implements OnInit {
             
             this.showClima(this.codigo, this.novaFecha)
 
-            this.getRS(this.codigo)
+            this.getRS(this.codigo, this.novaFecha)
 
             this.intervalUpdate = setInterval(() => {
               this.showClima(this.codigo, this.novaFecha)
-              this.getRS(this.codigo)
-            }, 5000)
+              this.getRS(this.codigo, this.novaFecha)
+              this._incidente.getIncidentesbyEstacion(data.codigo).subscribe(
+                items => {
+                  for(let incidente of items){
+                    if(incidente.tipo == 'Temperatura'){
+                      if(this.tempActual > incidente.valor){
+                        let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.estacion_id)
+                        this._alerta.addAlerta(newAlerta).subscribe(
+                          alert => console.log(alert)
+                        )
+                        console.log('Alerta Creada por Calor')
+                      }
+                    }
+
+                    if(incidente.tipo == 'VelViento'){
+                      if(this.vel_Kmh > incidente.valor){
+                        let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.estacion_id)
+                        this._alerta.addAlerta(newAlerta).subscribe(
+                          alert => console.log(alert)
+                        )
+                      }
+                    }
+
+                  }
+                }
+              )
+
+            }, 125000)
 
             this._centro.getCentro(data.id_centro).subscribe(
               center => {
@@ -150,7 +249,7 @@ export class EstacionComponent implements OnInit {
   }
 
   formatoFecha(fecha:string){
-    let splitted = fecha.split(' ');
+    let splitted = fecha.split('T');
     let fechaCal = splitted[0].split('-');
     let horaCal = splitted[1].split('.');
 
@@ -159,7 +258,7 @@ export class EstacionComponent implements OnInit {
     let y = fechaCal[0]
 
     let newFecha = d + '/' + m + '/' + y + ' - ' + horaCal[0]
-    return newFecha
+    return horaCal[0]
   }
 
   fechaEnviar(fecha:string){
@@ -231,6 +330,8 @@ export class EstacionComponent implements OnInit {
     this._dataGm.getClima(codigo, fecha).subscribe(
       dataClima => {
         this.datosClima = dataClima[0]
+        console.log(dataClima[0], 'VER HORAAA')
+        this.horaRegistro_clima = this.formatoFecha(dataClima[0].data_time)
         this.tempActual = dataClima[0].temperatura_actual
         this.vel_ms = dataClima[0].velocidad_actual
         this.vel_Kmh = (this.vel_ms * 3.6).toFixed(2)
@@ -245,7 +346,8 @@ export class EstacionComponent implements OnInit {
 
     this._dataGm.getSpeedPress(codigo).subscribe(
       dataVelc => {
-        this.dataVelPre = dataVelc        
+        this.dataVelPre = dataVelc
+        console.log('DATARELOJ:', this.dataVelPre)        
       }
     )
 
@@ -256,13 +358,20 @@ export class EstacionComponent implements OnInit {
     )
   }
 
-  getRS(codigo: any){
+  getRS(codigo: any, fecha:any){
     this._dataGm.getRSdata(codigo).subscribe(
       dataRS => {
         this.dataRs = dataRS
         this.dataRsNow = dataRS[0]
       }
     )
+    this._dataGm.getRSmaxMin(codigo, fecha).subscribe(
+      maxminRS => {
+        this.minRoll = maxminRS[0][0].roll_MIN
+        this.maxRoll = maxminRS[0][0].roll_MAX
+        this.minPitch = maxminRS[0][0].pitch_MIN
+        this.maxPitch = maxminRS[0][0].pitch_MAX
+      })
   }
 
   ngOnDestroy(){
@@ -276,6 +385,39 @@ export class EstacionComponent implements OnInit {
     let hora = hour.split(' ')
     this.fechaShow = fecha.split(' ')
     this.fechaShow.push(hora[0])
+  }
+
+  //---------------------------EXPORT TO XLSX--------------------------------------//
+  exportasXLSX_anio(){
+    this._excel.exportAsExcelFile(this.excel_anio, 'Clima_anio')
+  }
+
+  exportasXLSX_3mes(){
+    this._excel.exportAsExcelFile(this.excel_3mes, 'Clima_3meses')
+  }
+
+  exportasXLSX_6mes(){
+    this._excel.exportAsExcelFile(this.excel_6mes, 'Clima_6meses')
+  }
+
+  exportasXLSX_2anio(){
+    this._excel.exportAsExcelFile(this.excel_2anio, 'Clima_2anio')
+  }
+
+  exportasXLSX_rs_anio(){
+    this._excel.exportAsExcelFile(this.excel_rs_anio, 'RS_anio')
+  }
+
+  exportasXLSX_rs_2anio(){
+    this._excel.exportAsExcelFile(this.excel_rs_2anio, 'RS_2anio')
+  }
+
+  exportasXLSX_rs_3mes(){
+    this._excel.exportAsExcelFile(this.excel_rs_3mes, 'RS_3mes')
+  }
+
+  exportasXLSX_rs_6mes(){
+    this._excel.exportAsExcelFile(this.excel_rs_6mes, 'RS_6mes')
   }
 
 }

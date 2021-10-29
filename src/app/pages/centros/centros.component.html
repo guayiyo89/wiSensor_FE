@@ -5,19 +5,19 @@
     <h1>Centros</h1>
 
     <p-table [value]="listCentro" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
-    [globalFilterFields]="['NOMBRE, CATEGORIA']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+    [globalFilterFields]="['nombreCentro, CATEGORIA']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 120px;" pSortableColumn="NOMBRE"> Nombre <p-sortIcon field="NOMBRE" style="color: thistle;"></p-sortIcon> </th>
-                <th pSortableColumn="EMPRESA"> Empresa <p-sortIcon field="EMPRESA"></p-sortIcon> </th>
-                <th style="max-width: 120px;" pSortableColumn="COMUNA"> Comuna <p-sortIcon field="COMUNA"></p-sortIcon> </th>
-                <th style="max-width: 120px;" pSortableColumn="REGION"> Región <p-sortIcon field="REGION"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="nombreCentro"> Nombre <p-sortIcon field="nombreCentro" style="color: thistle;"></p-sortIcon> </th>
+                <th pSortableColumn="nombreEmpresa"> Empresa <p-sortIcon field="nombreEmpresa"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="comunaCentro"> Comuna <p-sortIcon field="comunaCentro"></p-sortIcon> </th>
+                <th style="max-width: 120px;" pSortableColumn="regionCentro"> Región <p-sortIcon field="regionCentro"></p-sortIcon> </th>
                 <th> </th>
             </tr>
             <tr>
-                <th style="max-width: 120px;"><p-columnFilter type="text" field="NOMBRE"></p-columnFilter></th>
-                <th style="max-width: 120px;"><p-columnFilter type="text" field="EMPRESA"></p-columnFilter></th>
+                <th style="max-width: 120px;"><p-columnFilter type="text" field="nombreCentro"></p-columnFilter></th>
+                <th style="max-width: 120px;"><p-columnFilter type="text" field="nombreEmpresa"></p-columnFilter></th>
                 <th></th>
             </tr>
         </ng-template>

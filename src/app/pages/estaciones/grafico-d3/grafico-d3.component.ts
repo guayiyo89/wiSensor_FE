@@ -11,6 +11,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import am4themes_dataviz from "@amcharts/amcharts4/themes/dataviz";
 import type { RadarChart } from "@amcharts/amcharts4/charts";
 import { isPlatformBrowser } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-grafico-d3',
@@ -26,7 +27,7 @@ export class GraficoD3Component implements OnInit {
   chart: RadarChart;
 
   constructor(public _dataGm: DataEstacionGmService, public _user: UsuarioService, public _estacion: EstacionService,
-    private _route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) { }
+    private _route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: any, private zone: NgZone, private _modal: NgbModal) { }
 
   // Run the function only in the browser
   browserOnly(f: () => void) {
@@ -162,7 +163,9 @@ export class GraficoD3Component implements OnInit {
     return newFecha
   }
 
-
-
+  // Radiacion
+  openTable(tableWind: any){
+    this._modal.open(tableWind, {size: 'lg'})
+  }
 
 }

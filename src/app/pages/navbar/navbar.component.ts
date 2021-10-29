@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   _idEstacion: any
   _idGenpack: any
 
-  itemCentro: any[] = []
+  itemCentro: any
 
   faFish = faFish
   faChartLine = faChartLine
@@ -62,8 +62,8 @@ export class NavbarComponent implements OnInit {
     this._centro.getItems(id).subscribe(
       items => {
         this.itemCentro = items[0]
-      }
-    )
+        console.log(this.itemCentro)
+      })
   }
 
   logOut(){

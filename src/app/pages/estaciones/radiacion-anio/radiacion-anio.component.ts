@@ -52,21 +52,7 @@ export class RadiacionAnioComponent implements OnInit {
         this._estacion.getEstacion(this._id).subscribe(
           data => {
             this._codigo = data.codigo
-            this._dataGm.getLluviaYear(this.novaFecha, this._codigo).subscribe(
-              res => {
-                console.log(res);
-                
-                this.dataRadiacion = res
-                for (let s of this.dataRadiacion){
-                  this.chartRadiacionDataY[0].data?.push(s.radiacion_solar_min)
-                  this.chartRadiacionDataY[1].data?.push(s.radiacion_solar_avg)
-                  this.chartRadiacionDataY[2].data?.push(s.radiacion_solar_max)
-                  let myMes = this.getMes(s.mes)
-
-                  this.chartRadiacionLabelY.push(myMes)
-                }
-              }
-            )
+          
           }// fin getStation
         )
       }// fin params

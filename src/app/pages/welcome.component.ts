@@ -16,7 +16,7 @@ export class WelcomeComponent implements OnInit {
   _perfil: any
   _centroId: any
 
-  itemCentro: any[] = []
+  itemCentro: any
 
   faFish = faFish
   faChartLine = faChartLine
@@ -48,8 +48,10 @@ export class WelcomeComponent implements OnInit {
 
   loadItems(id:any){
     this._centro.getItems(id).subscribe(
-      items => this.itemCentro = items[0]
-    )
+      items => {
+        this.itemCentro = items[0]
+        console.log(this.itemCentro)
+      })
   }
 
 }

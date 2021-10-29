@@ -7,7 +7,7 @@
                     <img src="../../../assets/img/logo.png" alt="" srcset="" height="60px" [routerLink]="['/welcome']" style="cursor:pointer" >
                 </div>
                 <div *ngIf="usuario" class="col-6 text-end">
-                    <span class="user"> {{usuario.NOMBRE}} {{usuario.APELLIDO}} </span> <br>
+                    <span class="user"> {{usuario.nombre}} {{usuario.apellido}} </span> <br>
                     <span class="user" style="cursor: pointer;" [routerLink]="['/password']"> Opciones </span> | <span class="user" style="cursor: pointer;" (click)="logOut()"> Logout </span>
                 </div>
             </div>
