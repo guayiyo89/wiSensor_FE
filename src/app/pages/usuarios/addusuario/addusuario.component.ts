@@ -128,9 +128,7 @@ export class AddusuarioComponent implements OnInit {
       this._empresa.getCentros(id).subscribe(
         (data) => {
           this.centroList = data
-        }
-      )
-
+        })
   }
 
   changeCentros(id: any){

@@ -117,9 +117,7 @@ export class AddestacionComponent implements OnInit {
         (data) => {
           this.centroList = data
         }
-      )
-
-  }
+      )}
 
 
   changeCentros(id: any){

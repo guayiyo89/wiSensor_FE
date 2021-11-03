@@ -6,6 +6,7 @@ export class Incidente{
         public cod_estacion: string,
         public descripcion: string,
         public severidad: string,
+        public evaluacion: string,
         public created_at: string,
         public updated_at: string,
         public deleted_at: string,

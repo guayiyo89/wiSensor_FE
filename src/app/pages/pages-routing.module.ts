@@ -21,6 +21,9 @@ import { AddgenpackComponent } from "./genpacks/addgenpack/addgenpack.component"
 import { EditgenpackComponent } from "./genpacks/editgenpack/editgenpack.component";
 import { GenpackComponent } from "./genpacks/genpack.component";
 import { GenpacksComponent } from "./genpacks/genpacks.component";
+import { AddincidenteComponent } from "./incidentes/addincidente/addincidente.component";
+import { EditincidenteComponent } from "./incidentes/editincidente/editincidente.component";
+import { IncidentesComponent } from "./incidentes/incidentes.component";
 import { NoPageFoundComponent } from "./no-page-found/no-page-found.component";
 import { PagesComponent } from "./pages.component";
 import { AddRadarComponent } from "./radares/add-radar/add-radar.component";
@@ -65,6 +68,9 @@ const pagesRoutes: Routes = [
             {path: 'radar/:id', component:RadarComponent, canActivate:[LoginGuardGuard]},
             {path: 'addRadar', component:AddRadarComponent, canActivate:[AdminGuardGuard]},
             {path: 'editRadar/:id', component:EditRadarComponent, canActivate:[AdminGuardGuard]},
+            {path: 'incidentes', component:IncidentesComponent, canActivate:[LoginGuardGuard]},
+            {path: 'addIncidente', component:AddincidenteComponent, canActivate:[JCentroGuardGuard]},
+            {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

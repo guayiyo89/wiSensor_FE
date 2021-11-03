@@ -113,6 +113,9 @@ import { CombustibleDiasComponent } from './pages/genpacks/combustible-dias/comb
 import { CombustibleActualComponent } from './pages/genpacks/combustible-actual/combustible-actual.component';
 import { AddRadarComponent } from './pages/radares/add-radar/add-radar.component';
 import { EditRadarComponent } from './pages/radares/edit-radar/edit-radar.component';
+import { IncidentesComponent } from './pages/incidentes/incidentes.component';
+import { AddincidenteComponent } from './pages/incidentes/addincidente/addincidente.component';
+import { EditincidenteComponent } from './pages/incidentes/editincidente/editincidente.component';
 
 @NgModule({
   declarations: [
@@ -190,7 +193,10 @@ import { EditRadarComponent } from './pages/radares/edit-radar/edit-radar.compon
     CombustibleDiasComponent,
     CombustibleActualComponent,
     AddRadarComponent,
-    EditRadarComponent
+    EditRadarComponent,
+    IncidentesComponent,
+    AddincidenteComponent,
+    EditincidenteComponent
   ],
   imports: [
     BrowserModule,

@@ -209,21 +209,36 @@ export class EstacionComponent implements OnInit {
                 items => {
                   for(let incidente of items){
                     if(incidente.tipo == 'Temperatura'){
-                      if(this.tempActual > incidente.valor){
-                        let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.estacion_id)
-                        this._alerta.addAlerta(newAlerta).subscribe(
-                          alert => console.log(alert)
-                        )
-                        console.log('Alerta Creada por Calor')
+                      if(incidente.evaluacion == 'mayor'){
+                        if(this.tempActual > incidente.valor){
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          this._alerta.addAlerta(newAlerta).subscribe(
+                            alert => console.log(alert)
+                          )}
+                      }
+                      if(incidente.evaluacion == 'menor'){
+                        if(this.tempActual < incidente.valor){
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          this._alerta.addAlerta(newAlerta).subscribe(
+                            alert => console.log(alert)
+                          )}
                       }
                     }
 
-                    if(incidente.tipo == 'VelViento'){
-                      if(this.vel_Kmh > incidente.valor){
-                        let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.estacion_id)
-                        this._alerta.addAlerta(newAlerta).subscribe(
-                          alert => console.log(alert)
-                        )
+                    if(incidente.tipo == 'Velocidad Viento'){
+                      if(incidente.evaluacion == 'mayor'){
+                        if(this.vel_Kmh > incidente.valor){
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          this._alerta.addAlerta(newAlerta).subscribe(
+                            alert => console.log(alert)
+                          )}
+                      }
+                      if(incidente.evaluacion == 'menor'){
+                        if(this.vel_Kmh < incidente.valor){
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          this._alerta.addAlerta(newAlerta).subscribe(
+                            alert => console.log(alert)
+                          )}
                       }
                     }
 
