@@ -211,14 +211,14 @@ export class EstacionComponent implements OnInit {
                     if(incidente.tipo == 'Temperatura'){
                       if(incidente.evaluacion == 'mayor'){
                         if(this.tempActual > incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
                           this._alerta.addAlerta(newAlerta).subscribe(
                             alert => console.log(alert)
                           )}
                       }
                       if(incidente.evaluacion == 'menor'){
                         if(this.tempActual < incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
                           this._alerta.addAlerta(newAlerta).subscribe(
                             alert => console.log(alert)
                           )}
@@ -228,14 +228,14 @@ export class EstacionComponent implements OnInit {
                     if(incidente.tipo == 'Velocidad Viento'){
                       if(incidente.evaluacion == 'mayor'){
                         if(this.vel_Kmh > incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
                           this._alerta.addAlerta(newAlerta).subscribe(
                             alert => console.log(alert)
                           )}
                       }
                       if(incidente.evaluacion == 'menor'){
                         if(this.vel_Kmh < incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.estacion_id)
+                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
                           this._alerta.addAlerta(newAlerta).subscribe(
                             alert => console.log(alert)
                           )}
