@@ -34,6 +34,7 @@ import { AddusuarioComponent } from "./usuarios/addusuario/addusuario.component"
 import { EditusuarioComponent } from "./usuarios/editusuario/editusuario.component";
 import { PasswordComponent } from "./usuarios/password/password.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
+import { ConfComponent } from "./conf/conf.component";
 import { WelcomeComponent } from "./welcome.component";
 
 const pagesRoutes: Routes = [
@@ -69,6 +70,7 @@ const pagesRoutes: Routes = [
             {path: 'addRadar', component:AddRadarComponent, canActivate:[AdminGuardGuard]},
             {path: 'editRadar/:id', component:EditRadarComponent, canActivate:[AdminGuardGuard]},
             {path: 'incidentes', component:IncidentesComponent, canActivate:[LoginGuardGuard]},
+            {path: 'configuracion', component:ConfComponent, canActivate:[LoginGuardGuard]},
             {path: 'addIncidente', component:AddincidenteComponent, canActivate:[JCentroGuardGuard]},
             {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
             {path: '404', component: NoPageFoundComponent },

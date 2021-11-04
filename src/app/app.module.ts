@@ -116,6 +116,7 @@ import { EditRadarComponent } from './pages/radares/edit-radar/edit-radar.compon
 import { IncidentesComponent } from './pages/incidentes/incidentes.component';
 import { AddincidenteComponent } from './pages/incidentes/addincidente/addincidente.component';
 import { EditincidenteComponent } from './pages/incidentes/editincidente/editincidente.component';
+import { ConfComponent } from './pages/conf/conf.component';
 
 @NgModule({
   declarations: [
@@ -196,7 +197,8 @@ import { EditincidenteComponent } from './pages/incidentes/editincidente/editinc
     EditRadarComponent,
     IncidentesComponent,
     AddincidenteComponent,
-    EditincidenteComponent
+    EditincidenteComponent,
+    ConfComponent
   ],
   imports: [
     BrowserModule,
