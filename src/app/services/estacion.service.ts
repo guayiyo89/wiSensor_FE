@@ -43,4 +43,10 @@ export class EstacionService {
     return this.http.delete<any>(url)
   }
 
+  getAlertasbySt(cod:any){
+    let url = `${this.baseUrl}/alertas/novistas/${cod}`
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
 }

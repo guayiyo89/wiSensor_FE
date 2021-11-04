@@ -205,40 +205,30 @@ export class EstacionComponent implements OnInit {
             this.intervalUpdate = setInterval(() => {
               this.showClima(this.codigo, this.novaFecha)
               this.getRS(this.codigo, this.novaFecha)
+
+              //review for each incident
               this._incidente.getIncidentesbyEstacion(data.codigo).subscribe(
                 items => {
                   for(let incidente of items){
                     if(incidente.tipo == 'Temperatura'){
                       if(incidente.evaluacion == 'mayor'){
                         if(this.tempActual > incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
-                          this._alerta.addAlerta(newAlerta).subscribe(
-                            alert => console.log(alert)
-                          )}
+                          this.generarAlerta(incidente)}
                       }
                       if(incidente.evaluacion == 'menor'){
                         if(this.tempActual < incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
-                          this._alerta.addAlerta(newAlerta).subscribe(
-                            alert => console.log(alert)
-                          )}
+                          this.generarAlerta(incidente)}
                       }
                     }
 
                     if(incidente.tipo == 'Velocidad Viento'){
                       if(incidente.evaluacion == 'mayor'){
                         if(this.vel_Kmh > incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
-                          this._alerta.addAlerta(newAlerta).subscribe(
-                            alert => console.log(alert)
-                          )}
-                      }
+                          this.generarAlerta(incidente)}
+                        }
                       if(incidente.evaluacion == 'menor'){
                         if(this.vel_Kmh < incidente.valor){
-                          let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
-                          this._alerta.addAlerta(newAlerta).subscribe(
-                            alert => console.log(alert)
-                          )}
+                          this.generarAlerta(incidente)}
                       }
                     }
 
@@ -400,6 +390,13 @@ export class EstacionComponent implements OnInit {
     let hora = hour.split(' ')
     this.fechaShow = fecha.split(' ')
     this.fechaShow.push(hora[0])
+  }
+
+  generarAlerta(incidente: any){
+    let newAlerta = new Alerta(incidente.tipo, incidente.severidad, incidente.codigo, incidente.descripcion, 0, incidente.cod_estacion, incidente.destino_id, incidente.destino)
+    this._alerta.addAlerta(newAlerta).subscribe(
+      alert => console.log(alert)
+    )
   }
 
   //---------------------------EXPORT TO XLSX--------------------------------------//
