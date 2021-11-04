@@ -18,4 +18,16 @@ export class AlertasService {
     url += '?token=' + this._user.token;
     return this.http.post(url, alerta);
   }
+
+  vistoAlerta(id:any, alerta:Alerta){
+    let url = `${this.baseUrl}/${id}`
+    url += '?token=' + this._user.token;
+    return this.http.put(url, alerta)
+  }
+
+  getAlerta(id:any){
+    let url = `${this.baseUrl}/${id}`
+    url += '?token=' + this._user.token;
+    return this.http.get<any>(url)
+  }
 }

@@ -50,7 +50,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { SidebarModule } from 'ng-sidebar';
 import { PasswordComponent } from './pages/usuarios/password/password.component';
-import { AlertasComponent } from './pages/alertas/alertas.component';
+import { AlertasComponent } from './pages/estaciones/alertas/alertas.component';
 import { GraficoD3Component } from './pages/estaciones/grafico-d3/grafico-d3.component';
 import { GaugeComponent } from './pages/estaciones/gauge/gauge.component';
 import { WindActualComponent } from './pages/estaciones/wind-actual/wind-actual.component';
