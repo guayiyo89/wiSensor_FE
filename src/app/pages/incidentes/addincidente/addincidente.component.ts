@@ -58,11 +58,13 @@ export class AddincidenteComponent implements OnInit {
       severidad: ['', Validators.required],
       evaluacion: ['', Validators.required],
       destino_id: ['', Validators.required],
-      destino: ['', Validators.required]
+      destino: ['', Validators.required],
+      centro_id: ['', Validators.required]
     })
 
     this.addForm.controls['evaluacion'].setValue("mayor")
     this.addForm.controls['severidad'].setValue("error")
+    this.addForm.controls['centro_id'].setValue(this.centro_user)
 
     if(this.perfil_user == 2){
       this.getCentros(this.empresa_user)
@@ -112,18 +114,21 @@ export class AddincidenteComponent implements OnInit {
         this.addForm.controls['cod_estacion'].setValue(this.codigo_est)
         this.addForm.controls['destino_id'].setValue(this.itemList.id_estacion)
         this.addForm.controls['destino'].setValue('estacion')
+        this.addForm.controls['tipo'].setValue(this.tipos[0])
         break
       case 'Energia':
         this.tipos = ['Nivel Bateria']
         this.addForm.controls['cod_estacion'].setValue(this.codigo_gp)
         this.addForm.controls['destino_id'].setValue(this.itemList.id_genpack)
         this.addForm.controls['destino'].setValue('genpack')
+        this.addForm.controls['tipo'].setValue(this.tipos[0])
         break
       case 'Radar':
         this.tipos = ['Numero Eventos']
         this.addForm.controls['cod_estacion'].setValue(this.codigo_rdr)
         this.addForm.controls['destino_id'].setValue(this.itemList.id_radar)
         this.addForm.controls['destino'].setValue('radar')
+        this.addForm.controls['tipo'].setValue(this.tipos[0])
         break
     }
   }

@@ -1,0 +1,61 @@
+<div class="container">
+    <ng-template pTemplate="caption">
+      <h1>Alertas</h1>
+    </ng-template>
+    <h1>Alertas</h1>
+  
+    <p-table [value]="alertList" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+             [globalFilterFields]="['alerta_codigo, alerta_tipo', 'centro_nombre']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+  
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="max-width: 90px;" pSortableColumn="fecha_creacion">Fecha <p-sortIcon field="fecha_creacion" style="color: thistle;"></p-sortIcon> </th>
+          <th style="max-width: 120px;" pSortableColumn="centro_nombre"> Nombre centro <p-sortIcon field="centro_nombre" style="color: thistle;"></p-sortIcon> </th>
+          <th style="max-width: 60px;" pSortableColumn="alertas_codigo"> Código <p-sortIcon field="alerta_codigo"></p-sortIcon> </th>
+          <th style="max-width: 120px;" pSortableColumn="alerta_tipo"> Tipo <p-sortIcon field="alerta_valor"></p-sortIcon> </th>
+          <th style="max-width: 120px;" pSortableColumn="alerta_descripcion"> Descripcion <p-sortIcon field="alerta_descripcion"></p-sortIcon> </th>
+          <th style="max-width: 120px;" pSortableColumn="alerta_severidad"> Severidad <p-sortIcon field="alerta_severidad"></p-sortIcon> </th>
+          <th pSortableColumn="fecha_visto">Fecha Visto <p-sortIcon field="fecha_visto" style="color: thistle;"></p-sortIcon> </th>
+          <th> visto </th>
+  
+  
+        </tr>
+        <tr>
+          <th></th>
+          <th style="max-width: 120px;"><p-columnFilter type="text" field="centro_nombre"></p-columnFilter></th>
+          <th style="max-width: 80px;"><p-columnFilter type="text" field="alerta_codigo"></p-columnFilter></th>
+          <th style="max-width: 120px;"><p-columnFilter type="text" field="alerta_tipo"></p-columnFilter></th>
+          <th style="max-width: 120px;"><p-columnFilter type="text" field="alerta_descripcion"></p-columnFilter></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-alerta>
+        <tr class="rowth blackness" (click)="cambiarVisto(alerta.alerta_id)">
+          <td>{{alerta.fecha_creacion | fecha}} </td>
+          <td>{{alerta.centro_nombre}}</td>
+          <td>{{alerta.alerta_codigo}}</td>
+          <td>{{alerta.alerta_tipo}}</td>
+          <td>{{alerta.alerta_descripcion}}</td>
+          <td *ngIf="alerta.alerta_severidad == 'warning'"> <span style="border-radius: 4px; background-color: rgb(255, 196, 0) ; color: black; font-size: 9pt; font-weight: bold; padding: 2px;"> {{alerta.alerta_severidad == "warning" ? "Advertencia" : "Peligro"}} </span></td>
+          <td *ngIf="alerta.alerta_severidad == 'error'"> <span style="border-radius: 4px; background-color: rgb(206, 31, 7) ; color: rgb(236, 236, 236); font-size: 9pt; font-weight: bold;"> {{alerta.alerta_severidad == "warning" ? "Advertencia" : "Peligro"}} </span></td>
+          <td>{{alerta.fecha_visto | fecha}} </td>
+          <td *ngIf="alerta.alerta_visto == 1"> <fa-icon [icon]="faCheck" style="color: rgb(17, 180, 17);"></fa-icon> </td>
+          <td *ngIf="alerta.alerta_visto == 0"> </td>
+        </tr>
+      </ng-template>
+  
+    </p-table>
+  
+    <div class="text-right" style="margin-top: 1em;">
+      <button [routerLink]="['/welcome']" class="noselect" style="margin-right: 0.5em;" type="button">
+        <fa-icon [icon]="faBack"></fa-icon>
+        Volver
+      </button>
+      <button [routerLink]="['/addalerta']" class="noselect" type="button">
+        <fa-icon [icon]="faBack"></fa-icon> Agregar</button> 
+    </div>
+  
+  </div>

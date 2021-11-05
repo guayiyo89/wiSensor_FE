@@ -24,12 +24,7 @@ export class AlertasComponent implements OnInit {
 
   ngOnInit(){
     //review for each alert
-    this._estacion.getAlertasbySt(this.codigo).subscribe(
-      alertas => {
-        this.alertasList_nv = alertas
-        this.total_alertas_nv = alertas.length
-      }
-    )
+    this.cargaAlertas(this.codigo)
   }
 
   // Radiacion
@@ -43,12 +38,26 @@ export class AlertasComponent implements OnInit {
         this._alerta.vistoAlerta(id, alert).subscribe(
           data => {
             Swal.fire({
+              position: 'top-end',
               title: 'Alerta Revisada',
               icon: 'success',
-              timer: 2000
+              showConfirmButton: false,
+              timer: 1500
+            }).then(result => {
+              this.alertasList_nv.splice(this.alertasList_nv.indexOf(alert), 1)
+              this.cargaAlertas(this.codigo)
             })
           }
         )}
     )}
+
+  cargaAlertas(cod: any){
+    this._estacion.getAlertasbySt(cod).subscribe(
+      alertas => {
+        this.alertasList_nv = alertas
+        this.total_alertas_nv = alertas.length
+      }
+    )
+  }
 
 }

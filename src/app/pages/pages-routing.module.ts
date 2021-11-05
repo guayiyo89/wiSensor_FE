@@ -36,6 +36,9 @@ import { PasswordComponent } from "./usuarios/password/password.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
 import { ConfComponent } from "./conf/conf.component";
 import { WelcomeComponent } from "./welcome.component";
+import { AlertasService } from "../services/alertas.service";
+import { AlertasComponent } from "./estaciones/alertas/alertas.component";
+import { AlertsComponent } from "./alerts/alerts.component";
 
 const pagesRoutes: Routes = [
     {
@@ -73,6 +76,7 @@ const pagesRoutes: Routes = [
             {path: 'configuracion', component:ConfComponent, canActivate:[LoginGuardGuard]},
             {path: 'addIncidente', component:AddincidenteComponent, canActivate:[JCentroGuardGuard]},
             {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
+            {path: 'alertas', component:AlertsComponent, canActivate:[LoginGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

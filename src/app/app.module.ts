@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,10 +44,8 @@ import { UserGuardGuard } from './services/user-guard.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PerfilPipe } from './pipes/perfil.pipe';
-import { JwPaginationModule } from 'jw-angular-pagination';
 import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { SidebarModule } from 'ng-sidebar';
 import { PasswordComponent } from './pages/usuarios/password/password.component';
 import { AlertasComponent } from './pages/estaciones/alertas/alertas.component';
@@ -117,6 +115,7 @@ import { IncidentesComponent } from './pages/incidentes/incidentes.component';
 import { AddincidenteComponent } from './pages/incidentes/addincidente/addincidente.component';
 import { EditincidenteComponent } from './pages/incidentes/editincidente/editincidente.component';
 import { ConfComponent } from './pages/conf/conf.component';
+import { AlertsComponent } from './pages/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +145,6 @@ import { ConfComponent } from './pages/conf/conf.component';
     AddusuarioComponent,
     EditusuarioComponent,
     NoPageFoundComponent,
-    SidebarComponent,
     PasswordComponent,
     AlertasComponent,
     GraficoD3Component,
@@ -198,7 +196,8 @@ import { ConfComponent } from './pages/conf/conf.component';
     IncidentesComponent,
     AddincidenteComponent,
     EditincidenteComponent,
-    ConfComponent
+    ConfComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
@@ -210,7 +209,6 @@ import { ConfComponent } from './pages/conf/conf.component';
     ChartsModule,
     FontAwesomeModule,
     GoogleMapsModule,
-    JwPaginationModule,
     Ng2SearchPipeModule,
     SidebarModule.forRoot(),
     PAGES_ROUTES,

@@ -30,4 +30,10 @@ export class AlertasService {
     url += '?token=' + this._user.token;
     return this.http.get<any>(url)
   }
+
+  getAlertas(id:any){
+    let url = `${this.baseUrl}/centro/${id}`
+    url += '?token=' + this._user.token;
+    return this.http.get(url).toPromise().then(res => <any[]> res)
+  }
 }
