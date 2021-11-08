@@ -22,7 +22,6 @@ import { AlertasService } from 'src/app/services/alertas.service';
   ]
 })
 export class EstacionComponent implements OnInit {
-  @ViewChild(GaugeComponent) gauge:GaugeComponent
 
   excel_anio: any[] = []
   excel_2anio: any[] = []
@@ -112,6 +111,7 @@ export class EstacionComponent implements OnInit {
   dataVelPre: any[] = []
   tempAnio: any[] = []
   _id: any;
+  // @ts-ignore
   estacion: Estacion
   codigo: any
   tempActual: any
@@ -231,7 +231,6 @@ export class EstacionComponent implements OnInit {
                           this.generarAlerta(incidente)}
                       }
                     }
-
                   }
                 }
               )

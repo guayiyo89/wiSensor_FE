@@ -22,23 +22,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  // ingresar(forma: NgForm) {
-  //   if(forma.invalid){
-      // Swal.fire({
-      //   title: 'Intente otra vez.',
-      //   text: 'Email y/o contraseña incorrectos',
-      //   icon: 'warning'
-      // })
-      // return
-  //   }
-  //   let usuario = new Usuario(1,1, '', forma.value.email, forma.value.password,1,'', '', '');
-
-  //   this._user.login(usuario, forma.value.recuerdame)
-  //     .subscribe(resp=>{
-  //       this.router.navigate(['/empresas'])
-  //     })
-  // }
-
   ingresar(forma: NgForm){
     if(forma.valid){
       let usuario = new Usuario(forma.value.email, forma.value.password, '', '', 1, '','', '', 0, 0);

@@ -21,9 +21,11 @@ export class AddcentroComponent implements OnInit {
      private router: Router, private _fbuilder: FormBuilder) { }
 
   submitted = false;
+  // @ts-ignore
   addForm: FormGroup;
   empresaList: Empresa[] = []
 
+  // @ts-ignore
   empresaUser: Empresa
 
   perfilUser: any
@@ -38,6 +40,7 @@ export class AddcentroComponent implements OnInit {
 
   //--------------------------------------------------------MAPA
   zoom = 12
+  // @ts-ignore
   center: google.maps.LatLngLiteral
 
   options: google.maps.MapOptions = {

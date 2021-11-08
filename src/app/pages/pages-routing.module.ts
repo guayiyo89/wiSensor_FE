@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AdminGuardGuard } from "../services/admin-guard.guard";
+// @ts-ignore
 import { JCentroGuardGuard } from "../services/jCentro-guard.guard";
 import { LoginGuardGuard } from "../services/login-guard.guard";
 import { UserGuardGuard } from "../services/user-guard.guard";

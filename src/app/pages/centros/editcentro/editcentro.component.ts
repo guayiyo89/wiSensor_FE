@@ -23,11 +23,13 @@ export class EditcentroComponent implements OnInit {
      private router: Router, private _fbuilder: FormBuilder, private _route: ActivatedRoute) { }
 
   submitted = false;
+  // @ts-ignore
   editForm: FormGroup;
   empresaList: Empresa[] = [];
+  // @ts-ignore
   centro: Centro;
   _id: any;
-
+  // @ts-ignore
   empresaUser: Empresa
 
   perfilUser: any
@@ -43,6 +45,7 @@ export class EditcentroComponent implements OnInit {
 
   //--------------------------------------------------------MAPA
   zoom = 14
+  // @ts-ignore
   center: google.maps.LatLngLiteral
 
   options: google.maps.MapOptions = {

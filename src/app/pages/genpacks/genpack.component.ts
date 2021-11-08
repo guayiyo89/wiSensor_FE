@@ -25,7 +25,8 @@ export class GenpackComponent implements OnInit {
 
   dataGenpack: any[] = []
   dataGPnow: any
-
+  
+  // @ts-ignore
   genpack: Genpack
 
   generadores: any[] = []

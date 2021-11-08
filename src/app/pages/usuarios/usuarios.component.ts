@@ -14,17 +14,19 @@ import Swal from 'sweetalert2';
   ]
 })
 export class UsuariosComponent implements OnInit {
-
+  // @ts-ignore
   userList: any[];
+  // @ts-ignore
   datasource: any[]
 
   idEmpresaUser: any
   perfilUser: any
-
+  // @ts-ignore
   totalRecords: number;
 
+  // @ts-ignore
   cols: any[];
-
+  // @ts-ignore
   loading: boolean;
 
   //iconos
@@ -33,7 +35,7 @@ export class UsuariosComponent implements OnInit {
   faUser = faUserPlus;
   faBack = faArrowLeft
 
-  //pagination
+  // @ts-ignore
   pageOfItems: Array<any>;
 
   constructor(public _user: UsuarioService, public _empresa: EmpresaService, private primengConfig: PrimeNGConfig) {

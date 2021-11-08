@@ -91,4 +91,10 @@ export class DataEstacionGmService {
     return this.http.get<any[]>(url)
   }
 
+  //get Lunas
+  getLunas(fecha:any){
+    let url = `${URL_SERVICIOS}/lunar/${fecha}`
+    return this.http.get<any[]>(url)
+  }
+
 }

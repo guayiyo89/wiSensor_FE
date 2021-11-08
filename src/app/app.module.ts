@@ -116,6 +116,7 @@ import { AddincidenteComponent } from './pages/incidentes/addincidente/addincide
 import { EditincidenteComponent } from './pages/incidentes/editincidente/editincidente.component';
 import { ConfComponent } from './pages/conf/conf.component';
 import { AlertsComponent } from './pages/alerts/alerts.component';
+import { LunasComponent } from './pages/estaciones/lunas/lunas.component';
 
 @NgModule({
   declarations: [
@@ -197,7 +198,8 @@ import { AlertsComponent } from './pages/alerts/alerts.component';
     AddincidenteComponent,
     EditincidenteComponent,
     ConfComponent,
-    AlertsComponent
+    AlertsComponent,
+    LunasComponent
   ],
   imports: [
     BrowserModule,
