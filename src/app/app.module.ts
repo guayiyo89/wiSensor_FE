@@ -118,6 +118,8 @@ import { ConfComponent } from './pages/conf/conf.component';
 import { AlertsComponent } from './pages/alerts/alerts.component';
 import { LunasComponent } from './pages/estaciones/lunas/lunas.component';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -229,7 +231,7 @@ import { LunasComponent } from './pages/estaciones/lunas/lunas.component';
     BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [AdminGuardGuard, LoginGuardGuard, UserGuardGuard, JCentroGuardGuard, CentroService, EmpresaService, EstacionService, UsuarioService, BuscadorService, NgbActiveModal],
+  providers: [AdminGuardGuard, LoginGuardGuard, UserGuardGuard, JCentroGuardGuard, CentroService, EmpresaService, EstacionService, UsuarioService, BuscadorService, NgbActiveModal, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
