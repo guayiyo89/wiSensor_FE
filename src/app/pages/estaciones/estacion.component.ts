@@ -67,22 +67,22 @@ export class EstacionComponent implements OnInit {
 
               this._dataGm.getRSlimit(est.codigo, 13125).subscribe( data => {
                 data.forEach((row:any) => {
-                  this.excel_3mes.push(row)
+                  this.excel_rs_3mes.push(row)
                 });
               })
               this._dataGm.getRSlimit(est.codigo, 26250).subscribe( data => {
                 data.forEach((row:any) => {
-                  this.excel_6mes.push(row)
+                  this.excel_rs_6mes.push(row)
                 });
               })
               this._dataGm.getRSlimit(est.codigo, 52500).subscribe( data => {
                 data.forEach((row:any) => {
-                  this.excel_anio.push(row)
+                  this.excel_rs_anio.push(row)
                 });
               })
               this._dataGm.getRSlimit(est.codigo, 105000).subscribe( data => {
                 data.forEach((row:any) => {
-                  this.excel_2anio.push(row)
+                  this.excel_rs_2anio.push(row)
                 });
               })
             })

@@ -119,6 +119,10 @@ import { AlertsComponent } from './pages/alerts/alerts.component';
 import { LunasComponent } from './pages/estaciones/lunas/lunas.component';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ProduccionComponent } from './pages/produccion/produccion.component';
+import { SilosBarComponent } from './pages/produccion/silos-bar/silos-bar.component';
+import { TempAguaComponent } from './pages/produccion/temp-agua/temp-agua.component';
+import { TempHistoricosComponent } from './pages/produccion/temp-historicos/temp-historicos.component';
 
 @NgModule({
   declarations: [
@@ -201,7 +205,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     EditincidenteComponent,
     ConfComponent,
     AlertsComponent,
-    LunasComponent
+    LunasComponent,
+    ProduccionComponent,
+    SilosBarComponent,
+    TempAguaComponent,
+    TempHistoricosComponent
   ],
   imports: [
     BrowserModule,
