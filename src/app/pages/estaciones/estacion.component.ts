@@ -165,7 +165,8 @@ export class EstacionComponent implements OnInit {
   faAlert = faExclamationTriangle
   faOk = faCheckCircle
   
-
+  flag_time = 1 //flag to announce if the weather data arrived at time
+  flag_time_rs = 1
  
   ngOnInit(){
     this._idCentroUser = this._user.usuario.CENTRO_ID
@@ -334,8 +335,18 @@ export class EstacionComponent implements OnInit {
     this._dataGm.getClima(codigo, fecha).subscribe(
       dataClima => {
         this.datosClima = dataClima[0]
-        console.log(dataClima[0], 'VER HORAAA')
+        //comparing Time
+        let fechaActual = new Date()
+        let fechaReg = new Date(dataClima[0].data_time)
+
+        let val_flag = Math.abs(( fechaActual.getTime() - fechaReg.getTime() )/60000)
+
+         if(val_flag < 10){
+           this.flag_time = 0
+         }else this.flag_time = 1
+
         this.horaRegistro_clima = this.formatoFecha(dataClima[0].data_time)
+
         this.tempActual = dataClima[0].temperatura_actual
         this.vel_ms = dataClima[0].velocidad_actual
         this.vel_Kmh = (this.vel_ms * 3.6).toFixed(2)
@@ -369,6 +380,22 @@ export class EstacionComponent implements OnInit {
         this.dataRsNow = dataRS[0]
       }
     )
+    this._dataGm.getHourRS(codigo).subscribe(
+      data => {
+        let timeRs = new Date(data.data_time)
+        let time = new Date()
+
+        let val_flag = Math.abs(( time.getTime() - timeRs.getTime() )/60000)
+
+        console.log(val_flag, 'minutos');
+        
+        if(val_flag < 10){
+          this.flag_time_rs = 0
+        }else this.flag_time_rs = 1
+      }
+    )
+
+
     this._dataGm.getRSmaxMin(codigo, fecha).subscribe(
       maxminRS => {
         this.minRoll = maxminRS[0][0].roll_MIN

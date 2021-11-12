@@ -123,6 +123,7 @@ import { ProduccionComponent } from './pages/produccion/produccion.component';
 import { SilosBarComponent } from './pages/produccion/silos-bar/silos-bar.component';
 import { TempAguaComponent } from './pages/produccion/temp-agua/temp-agua.component';
 import { TempHistoricosComponent } from './pages/produccion/temp-historicos/temp-historicos.component';
+import { SilosPieComponent } from './pages/produccion/silos-pie/silos-pie.component';
 
 @NgModule({
   declarations: [
@@ -209,7 +210,8 @@ import { TempHistoricosComponent } from './pages/produccion/temp-historicos/temp
     ProduccionComponent,
     SilosBarComponent,
     TempAguaComponent,
-    TempHistoricosComponent
+    TempHistoricosComponent,
+    SilosPieComponent
   ],
   imports: [
     BrowserModule,

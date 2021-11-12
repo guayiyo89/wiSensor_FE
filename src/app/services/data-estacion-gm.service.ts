@@ -97,4 +97,9 @@ export class DataEstacionGmService {
     return this.http.get<any[]>(url)
   }
 
+  getHourRS(cod:any){
+    let url = `${URL_SERVICIOS}/getRshour/${cod}`
+    return this.http.get<any>(url)
+  }
+
 }

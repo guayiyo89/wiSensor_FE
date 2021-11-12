@@ -78,17 +78,20 @@
   <!-- NUEVO ESQUEMA Pitch -->
   <div class="row blackness" style="padding-top: 0.3em;">
     <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
        Pitch (Inclinación Longitudinal)</h4> 
       <app-heading-rs [heading]="dataRsNow.pitch" [minPitch]="minPitch" [maxPitch]="maxPitch" class="text-center"></app-heading-rs>
     </div>
     <div class="col-md-6"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
        Pitch - Histórico</h4>
       <app-hist-pitch [dataPitch]="dataRs"></app-hist-pitch>
     </div>
     <div class="col-md-3 text-center"> <h4 class="titClima">
-       <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
         Orientación</h4> 
       <app-orientation [yaw]="dataRsNow.header"></app-orientation>
     </div>
@@ -97,17 +100,20 @@
   <!-- segunda Fila Roll -->
   <div class="row blackness" style="padding-top: 5px;">
     <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
        Roll (Inclinación Transversal)</h4>
       <app-escoring-rs [escora]="dataRsNow.roll" [minRoll]="minRoll" [maxRoll]="maxRoll" class="text-center"></app-escoring-rs>
     </div>
     <div class="col-md-6"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
        Roll - Histórico</h4>
       <app-hist-roll [dataRoll]="dataRs"></app-hist-roll>
     </div>
     <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
        Viento durante 7 días</h4>
       <app-grafico-d3></app-grafico-d3>
     </div>
@@ -120,7 +126,8 @@
   
   <div class="row blackness" style="padding-top: 5px;">
     <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Velocidad Viento</h4>
   
       <span style="font-weight: bold; text-align: center;">Actual</span>
@@ -177,12 +184,16 @@
   
   
     <div class="col-md-6"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Velocidad Viento - Histórico</h4>
       <app-hist-velc [dataVelc]="dataVelPre"></app-hist-velc>
     </div>
+
+
     <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Dirección Viento</h4>
       <app-wind-actual [angle]="datosClima.direccion_actual" ></app-wind-actual>
       
@@ -196,7 +207,8 @@
   
   <div class="row blackness" style="padding-bottom: 0.5em;">
     <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Presión</h4>
       <span style="font-weight: bold; text-align: center;">Actual</span>
   
@@ -233,13 +245,15 @@
       </div>
   
     <div class="col-md-6"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Presión - Histórico</h4>
       <app-hist-press [dataPres]="dataVelPre"></app-hist-press></div>
   
     <!-- Temperatura -->
     <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Temperatura</h4>
   
       <span style="font-weight: bold; text-align: center; margin-top: 1em;">Actual</span>
@@ -300,7 +314,8 @@
   <div class="row blackness">
   
     <div class="col-md-4"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Posición</h4>
       <app-position *ngIf="latitud && longitud" [lat1]="latitud" [lon1]="longitud" [lat2]="datosClima.gps_latitude" [lon2]="datosClima.gps_longitude"></app-position>
   
@@ -308,7 +323,8 @@
   
   
     <div class="col-md-4 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Precipitaciones</h4> 
       <span style="font-weight: bold;">Actual</span>
   
@@ -348,7 +364,8 @@
   
   
     <div class="col-md-4 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
       Radiación Solar</h4> 
   
       <span style="font-weight: bold;">Actual</span>
