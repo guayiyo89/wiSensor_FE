@@ -4,7 +4,7 @@
     </ng-template>
     <h1>Seguridad</h1>
 
-    <p-table [value]="radarList" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+    <p-table [value]="radarList" [paginator]="true" [rows]="15" [totalRecords]="totalRecords"
     [globalFilterFields]="['nombreRadar','nombreEmpresa','nombreCentro']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
@@ -25,7 +25,7 @@
 
         <ng-template pTemplate="body" let-st>
             <tr class="rowth blackness">
-                <td style="padding-left: 1em; cursor: pointer;" [routerLink]="['/radar', st.id_radar]">{{st.nombreRadar}}</td>
+                <td style="padding-left: 1em; cursor: pointer;" [routerLink]="['/radar', st.id_Radar]">{{st.nombreRadar}}</td>
                 <td *ngIf="perfilUser == 1">{{st.nombreEmpresa}}</td>
                 <td>{{st.nombreCentro}}</td>
                 <td style="max-width: 120px;">{{st.marcaRadar}} / {{st.modeloRadar}}</td>

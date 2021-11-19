@@ -41,6 +41,7 @@ import { AlertasService } from "../services/alertas.service";
 import { AlertasComponent } from "./estaciones/alertas/alertas.component";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { ProduccionComponent } from "./produccion/produccion.component";
+import { EstructuraComponent } from "./estructura/estructura.component";
 
 const pagesRoutes: Routes = [
     {
@@ -80,6 +81,7 @@ const pagesRoutes: Routes = [
             {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
             {path: 'alertas', component:AlertsComponent, canActivate:[LoginGuardGuard]},
             {path: 'produccion', component:ProduccionComponent, canActivate:[LoginGuardGuard]},
+            {path: 'estructura', component: EstructuraComponent, canActivate: [LoginGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

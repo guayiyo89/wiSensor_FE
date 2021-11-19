@@ -29,58 +29,67 @@
 
 <div class="row blackness">
     <div class="col-md-4">
-        <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-            Eventos | 1 hora | Tiempo Acumulado</h4> 
-            
-            <div class="row text-center">
-                <div class="col-6">
-                    <span style="font-weight: bold;">Eventos Acumulados</span>
-                    <span style="display: block; padding: 0.1em; font-size: 2.5em;">104</span>
-                </div>
-                <div class="col-6">
-                    <span style="font-weight: bold;">Última hora</span>
-                    <span style="display: block; padding: 0.1em; font-size: 2.5em;">23</span>
-                </div>
-            </div>
-            <app-eventos></app-eventos>
+        <google-map
+        height="500px"
+        width="100%"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options"
+        >
+            <map-marker
+            #markerElem
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            (mapClick)="clickedMarker(marker.position, marker.info)"
+            >
+            </map-marker>
+        </google-map>
+        <div #dataMarker class="card bg-dark" style="display: none; padding: 5px;">
+          (<span style="color: chartreuse; font-weight: bold;">{{latCont}} </span>,
+          <span style="color: chartreuse; font-weight: bold;">{{lonCont}}</span>)
+          <span style="display: block;">Fecha: {{fechaContent | fecha}}</span>
+          <span style="display: block;">Distancia: {{distContent | truncar}} m</span>
+          <span style="display: block;">Velocidad: {{velContent | truncar}} m/s</span>
+          <span style="display: block;">Distancia: {{timeContent}} s</span>
         </div>
-
-    <div class="col-md-4">
-        <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-            Actividad Última Hora</h4>
     </div>
-    <div class="col-md-4"></div>
+
+
+    <div class="col-md-8">
+      
+      <p-table [value]="detalles" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+      [globalFilterFields]="['fecha','velocidad','distancia']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="fecha"> Fecha <p-sortIcon field="fecha" style="color: thistle;"></p-sortIcon> </th>
+                <th pSortableColumn="velocidad"> Velocidad <p-sortIcon field="velocidad"></p-sortIcon> </th>
+                <th pSortableColumn="distancia"> Distancia <p-sortIcon field="distancia"></p-sortIcon> </th>
+                <th pSortableColumn="desplazamiento"> Desplazamiento <p-sortIcon field="desplazamiento"></p-sortIcon> </th>
+                <th pSortableColumn="codigo"> Duración <p-sortIcon field="duracion"></p-sortIcon> </th>
+                <th> Visto </th>
+                <th> Trayectoria </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-dato>
+            <tr class="rowth blackness" (click)="detalleView(dato.sp_cabecera_id)">
+              <td>{{dato.fecha | fecha}}</td>
+              <td>{{dato.velocidad | truncar}}</td>
+              <td>{{dato.distancia | truncar}}</td>
+              <td>{{dato.desplazamiento | truncar}}</td>
+              <td>{{dato.duracion}} s</td>
+              <td><fa-icon *ngIf="dato.visto==1" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon> <fa-icon id="checkId-{{dato.id}}" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon>  </td>
+              <td><fa-icon style="font-size: 1.2em; cursor: pointer; color: chartreuse;" [icon]="faExcel" (click)="exportasXLSX(dato.sp_cabecera_id)"></fa-icon> </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+    </div>
 </div>
 
-
-<div class="row blackness">
-    <div class="col-md-4">
-        <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-            Eventos | 1 Día | Tiempo Acumulado</h4> 
-
-        <div class="row text-center">
-            <div class="col-6">
-                <span style="font-weight: bold;">Eventos Acumulados</span>
-                <span style="display: block; padding: 0.1em; font-size: 2.5em;">104</span>
-            </div>
-            <div class="col-6">
-                <span style="font-weight: bold;">Última hora</span>
-                <span style="display: block; padding: 0.1em; font-size: 2.5em;">23</span>
-            </div>
-        </div>
-        
-        <app-evento-dia></app-evento-dia>
-    </div>
-
-    <div class="col-md-5">
-        <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-            Actividad Última Hora</h4>
-        <app-actividad-hora></app-actividad-hora>
-    </div>
-
-    <div class="col-md-3"></div>
-</div>
+<!-- (mapClick)="openInfo(markerElem, marker.info)" -->

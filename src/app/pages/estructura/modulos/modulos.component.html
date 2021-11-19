@@ -1,0 +1,213 @@
+
+
+
+<table style="user-select: none;">
+    <tbody>
+        <tr>
+            <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 1</span>
+                <div class="circle" *ngIf="valores[0] <= 90 && valores[0] >= 60" (click)="openTable(dataNode)">{{valores[0]}}</div>
+                <div class="circle" *ngIf="valores[0] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[0]}}</div>
+                <div class="circle" *ngIf="valores[0] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[0]}}</div>  
+            </td>
+            <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 2</span>
+                <div class="circle" *ngIf="valores[1] <= 90 && valores[1] >= 60" (click)="openTable(dataNode)">{{valores[1]}}</div>
+                <div class="circle" *ngIf="valores[1] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[1]}}</div>
+                <div class="circle" *ngIf="valores[1] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[1]}}</div>    
+            </td>
+            <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 3</span>
+                <div class="circle" *ngIf="valores[2] <= 90 && valores[2] >= 60" (click)="openTable(dataNode)">{{valores[2]}}</div>
+                <div class="circle" *ngIf="valores[2] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[2]}}</div>
+                <div class="circle" *ngIf="valores[2] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[2]}}</div>  
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 2em; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 4</span>
+                <div class="circle" *ngIf="valores[5] <= 90 && valores[5] >= 60" (click)="openTable(dataNode)">{{valores[5]}}</div>
+                <div class="circle" *ngIf="valores[5] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[5]}}</div>
+                <div class="circle" *ngIf="valores[5] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[5]}}</div>  
+            </td>
+            <td style="padding: 2em;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 5</span>
+                <div class="circle" *ngIf="valores[4] <= 90 && valores[4] >= 60" (click)="openTable(dataNode)">{{valores[4]}}</div>
+                <div class="circle" *ngIf="valores[4] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[4]}}</div>
+                <div class="circle" *ngIf="valores[4] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[4]}}</div>    
+            </td>
+            <td style="padding: 2em; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 6</span>
+                <div class="circle" *ngIf="valores[3] <= 90 && valores[3] >= 60" (click)="openTable(dataNode)">{{valores[3]}}</div>
+                <div class="circle" *ngIf="valores[3] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[3]}}</div>
+                <div class="circle" *ngIf="valores[3] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[3]}}</div>  
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 7</span>
+                <div class="circle" *ngIf="valores[6] <= 90 && valores[6] >= 60" (click)="openTable(dataNode)">{{valores[6]}}</div>
+                <div class="circle" *ngIf="valores[6] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[6]}}</div>
+                <div class="circle" *ngIf="valores[6] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[6]}}</div>  
+            </td>
+            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 8</span>
+                <div class="circle" *ngIf="valores[7] <= 90 && valores[7] >= 60" (click)="openTable(dataNode)">{{valores[7]}}</div>
+                <div class="circle" *ngIf="valores[7] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[7]}}</div>
+                <div class="circle" *ngIf="valores[7] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[7]}}</div>   
+            </td>
+            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo 9</span>
+                <div class="circle" (click)="openTable(dataNode)">{{valores[8]}}</div> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<ng-template #dataNode let-modal class="bg-dark">
+    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span></button> <h4 class="titClima">Informacion Nodo</h4> </div>
+    
+    <div class="modal-body bg-dark">
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Desplazamiento N-S</th>
+                <th scope="col">Desplazamiento E-O</th>
+                <th scope="col">Desplazamiento</th>
+                <th scope="col">Estado</th>
+    
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>2.1 m</th>
+                <td>3.1 m</td>
+                <td>3.96 m</td>
+                <td>OK</td>
+              </tr>
+
+              <tr>
+                <th>Norte</th>
+                <td>Este</td>
+                <td>NE</td>
+                <td></td>
+              </tr>
+    
+            </tbody>
+        </table>
+
+        <div style="display: block;">
+            <canvas baseChart style="height: 220px;"
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [colors]="barChartColor"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+            </canvas>
+        </div>
+
+        <div class="row">
+            <div class="col-6 text-center">
+                <div style="height: 170px;">
+                    <radial-gauge
+                    type="radial-gauge"
+                    major-ticks="-45,-30,-15,0,15,30,45"
+                    minor-ticks="3"
+                    ticks-angle="180"
+                    start-angle="90"
+                    width="250"
+                    units="hPa"
+                    height="250"
+                    min-value="-45"
+                    max-value="45"
+                    stroke-ticks="false"
+                    highlights='[{"from": -45, "to": -30, "color": "rgba(200, 50, 50, .75)"},{"from": -30, "to": -15, "color": "rgba(252, 186, 3, .75)"},
+                    {"from": 15, "to": 30, "color": "rgba(252, 186, 3, .75)"},{"from": -15, "to": 15, "color": "rgba(81, 184, 22, .75)"},{"from": 30, "to": 45, "color": "rgba(200, 50, 50, .75)"}]'
+                    color-plate="rgb(42, 42, 42, 0)"
+                    color-major-ticks="#414142"
+                    color-minor-ticks="#414142"
+                    color-numbers="#ccc"
+                    color-needle="#e0390b"
+                    color-needle-end="#e0390b"
+                    value-box="false"
+                    value-text-shadow="false"
+                    color-circle-inner="#111"
+                    color-needle-circle-outer="rgb(84, 144, 154)"
+                    needle-circle-size="7"
+                    needle-circle-outer="false"
+                    animation-rule="linear"
+                    needle-type="line"
+                    needle-start="0"
+                    needle-width="3"
+                    borders="true"
+                    border-inner-width="0"
+                    border-middle-width="0"
+                    border-outer-width="0"
+                    color-border-outer="#fff"
+                    color-border-outer-end="#000"
+                    color-needle-shadow-down="#111"
+                    border-shadow-width="0"
+                    animation-duration="800"
+                    animate-on-init="true"
+                    [attr.value] = "pitch"
+                ></radial-gauge>
+                </div>
+            </div>
+            <div class="col-6">
+                <div style="height: 170px;">
+                    <radial-gauge
+                    type="radial-gauge"
+                    major-ticks="-45,-30,-15,0,15,30,45"
+                    minor-ticks="3"
+                    ticks-angle="180"
+                    start-angle="90"
+                    width="250"
+                    units="hPa"
+                    height="250"
+                    min-value="-45"
+                    max-value="45"
+                    stroke-ticks="false"
+                    highlights='[{"from": -45, "to": -30, "color": "rgba(200, 50, 50, .75)"},{"from": -30, "to": -15, "color": "rgba(252, 186, 3, .75)"},
+                    {"from": 15, "to": 30, "color": "rgba(252, 186, 3, .75)"},{"from": -15, "to": 15, "color": "rgba(81, 184, 22, .75)"},{"from": 30, "to": 45, "color": "rgba(200, 50, 50, .75)"}]'
+                    color-plate="rgb(42, 42, 42, 0)"
+                    color-major-ticks="#414142"
+                    color-minor-ticks="#414142"
+                    color-numbers="#ccc"
+                    color-needle="#e0390b"
+                    color-needle-end="#e0390b"
+                    value-box="false"
+                    value-text-shadow="false"
+                    color-circle-inner="#111"
+                    color-needle-circle-outer="rgb(84, 144, 154)"
+                    needle-circle-size="7"
+                    needle-circle-outer="false"
+                    animation-rule="linear"
+                    needle-type="line"
+                    needle-start="0"
+                    needle-width="3"
+                    borders="true"
+                    border-inner-width="0"
+                    border-middle-width="0"
+                    border-outer-width="0"
+                    color-border-outer="#fff"
+                    color-border-outer-end="#000"
+                    color-needle-shadow-down="#111"
+                    border-shadow-width="0"
+                    animation-duration="800"
+                    animate-on-init="true"
+                    [attr.value] = "roll"
+                ></radial-gauge>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer bg-dark"></div>
+
+    
+</ng-template>

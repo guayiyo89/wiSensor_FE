@@ -124,6 +124,15 @@ import { SilosBarComponent } from './pages/produccion/silos-bar/silos-bar.compon
 import { TempAguaComponent } from './pages/produccion/temp-agua/temp-agua.component';
 import { TempHistoricosComponent } from './pages/produccion/temp-historicos/temp-historicos.component';
 import { SilosPieComponent } from './pages/produccion/silos-pie/silos-pie.component';
+import { PetroleoComponent } from './pages/produccion/petroleo/petroleo.component';
+import { AguaComponent } from './pages/produccion/agua/agua.component';
+import { AguaPetroleoComponent } from './pages/produccion/agua-petroleo/agua-petroleo.component';
+import { PuertasComponent } from './pages/produccion/puertas/puertas.component';
+import { EstructuraComponent } from './pages/estructura/estructura.component';
+import { ModulosComponent } from './pages/estructura/modulos/modulos.component';
+import { InundacionComponent } from './pages/produccion/inundacion/inundacion.component';
+import { ModulosLineComponent } from './pages/estructura/modulos-line/modulos-line.component';
+import { TruncarPipe } from './pipes/truncar.pipe';
 
 @NgModule({
   declarations: [
@@ -211,7 +220,16 @@ import { SilosPieComponent } from './pages/produccion/silos-pie/silos-pie.compon
     SilosBarComponent,
     TempAguaComponent,
     TempHistoricosComponent,
-    SilosPieComponent
+    SilosPieComponent,
+    PetroleoComponent,
+    AguaComponent,
+    AguaPetroleoComponent,
+    PuertasComponent,
+    EstructuraComponent,
+    ModulosComponent,
+    InundacionComponent,
+    ModulosLineComponent,
+    TruncarPipe
   ],
   imports: [
     BrowserModule,

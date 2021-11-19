@@ -1,5 +1,5 @@
 <div class="row">
-    <h2>Agregar nueva estación</h2>
+    <h2>Agregar nuevo Radar</h2>
     <div class="col-md-6">
         <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -73,6 +73,29 @@
                     <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label>Zona</label>
+                <input type="text" formControlName="zona" placeholder="Zona" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zona.errors }">
+                <div *ngIf="submitted && f.zona.errors">
+                    <div *ngIf="f.zona.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Latitud</label>
+                <input type="number" formControlName="latitud" placeholder="Latitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.latitud.errors }">
+                <div *ngIf="submitted && f.latitud.errors">
+                    <div *ngIf="f.latitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La latitud es obligatoria.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Longitud</label>
+                <input type="number" formControlName="longitud" placeholder="Longitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.longitud.errors }">
+                <div *ngIf="submitted && f.longitud.errors">
+                    <div *ngIf="f.longitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La longitud es obligatoria.</div>
+                </div>
+            </div>
     
             <!-- <div class="form-group">
                 <label>Comuna</label>
@@ -89,5 +112,20 @@
     
         </form>
     </div>
+
+
+    <div class="col-md-6">
+        <google-map
+        height="450px"
+        width="100%"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options"
+        (mapClick)="click($event)">
+        </google-map>
+        <span style="color: grey; font-size: 9pt; font-family: Roboto;">Haga click en el mapa para obtener una ubicación referencial. <br>
+            Se recomienda editar en los campos especificos para obtener la locación específica. </span>
+    </div>
+
 
 </div>

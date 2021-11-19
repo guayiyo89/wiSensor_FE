@@ -32,6 +32,22 @@ export class EditRadarComponent implements OnInit {
   faBack = faArrowLeft
   _id: any
 
+  //--------------------------------------------------------MAPA
+  zoom = 14
+  // @ts-ignore
+  center: google.maps.LatLngLiteral
+
+  options: google.maps.MapOptions = {
+    mapTypeId: 'hybrid',
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    fullscreenControl: false,
+    streetViewControl: false,
+    maxZoom: 17,
+    minZoom: 9,
+  }
+
   ngOnInit(){
     this.nomEmpresa()
     this._route.params.subscribe( params => {
@@ -45,6 +61,9 @@ export class EditRadarComponent implements OnInit {
         modelo: ['', Validators.required],
         status: ['', Validators.required],
         empresa_id: ['', Validators.required],
+        zona: ['', Validators.required],
+        latitud: ['', Validators.required],
+        longitud: ['', Validators.required],
         id_centro: ['', Validators.required]
       })
   
@@ -62,7 +81,17 @@ export class EditRadarComponent implements OnInit {
           this.editForm.controls['marca'].setValue(data.marca)
           this.editForm.controls['modelo'].setValue(data.modelo)
           this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['zona'].setValue(data.zona)
+          this.editForm.controls['latitud'].setValue(data.latitud)
+          this.editForm.controls['longitud'].setValue(data.longitud)
           this.editForm.controls['id_centro'].setValue(data.id_centro)
+
+          navigator.geolocation.getCurrentPosition((position) => {
+            this.center = {
+              lat: data.latitud,
+              lng: data.longitud,
+            }
+          })
         }
       )
 
@@ -113,14 +142,22 @@ export class EditRadarComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.editForm.controls['id_centro'].setValue('')
+        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0])}
+        else { this.editForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)
         this.centroList = []
-        this.editForm.controls['id_centro'].setValue('')
+        this.editForm.controls['id_centro'].setValue(this.centroList[0])
       }
     )
+  }
+
+  click(event: google.maps.MapMouseEvent) {
+    //this.latMap = event.latLng.lat()
+    //this.longMap = event.latLng.lng()
+    this.editForm.controls['latitud'].setValue(event.latLng.lat())
+    this.editForm.controls['longitud'].setValue(event.latLng.lng())
   }
 
   // get the form short name to access the form fields

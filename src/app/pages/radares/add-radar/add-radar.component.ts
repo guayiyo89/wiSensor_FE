@@ -28,6 +28,22 @@ export class AddRadarComponent implements OnInit {
   faSave = faSave
   faBack = faArrowLeft
 
+  //--------------------------------------------------------MAPA
+  zoom = 14
+  // @ts-ignore
+  center: google.maps.LatLngLiteral
+
+  options: google.maps.MapOptions = {
+    mapTypeId: 'hybrid',
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    fullscreenControl: false,
+    streetViewControl: false,
+    maxZoom: 17,
+    minZoom: 9,
+  }
+
   ngOnInit(){
     this.nomEmpresa()
     this.nomCentro(1); //rescato AST
@@ -41,6 +57,9 @@ export class AddRadarComponent implements OnInit {
       modelo: ['', Validators.required],
       status: ['', Validators.required],
       empresa_id: ['', Validators.required],
+      zona: ['', Validators.required],
+      latitud: ['', Validators.required],
+      longitud: ['', Validators.required],
       id_centro: ['', Validators.required]
     })
 
@@ -92,7 +111,8 @@ export class AddRadarComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.addForm.controls['id_centro'].setValue('')
+        if(this.centroList.length > 0) {this.addForm.controls['id_centro'].setValue(this.centroList[0])}
+        else { this.addForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)
@@ -100,6 +120,13 @@ export class AddRadarComponent implements OnInit {
         this.addForm.controls['id_centro'].setValue('')
       }
     )
+  }
+
+  click(event: google.maps.MapMouseEvent) {
+    //this.latMap = event.latLng.lat()
+    //this.longMap = event.latLng.lng()
+    this.addForm.controls['latitud'].setValue(event.latLng.lat())
+    this.addForm.controls['longitud'].setValue(event.latLng.lng())
   }
 
   // get the form short name to access the form fields

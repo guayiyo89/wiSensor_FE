@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-4">
+        <linear-gauge
+    type="linear-gauge"
+    width="90"
+    height="200"
+    min-value="0"
+    max-value="100"
+    major-ticks="0,20,40,60,80,100"
+    highlights='false'
+    minor-ticks="1"
+    stroke-ticks="true"
+    color-plate="rgba(42, 42, 42, 0)"
+    border-shadow-width="0"
+    borders="false"
+    bar-begin-circle="false"
+    tick-side="left"
+    number-side="left"
+    needle-side="left"
+    needle-type="false"
+    needle-width="3"
+    color-needle="#f23607"
+    color-needle-end="#fab30c"
+    animation-duration="81500"
+    animation-rule="linear"
+    animation-target="plate"
+    bar-width="42"
+    ticks-width="4"
+    color-units="#aaa"
+    color-minor-ticks="rgba(99, 98, 110, 0.5)"
+    color-major-ticks="rgba(99, 98, 110, 0.5)"
+    color-numbers="#eee"
+    color-bar= "rgba(2, 2, 2, 0.7)"
+    color-bar-progress="#63626e"
+    ticks-width-minor="15"
+    [attr.value] = "valor"
+></linear-gauge>
+    </div>
+    <div class="col-8">
+        <span style="font-weight: bold; display: block;">Porcentaje</span>
+        <span style="font-size: 2.6em; color: #888791; display: block;">{{value}} %</span>
+        <span style="font-weight: bold; display: block;">Total / Capacidad</span>
+        <span style="font-size: 2.2em; color: #8d8c96; display: block;">{{total}} / {{capacidad}} </span>
+    </div>
+</div>

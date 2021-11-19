@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-3">
-        <app-silos-bar></app-silos-bar>
+        <app-petroleo></app-petroleo>
     </div>
     <div class="col-3">
-        <app-silos-bar></app-silos-bar>
+        <app-agua></app-agua>
     </div>
-    <div class="col-3">
-        <app-silos-pie></app-silos-pie>
+    <div class="col-6">
+        <app-agua-petroleo></app-agua-petroleo>
     </div>
 </div>
 
@@ -14,7 +14,22 @@
     <div class="col-3">
         <app-temp-agua></app-temp-agua>
     </div>
-    <div class="col-9">
+    <div class="col-6">
         <app-temp-historicos></app-temp-historicos>
+    </div>
+    <div class="col-3">
+        <span style="display: block; font-weight: bold;">Temperatura Pontón</span>
+        <span style="display: block; font-size: 2.6em;"> <fa-icon [icon]="faTemp" style="color: chartreuse;"></fa-icon> {{tempPonton}} °C</span>
+        <span style="display: block; font-weight: bold;">Humedad Pontón</span>
+        <span style="display: block; font-size: 2.6em;"> <fa-icon [icon]="faHumedad" style="color: rgb(33, 151, 219);"></fa-icon> {{humedadPonton}} %</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <app-puertas></app-puertas>
+    </div>
+    <div class="col-md-6">
+        <app-inundacion></app-inundacion>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from '../config/config';
+import { ExcelServiceService } from './excel-service.service';
 import { UsuarioService } from './usuario.service';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class RadarService {
 
   baseUrl = URL_SERVICIOS + '/radar';
 
-  constructor(public http: HttpClient, public _user: UsuarioService) { }
+  constructor(public http: HttpClient, public _user: UsuarioService, private _excel: ExcelServiceService) { }
 
   getRadar(id:any){
     let url = `${this.baseUrl}/${id}`;
