@@ -121,10 +121,10 @@ export class UsuarioService {
     return this.http.put(url, usuario);
   }
 
-  deleteUser(id: any){
-    let url = URL_SERVICIOS + '/usuario/' + id;
+  deleteUser(id: any, usuario: Usuario){
+    let url = URL_SERVICIOS + '/usuario/del/' + id;
     url += '?token=' + this.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, usuario);
   }
 
   

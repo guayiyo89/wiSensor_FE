@@ -45,7 +45,7 @@ export class RadaresComponent implements OnInit {
     }
   }
 
-  delete(radar: any){
+  delete(radar: any, id:any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -56,11 +56,9 @@ export class RadaresComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._radar.deleteRadar(radar.id).subscribe(
+        this._radar.deleteRadar(id, radar).subscribe(
           resp => {
-            if(!resp.err){
               this.radarList.splice(this.radarList.indexOf(radar), 1)
-            }
           }
         )
         Swal.fire('Eliminado!', '', 'info');

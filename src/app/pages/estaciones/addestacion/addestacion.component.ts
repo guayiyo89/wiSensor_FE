@@ -71,8 +71,9 @@ export class AddestacionComponent implements OnInit {
       id_centro: ['', Validators.required]
     })
 
-    this.addForm.controls['estado'].setValue(1)
+    this.addForm.controls['status'].setValue(1)
     this.addForm.controls['empresa_id'].setValue(this.idEmpresa)
+    this.addForm.controls['id_centro'].setValue(this._user.userIds.id_centro) 
 
   }
   
@@ -124,7 +125,8 @@ export class AddestacionComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.addForm.controls['id_centro'].setValue('')
+        if(this.centroList.length > 0) {this.addForm.controls['id_centro'].setValue(this.centroList[0].id)}
+        else { this.addForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)

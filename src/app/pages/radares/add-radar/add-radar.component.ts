@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
-import { comunasChile } from 'src/app/config/chile';
 import { Centro } from 'src/app/interfaces/centro.model';
 import { Empresa } from 'src/app/interfaces/empresa.model';
 import { CentroService } from 'src/app/services/centro.service';
@@ -9,6 +8,7 @@ import { EmpresaService } from 'src/app/services/empresa.service';
 import { RadarService } from 'src/app/services/radar.service';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-add-radar',
@@ -18,7 +18,8 @@ import Swal from 'sweetalert2';
 })
 export class AddRadarComponent implements OnInit {
 
-  constructor(public _radar: RadarService, public _empresa: EmpresaService, public _centro: CentroService, private _location: Location, private _fbuilder: FormBuilder) { }
+  constructor(public _radar: RadarService, public _empresa: EmpresaService, public _centro: CentroService, private _location: Location, private _fbuilder: FormBuilder, 
+    public _user: UsuarioService) { }
 
   submitted = false;
   addForm: FormGroup;
@@ -63,8 +64,9 @@ export class AddRadarComponent implements OnInit {
       id_centro: ['', Validators.required]
     })
 
-    this.addForm.controls['estado'].setValue(1)
-    this.addForm.controls['empresa_id'].setValue(1)
+    this.addForm.controls['status'].setValue(1)
+    this.addForm.controls['empresa_id'].setValue(this._user.userIds.id_empresa)
+    this.addForm.controls['id_centro'].setValue(this._user.userIds.id_centro)
 
   }
 
@@ -111,7 +113,7 @@ export class AddRadarComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        if(this.centroList.length > 0) {this.addForm.controls['id_centro'].setValue(this.centroList[0])}
+        if(this.centroList.length > 0) {this.addForm.controls['id_centro'].setValue(this.centroList[0].id)}
         else { this.addForm.controls['id_centro'].setValue('')}
       },
       error => {

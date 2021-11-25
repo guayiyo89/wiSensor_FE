@@ -1,457 +1,464 @@
-<div *ngIf="_idPerfil > 2 && estacion.id_centro != _idCentroUser" style="user-select: none; padding-top: 0.7em;">
+<div *ngIf="_idPerfil > 2 && id_cent_est != _idCentroUser" style="user-select: none; padding-top: 0.7em;">
   <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
 </div>
 
 <div *ngIf="_idPerfil == 2 && _idEmpresaCenter != _idEmpresaUser" style="user-select: none; padding-top: 0.7em;">
   <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
 </div>
+
+<div *ngIf="flag == 0" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">La estación no esta disponible para su visualización.</h4>
+</div>
 <!-- "(_idPerfil > 2 && estacion.id_centro == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter" -->
-<div>
-  <!-- Datos y ALertas -->
-  <div class="row blackness">
-    <div class="col-md-6">
-      <div class="row w100">
-        <h3>{{estacion.nombre}}</h3>
-        <div class="col-6">
-          <span style="display: block; font-size: 10pt;"> {{estacion.descripcion}} </span>
-          <span style="display: block;"> {{estacion.marca}} / {{estacion.modelo}} </span>
+<div *ngIf="id_cent_est && _idEmpresaCenter && flag == 1">
+  <div *ngIf="(_idPerfil > 2 && id_cent_est == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter ">
+    <!-- Datos y ALertas -->
+    <div class="row blackness">
+      <div class="col-md-6">
+        <div class="row w100">
+          <h3>{{estacion.nombre}}</h3>
+          <div class="col-6">
+            <span style="display: block; font-size: 10pt;"> {{estacion.descripcion}} </span>
+            <span style="display: block;"> {{estacion.marca}} / {{estacion.modelo}} </span>
+          </div>
+          <div class="col-6"></div>
         </div>
-        <div class="col-6"></div>
+      </div>
+      <div class="col-md-6 text-right" *ngIf="codigo">
+        <app-alertas-est [codigo]="codigo"></app-alertas-est>
       </div>
     </div>
-    <div class="col-md-6 text-right" *ngIf="codigo">
-      <app-alertas-est [codigo]="codigo"></app-alertas-est>
-    </div>
-  </div>
-
-
-  <div class="row blackness" style="user-select: none; padding-top: 0.3em;">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
-          <div style="display: block; width: 80%; margin: 0 auto">
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
-            <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+  
+  
+    <div class="row blackness" style="user-select: none; padding-top: 0.3em;">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
+            <div style="display: block; width: 80%; margin: 0 auto">
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
+              <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+            </div>
+          </div>
+          
+          <div class="col-5">
+            <span style="font-weight: bold; text-align: center;">Hora Actual</span>
+            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
+          </div>
+    
+          <div class="col-5">
+            <span style="font-weight: bold; text-align: center;">Último registro</span>
+            <span *ngIf="horaRegistro_clima" style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{horaRegistro_clima}}</span>
+          </div>
+    
+        </div>
+      </div>
+    
+      <div class="col-md-6">
+        <div class="row">
+          <span style="text-align: center; font-weight: bold;">Descargas Excel (.xlsx)</span>
+          <div class="col-6">
+            <span style="text-align: center; font-weight: bold;">Meteorología</span>
+            <ul>
+              <li class="descarga" (click)="exportasXLSX_2anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 2 años</li>
+              <li class="descarga" (click)="exportasXLSX_anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 1 año</li>
+              <li class="descarga" (click)="exportasXLSX_6mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 6 meses</li>
+              <li class="descarga" (click)="exportasXLSX_3mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 3 meses</li>
+            </ul>
+          </div>
+  
+          <div class="col-6">
+            <span style="text-align: center; font-weight: bold;">Inclinación y Orientación</span>
+            <ul>
+              <li class="descarga" (click)="exportasXLSX_rs_2anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 2 años</li>
+              <li class="descarga" (click)="exportasXLSX_rs_anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 1 año</li>
+              <li class="descarga" (click)="exportasXLSX_rs_6mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 6 meses</li>
+              <li class="descarga" (click)="exportasXLSX_rs_3mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 3 meses</li>
+            </ul>
           </div>
         </div>
-        
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Hora Actual</span>
-          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
-        </div>
-  
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Último registro</span>
-          <span *ngIf="horaRegistro_clima" style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{horaRegistro_clima}}</span>
-        </div>
-  
-      </div>
-    </div>
-  
-    <div class="col-md-6">
-      <div class="row">
-        <span style="text-align: center; font-weight: bold;">Descargas Excel (.xlsx)</span>
-        <div class="col-6">
-          <span style="text-align: center; font-weight: bold;">Meteorología</span>
-          <ul>
-            <li class="descarga" (click)="exportasXLSX_2anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 2 años</li>
-            <li class="descarga" (click)="exportasXLSX_anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 1 año</li>
-            <li class="descarga" (click)="exportasXLSX_6mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 6 meses</li>
-            <li class="descarga" (click)="exportasXLSX_3mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 3 meses</li>
-          </ul>
-        </div>
-
-        <div class="col-6">
-          <span style="text-align: center; font-weight: bold;">Inclinación y Orientación</span>
-          <ul>
-            <li class="descarga" (click)="exportasXLSX_rs_2anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 2 años</li>
-            <li class="descarga" (click)="exportasXLSX_rs_anio()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 1 año</li>
-            <li class="descarga" (click)="exportasXLSX_rs_6mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 6 meses</li>
-            <li class="descarga" (click)="exportasXLSX_rs_3mes()"><fa-icon [icon]="faExcel" style="transform: scale(0.7); color: rgb(255, 255, 255); padding-right: 0.3em; font-size: 12pt;"> </fa-icon> 3 meses</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- NUEVO ESQUEMA Pitch -->
-  <div class="row blackness" style="padding-top: 0.3em;">
-    <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-       Pitch (Inclinación Longitudinal)</h4> 
-      <app-heading-rs [heading]="dataRsNow.pitch" [minPitch]="minPitch" [maxPitch]="maxPitch" class="text-center"></app-heading-rs>
-    </div>
-    <div class="col-md-6"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-       Pitch - Histórico</h4>
-      <app-hist-pitch [dataPitch]="dataRs"></app-hist-pitch>
-    </div>
-    <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-        Orientación</h4> 
-      <app-orientation [yaw]="dataRsNow.header"></app-orientation>
-    </div>
-  </div>
-  
-  <!-- segunda Fila Roll -->
-  <div class="row blackness" style="padding-top: 5px;">
-    <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-       Roll (Inclinación Transversal)</h4>
-      <app-escoring-rs [escora]="dataRsNow.roll" [minRoll]="minRoll" [maxRoll]="maxRoll" class="text-center"></app-escoring-rs>
-    </div>
-    <div class="col-md-6"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-       Roll - Histórico</h4>
-      <app-hist-roll [dataRoll]="dataRs"></app-hist-roll>
-    </div>
-    <div class="col-md-3"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-       Viento durante 7 días</h4>
-      <app-grafico-d3></app-grafico-d3>
-    </div>
-  </div>
-  
-  
-  <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
-  
-  <div class="row blackness" style="padding-top: 5px;">
-    <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Velocidad Viento</h4>
-  
-      <span style="font-weight: bold; text-align: center;">Actual</span>
-      <app-velc-actual [velc]="datosClima.velocidad_actual"></app-velc-actual>
-  
-      <div style="display: block">
-        <fa-icon [icon]="faWind" style="transform: scale(0.7); font-size: 1.8em; color: rgb(91, 142, 186);"></fa-icon>
-        <span style="font-size: 2.5em;"> {{vel_Kmh}} </span> <span style="font-size: 1.8em;"> Km/h </span>
-      </div>
-  
-      <span style="font-size: 1em; border-radius: 4px; display: block; background-color: rgb(59,59,59); text-align: center; font-weight: bold; text-transform: uppercase; margin-top: 3px;">
-        {{datosClima.velocidad_condicion_actual}}</span>
-  
-    <div class="row" style="padding-top: 0.6em;">
-      <div class="col-6">
-        <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
-          {{vel_ms}} </span>
-        <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95);  padding: 1px; display: block; width: 70%; margin: 2px auto">
-          m/s </span>
-      </div>
-      <div class="col-6">
-        <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
-          {{vel_knots}} </span>
-        <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95);  padding: 1px; display: block; width: 70%; margin: 2px auto">
-          Nudos </span>
-      </div>
-    </div>
-      <!-- Min Max Avg Wind -->
-      <div class="row" style="padding-top: 0.6em;">
-        <div class="col-4">
-          <span style="font-weight: bold;">Mínima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(50, 182, 30) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
-           {{vel_min}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
-            Km/h </span>
-        </div>
-        <div class="col-4">
-          <span style="font-weight: bold;">Promedio</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(238, 204, 15) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
-          {{vel_avg}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
-            Km/h </span>
-        </div>
-        <div class="col-4">
-          <span style="font-weight: bold;">Máxima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(226, 45, 21) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
-          {{vel_max}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
-            Km/h </span>
-        </div>
-      </div>
-  
-    </div>
-  
-  
-    <div class="col-md-6"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Velocidad Viento - Histórico</h4>
-      <app-hist-velc [dataVelc]="dataVelPre"></app-hist-velc>
-    </div>
-
-
-    <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Dirección Viento</h4>
-      <app-wind-actual [angle]="datosClima.direccion_actual" ></app-wind-actual>
-      
-    </div>
-  </div>
-  
-  
-  <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
-  
-  <div class="row blackness" style="padding-bottom: 0.5em;">
-    <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Presión</h4>
-      <span style="font-weight: bold; text-align: center;">Actual</span>
-  
-      <app-presion-actual [presion]="datosClima.presion_actual"></app-presion-actual>
-  
-      <span style="font-size: 2em; border-radius: 4px; display: block; background-color: rgb(59,59,59); text-align: center;">
-       {{datosClima.presion_actual}} hPa </span>
-  
-      <div class="row" style="padding-top: 0.5em; padding-bottom: 0.53em;">
-        <div class="col-6">
-          <span style="font-weight: bold;">Mínima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(50, 182, 30) 4px solid; padding: 2px; display: block; width: 70%; margin: 0 auto">
-            {{datosClima.presion_min_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 70%; margin: 2px auto">
-            hPa </span>
-        </div>
-        <div class="col-6">
-          <span style="font-weight: bold;">Máxima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(226, 45, 21) 4px solid; padding: 2px; display: block; width: 70%; margin: 0 auto">
-            {{datosClima.presion_max_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
-            hPa </span>
-        </div>
-      </div>
-  
-      <div style="margin: 0 auto; padding-top: 5px;">
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSday(graphPSdia)">Presión Dia</button>
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSmes(graphPSmes)">Presión Mes</button>
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSanio(graphPSanio)">Presión Año</button>
-      </div>
-  
-      <span style="font-weight: bold; text-align: center; margin-top: 1em;">Humedad Relativa</span>
-  
-      </div>
-  
-    <div class="col-md-6"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Presión - Histórico</h4>
-      <app-hist-press [dataPres]="dataVelPre"></app-hist-press></div>
-  
-    <!-- Temperatura -->
-    <div class="col-md-3 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Temperatura</h4>
-  
-      <span style="font-weight: bold; text-align: center; margin-top: 1em;">Actual</span>
-  
-      <app-temp-actual [temp]="tempActual" ></app-temp-actual>
-  
-      <div style="display: block">
-        <fa-icon *ngIf="tempActual < 5"  [icon]="faTvlow" style="transform: scale(0.7); font-size: 1.8em; color: rgb(65, 87, 132);"></fa-icon>
-        <fa-icon *ngIf="tempActual >= 5 && tempActual < 12"  [icon]="faTlow" style="transform: scale(0.7); font-size: 1.8em; color: rgb(26, 148, 75);"></fa-icon>
-        <fa-icon *ngIf="tempActual >= 12 && tempActual < 20" [icon]="faTmed" style="transform: scale(0.7); font-size: 1.8em; color: rgb(87, 199, 31);"></fa-icon>
-        <fa-icon *ngIf="tempActual >= 20 && tempActual < 25" [icon]="faThigh" style="transform: scale(0.7); font-size: 1.8em; color: rgb(226, 195, 21);"></fa-icon>
-        <fa-icon *ngIf="tempActual >= 25" [icon]="faTmax" style="transform: scale(0.7); font-size: 1.8em; color: rgb(226, 69, 21);"></fa-icon>
-        <span style="font-size: 2.5em;"> {{tempActual}}° </span> <span style="font-size: 2em;"> C </span>
-      </div>
-  
-      <div class="row" style="padding-top: 0.5em; padding-bottom: 0.53em;">
-        <div class="col-4">
-          <span style="font-weight: bold;">Mínima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(81, 199, 22) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
-          {{datosClima.temperatura_min_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
-            °C </span>
-        </div>
-        <div class="col-4">
-          <span style="font-weight: bold;">Promedio</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(233, 193, 15) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
-          {{datosClima.temperatura_avg_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 90%; margin: 2px auto">
-            °C </span>
-        </div>
-        <div class="col-4">
-          <span style="font-weight: bold;">Máxima</span>
-          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(224, 41, 17) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
-          {{datosClima.temperatura_max_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 90%; margin: 2px auto">
-            °C </span>
-        </div>
-  
-        <div style="margin: 0 auto; padding-top: 5px;">
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTday(graphTdia)">Temp.Dia</button>
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTmes(graphTmes)">Temp.Mes</button>
-          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTanio(graphTanio)">Temp.Año</button>
-        </div>
-  
-      </div>
-  
-      <span style="font-weight: bold; text-align: center; margin-top: 1em;">Punto de Rocío</span>
-      <span style="font-size: 2.3em; color: rgb(255, 255, 255); border-radius: 4px; display: block;text-align: center;">
-        {{datosClima.punto_rocio_actual}} </span>
-      </div>
-  
-  </div>
-  
-  <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
-  
-  <div class="row blackness">
-  
-    <div class="col-md-4"> <h4 class="titClima"> 
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Posición</h4>
-      <app-position *ngIf="latitud && longitud" [lat1]="latitud" [lon1]="longitud" [lat2]="datosClima.gps_latitude" [lon2]="datosClima.gps_longitude"></app-position>
-  
-    </div>
-  
-  
-    <div class="col-md-4 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Precipitaciones</h4> 
-      <span style="font-weight: bold;">Actual</span>
-  
-      <div style="display: block; padding-top: 0.5em; padding-bottom: 0.5em;">
-        <fa-icon [icon]="faRain" style="transform: scale(0.7); font-size: 2em; color: rgb(91, 142, 186);"></fa-icon>
-        <span style="font-size: 2.6em;"> {{lluvia}} </span> <span style="font-size: 1.6em;">mm</span>
-      </div>
-  
-      <div class="row" style="padding-top: 0.5em;">
-        <div class="col-6">
-          <span style="font-weight: bold;">Acumulado Hoy</span>
-          <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
-          {{datosClima.precipitacion_ult_24hrs}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
-            mm </span>
-        </div>
-        <div class="col-6">
-          <span style="font-weight: bold;">Probabilidad Lluvia</span>
-          <span style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
-            {{predictedApi.forecast.forecastday[0].hour[0].chance_of_rain}} % </span>
-        </div>
-      </div>
-  
-      <div style="margin: 0 auto; padding-top: 5px;">
-        <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlday(graphLldia)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Dia</button>
-        <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlmes(graphLlmes)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Mes</button>
-        <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlanio(graphLlanio)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Año</button>
-      </div>
-  
-      <div style="display: block; padding-top: 0.5em;">
-        <span style="font-weight: bold; display: block;">Humedad Relativa</span>
-        <fa-icon [icon]="faTint" style="transform: scale(0.7); font-size: 2em; color: rgb(91, 142, 186);"></fa-icon>
-        <span style="font-size: 2.6em;"> {{datosClima.humedad_actual}} % </span> 
       </div>
     </div>
     
-  
-  
-    <div class="col-md-4 text-center"> <h4 class="titClima">
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Radiación Solar</h4> 
-  
-      <span style="font-weight: bold;">Actual</span>
-      <app-gauge [radiacion]="datosClima.radiacion_actual"></app-gauge>
-  
-      <div style="display: block">
-        <fa-icon *ngIf="datosClima.radiacion_actual < 200"  [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(25, 148, 43);"></fa-icon>
-        <fa-icon *ngIf="datosClima.radiacion_actual >= 200 && datosClima.radiacion_actual < 400"  [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(100, 199, 30);"></fa-icon>
-        <fa-icon *ngIf="datosClima.radiacion_actual >= 400 && datosClima.radiacion_actual < 600" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(231, 207, 19);"></fa-icon>
-        <fa-icon *ngIf="datosClima.radiacion_actual >= 600 && datosClima.radiacion_actual < 800" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(233, 120, 0);"></fa-icon>
-        <fa-icon *ngIf="datosClima.radiacion_actual >= 800" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(209, 59, 13);"></fa-icon>
-        <span style="font-size: 2.5em;"> {{datosClima.radiacion_actual}} </span> <span style="font-size: 2em;"> W/m2 </span>
+    <!-- NUEVO ESQUEMA Pitch -->
+    <div class="row blackness" style="padding-top: 0.3em;">
+      <div class="col-md-3"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+         Pitch (Inclinación Longitudinal)</h4> 
+        <app-heading-rs [heading]="dataRsNow.pitch" [minPitch]="minPitch" [maxPitch]="maxPitch" class="text-center"></app-heading-rs>
       </div>
-  
-      <div class="row" style="padding-top: 0.5em;">
+      <div class="col-md-6"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+         Pitch - Histórico</h4>
+        <app-hist-pitch [dataPitch]="dataRs"></app-hist-pitch>
+      </div>
+      <div class="col-md-3 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+          Orientación</h4> 
+        <app-orientation [yaw]="dataRsNow.header"></app-orientation>
+      </div>
+    </div>
+    
+    <!-- segunda Fila Roll -->
+    <div class="row blackness" style="padding-top: 5px;">
+      <div class="col-md-3"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+         Roll (Inclinación Transversal)</h4>
+        <app-escoring-rs [escora]="dataRsNow.roll" [minRoll]="minRoll" [maxRoll]="maxRoll" class="text-center"></app-escoring-rs>
+      </div>
+      <div class="col-md-6"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+         Roll - Histórico</h4>
+        <app-hist-roll [dataRoll]="dataRs"></app-hist-roll>
+      </div>
+      <div class="col-md-3"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+         Viento durante 7 días</h4>
+        <app-grafico-d3></app-grafico-d3>
+      </div>
+    </div>
+    
+    
+    <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- VELC VIENTO ----------------------------------------------------------------- -->
+    
+    <div class="row blackness" style="padding-top: 5px;">
+      <div class="col-md-3 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Velocidad Viento</h4>
+    
+        <span style="font-weight: bold; text-align: center;">Actual</span>
+        <app-velc-actual [velc]="datosClima.velocidad_actual"></app-velc-actual>
+    
+        <div style="display: block">
+          <fa-icon [icon]="faWind" style="transform: scale(0.7); font-size: 1.8em; color: rgb(91, 142, 186);"></fa-icon>
+          <span style="font-size: 2.5em;"> {{vel_Kmh}} </span> <span style="font-size: 1.8em;"> Km/h </span>
+        </div>
+    
+        <span style="font-size: 1em; border-radius: 4px; display: block; background-color: rgb(59,59,59); text-align: center; font-weight: bold; text-transform: uppercase; margin-top: 3px;">
+          {{datosClima.velocidad_condicion_actual}}</span>
+    
+      <div class="row" style="padding-top: 0.6em;">
         <div class="col-6">
-          <span style="font-weight: bold;">Máxima</span>
-          <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(59,59,59); border-bottom: rgb(224, 41, 17) solid 4px; padding: 2px; display: block; width: 70%; margin: 0 auto">
-            {{datosClima.radiacion_max_hoy}} </span>
-          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
-            W/m2 </span>
+          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
+            {{vel_ms}} </span>
+          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95);  padding: 1px; display: block; width: 70%; margin: 2px auto">
+            m/s </span>
         </div>
         <div class="col-6">
-          <span style="font-weight: bold;">Índice UV</span>
-          <span *ngIf="predictedApi.current.uv < 3" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(66, 164, 57) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
-            {{predictedApi.current.uv}} </span>
-          <span *ngIf="predictedApi.current.uv >= 3 && predictedApi.current.uv < 6" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(236, 204, 18) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
-            {{predictedApi.current.uv}} </span>
-          <span *ngIf="predictedApi.current.uv >= 6 && predictedApi.current.uv < 8" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(233, 114, 2) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
-            {{predictedApi.current.uv}} </span>
-          <span *ngIf="predictedApi.current.uv >= 8 && predictedApi.current.uv < 10" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(220, 22, 22) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
-            {{predictedApi.current.uv}} </span>
-          <span *ngIf="predictedApi.current.uv >= 10" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); padding: 2px; display: block; border-bottom: rgb(90, 36, 120) solid 6px; width: 50%; margin: 0 auto">
+          <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
+            {{vel_knots}} </span>
+          <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95);  padding: 1px; display: block; width: 70%; margin: 2px auto">
+            Nudos </span>
+        </div>
+      </div>
+        <!-- Min Max Avg Wind -->
+        <div class="row" style="padding-top: 0.6em;">
+          <div class="col-4">
+            <span style="font-weight: bold;">Mínima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(50, 182, 30) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
+             {{vel_min}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
+              Km/h </span>
+          </div>
+          <div class="col-4">
+            <span style="font-weight: bold;">Promedio</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(238, 204, 15) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
+            {{vel_avg}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
+              Km/h </span>
+          </div>
+          <div class="col-4">
+            <span style="font-weight: bold;">Máxima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(226, 45, 21) 4px solid; padding: 2px; display: block; width: 90%; margin: 0 auto">
+            {{vel_max}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
+              Km/h </span>
+          </div>
+        </div>
+    
+      </div>
+    
+    
+      <div class="col-md-6"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Velocidad Viento - Histórico</h4>
+        <app-hist-velc [dataVelc]="dataVelPre"></app-hist-velc>
+      </div>
+  
+  
+      <div class="col-md-3 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Dirección Viento</h4>
+        <app-wind-actual [angle]="datosClima.direccion_actual" ></app-wind-actual>
+        
+      </div>
+    </div>
+    
+    
+    <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- PRESION, TEMPERATURA -------------------------------------------------------- -->
+    
+    <div class="row blackness" style="padding-bottom: 0.5em;">
+      <div class="col-md-3 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Presión</h4>
+        <span style="font-weight: bold; text-align: center;">Actual</span>
+    
+        <app-presion-actual [presion]="datosClima.presion_actual"></app-presion-actual>
+    
+        <span style="font-size: 2em; border-radius: 4px; display: block; background-color: rgb(59,59,59); text-align: center;">
+         {{datosClima.presion_actual}} hPa </span>
+    
+        <div class="row" style="padding-top: 0.5em; padding-bottom: 0.53em;">
+          <div class="col-6">
+            <span style="font-weight: bold;">Mínima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(50, 182, 30) 4px solid; padding: 2px; display: block; width: 70%; margin: 0 auto">
+              {{datosClima.presion_min_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 70%; margin: 2px auto">
+              hPa </span>
+          </div>
+          <div class="col-6">
+            <span style="font-weight: bold;">Máxima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(226, 45, 21) 4px solid; padding: 2px; display: block; width: 70%; margin: 0 auto">
+              {{datosClima.presion_max_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
+              hPa </span>
+          </div>
+        </div>
+    
+        <div style="margin: 0 auto; padding-top: 5px;">
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSday(graphPSdia)">Presión Dia</button>
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSmes(graphPSmes)">Presión Mes</button>
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openPSanio(graphPSanio)">Presión Año</button>
+        </div>
+    
+        <span style="font-weight: bold; text-align: center; margin-top: 1em;">Humedad Relativa</span>
+    
+        </div>
+    
+      <div class="col-md-6"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Presión - Histórico</h4>
+        <app-hist-press [dataPres]="dataVelPre"></app-hist-press></div>
+    
+      <!-- Temperatura -->
+      <div class="col-md-3 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Temperatura</h4>
+    
+        <span style="font-weight: bold; text-align: center; margin-top: 1em;">Actual</span>
+    
+        <app-temp-actual [temp]="tempActual" ></app-temp-actual>
+    
+        <div style="display: block">
+          <fa-icon *ngIf="tempActual < 5"  [icon]="faTvlow" style="transform: scale(0.7); font-size: 1.8em; color: rgb(65, 87, 132);"></fa-icon>
+          <fa-icon *ngIf="tempActual >= 5 && tempActual < 12"  [icon]="faTlow" style="transform: scale(0.7); font-size: 1.8em; color: rgb(26, 148, 75);"></fa-icon>
+          <fa-icon *ngIf="tempActual >= 12 && tempActual < 20" [icon]="faTmed" style="transform: scale(0.7); font-size: 1.8em; color: rgb(87, 199, 31);"></fa-icon>
+          <fa-icon *ngIf="tempActual >= 20 && tempActual < 25" [icon]="faThigh" style="transform: scale(0.7); font-size: 1.8em; color: rgb(226, 195, 21);"></fa-icon>
+          <fa-icon *ngIf="tempActual >= 25" [icon]="faTmax" style="transform: scale(0.7); font-size: 1.8em; color: rgb(226, 69, 21);"></fa-icon>
+          <span style="font-size: 2.5em;"> {{tempActual}}° </span> <span style="font-size: 2em;"> C </span>
+        </div>
+    
+        <div class="row" style="padding-top: 0.5em; padding-bottom: 0.53em;">
+          <div class="col-4">
+            <span style="font-weight: bold;">Mínima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(81, 199, 22) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
+            {{datosClima.temperatura_min_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); padding: 1px; display: block; width: 90%; margin: 2px auto">
+              °C </span>
+          </div>
+          <div class="col-4">
+            <span style="font-weight: bold;">Promedio</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(233, 193, 15) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
+            {{datosClima.temperatura_avg_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 90%; margin: 2px auto">
+              °C </span>
+          </div>
+          <div class="col-4">
+            <span style="font-weight: bold;">Máxima</span>
+            <span style="border-radius: 3px; font-size: 1.5em; background-color: rgb(59,59,59); border-bottom: rgb(224, 41, 17) solid 4px; padding: 2px; display: block; width: 90%; margin: 0 auto">
+            {{datosClima.temperatura_max_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 90%; margin: 2px auto">
+              °C </span>
+          </div>
+    
+          <div style="margin: 0 auto; padding-top: 5px;">
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTday(graphTdia)">Temp.Dia</button>
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTmes(graphTmes)">Temp.Mes</button>
+            <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openTanio(graphTanio)">Temp.Año</button>
+          </div>
+    
+        </div>
+    
+        <span style="font-weight: bold; text-align: center; margin-top: 1em;">Punto de Rocío</span>
+        <span style="font-size: 2.3em; color: rgb(255, 255, 255); border-radius: 4px; display: block;text-align: center;">
+          {{datosClima.punto_rocio_actual}} </span>
+        </div>
+    
+    </div>
+    
+    <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------- POSICION, LLUVIA, RADIACION -------------------------------------------------------- -->
+    
+    <div class="row blackness">
+    
+      <div class="col-md-4"> <h4 class="titClima"> 
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Posición</h4>
+        <app-position *ngIf="latitud && longitud" [lat1]="latitud" [lon1]="longitud" [lat2]="datosClima.gps_latitude" [lon2]="datosClima.gps_longitude"></app-position>
+    
+      </div>
+    
+    
+      <div class="col-md-4 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Precipitaciones</h4> 
+        <span style="font-weight: bold;">Actual</span>
+    
+        <div style="display: block; padding-top: 0.5em; padding-bottom: 0.5em;">
+          <fa-icon [icon]="faRain" style="transform: scale(0.7); font-size: 2em; color: rgb(91, 142, 186);"></fa-icon>
+          <span style="font-size: 2.6em;"> {{lluvia}} </span> <span style="font-size: 1.6em;">mm</span>
+        </div>
+    
+        <div class="row" style="padding-top: 0.5em;">
+          <div class="col-6">
+            <span style="font-weight: bold;">Acumulado Hoy</span>
+            <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
+            {{datosClima.precipitacion_ult_24hrs}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
+              mm </span>
+          </div>
+          <div class="col-6">
+            <span style="font-weight: bold;">Probabilidad Lluvia</span>
+            <span style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); padding: 2px; display: block; width: 70%; margin: 0 auto">
+              {{predictedApi.forecast.forecastday[0].hour[0].chance_of_rain}} % </span>
+          </div>
+        </div>
+    
+        <div style="margin: 0 auto; padding-top: 5px;">
+          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlday(graphLldia)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Dia</button>
+          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlmes(graphLlmes)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Mes</button>
+          <button class="btn btn-outline-primary mb-2 mr-2" style="font-size: 9pt; margin: 2px" (click)="openLlanio(graphLlanio)"><fa-icon [icon]="faRain" style="transform: scale(0.7);"></fa-icon> Año</button>
+        </div>
+    
+        <div style="display: block; padding-top: 0.5em;">
+          <span style="font-weight: bold; display: block;">Humedad Relativa</span>
+          <fa-icon [icon]="faTint" style="transform: scale(0.7); font-size: 2em; color: rgb(91, 142, 186);"></fa-icon>
+          <span style="font-size: 2.6em;"> {{datosClima.humedad_actual}} % </span> 
+        </div>
+      </div>
+      
+    
+    
+      <div class="col-md-4 text-center"> <h4 class="titClima">
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        <fa-icon [icon]="faDot" *ngIf="flag_time == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Radiación Solar</h4> 
+    
+        <span style="font-weight: bold;">Actual</span>
+        <app-gauge [radiacion]="datosClima.radiacion_actual"></app-gauge>
+    
+        <div style="display: block">
+          <fa-icon *ngIf="datosClima.radiacion_actual < 200"  [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(25, 148, 43);"></fa-icon>
+          <fa-icon *ngIf="datosClima.radiacion_actual >= 200 && datosClima.radiacion_actual < 400"  [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(100, 199, 30);"></fa-icon>
+          <fa-icon *ngIf="datosClima.radiacion_actual >= 400 && datosClima.radiacion_actual < 600" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(231, 207, 19);"></fa-icon>
+          <fa-icon *ngIf="datosClima.radiacion_actual >= 600 && datosClima.radiacion_actual < 800" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(233, 120, 0);"></fa-icon>
+          <fa-icon *ngIf="datosClima.radiacion_actual >= 800" [icon]="faSun" style="transform: scale(0.7); font-size: 1.8em; color: rgb(209, 59, 13);"></fa-icon>
+          <span style="font-size: 2.5em;"> {{datosClima.radiacion_actual}} </span> <span style="font-size: 2em;"> W/m2 </span>
+        </div>
+    
+        <div class="row" style="padding-top: 0.5em;">
+          <div class="col-6">
+            <span style="font-weight: bold;">Máxima</span>
+            <span style="border-radius: 3px; font-size: 1.6em; background-color: rgb(59,59,59); border-bottom: rgb(224, 41, 17) solid 4px; padding: 2px; display: block; width: 70%; margin: 0 auto">
+              {{datosClima.radiacion_max_hoy}} </span>
+            <span style="border-radius: 3px; font-size: 1em; background-color: rgb(78, 95, 95); color: white; padding: 1px; display: block; width: 70%; margin: 2px auto">
+              W/m2 </span>
+          </div>
+          <div class="col-6">
+            <span style="font-weight: bold;">Índice UV</span>
+            <span *ngIf="predictedApi.current.uv < 3" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(66, 164, 57) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
               {{predictedApi.current.uv}} </span>
+            <span *ngIf="predictedApi.current.uv >= 3 && predictedApi.current.uv < 6" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(236, 204, 18) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
+              {{predictedApi.current.uv}} </span>
+            <span *ngIf="predictedApi.current.uv >= 6 && predictedApi.current.uv < 8" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(233, 114, 2) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
+              {{predictedApi.current.uv}} </span>
+            <span *ngIf="predictedApi.current.uv >= 8 && predictedApi.current.uv < 10" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); border-bottom: rgb(220, 22, 22) solid 6px; padding: 2px; display: block; width: 50%; margin: 0 auto">
+              {{predictedApi.current.uv}} </span>
+            <span *ngIf="predictedApi.current.uv >= 10" style="border-radius: 3px; font-size: 2.5em; background-color: rgb(59,59,59); padding: 2px; display: block; border-bottom: rgb(90, 36, 120) solid 6px; width: 50%; margin: 0 auto">
+                {{predictedApi.current.uv}} </span>
+          </div>
         </div>
+    
       </div>
-  
     </div>
-  </div>
-  
-  <!-- PRONOSTICO, FASES LUNARES, FOTO EN VIVO -->
-  
-  <div class="row blackness">
-    <div class="col-md-4" style="margin: 0 auto"><h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Pronóstico</h4>
-  
-      <div style="margin: 0 auto; display: block; text-align: center;">
-        <div class="cardClima">
-          <h5>Actual</h5>
-          <img [src]="predictedApi.current.condition.icon" alt="" style="display: block; margin: 0 auto">
-          <span style="font-weight: bold; display: block;">{{predictedApi.current.condition.text | clima}} </span>
-          <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{tempActual}}° </span>
+    
+    <!-- PRONOSTICO, FASES LUNARES, FOTO EN VIVO -->
+    
+    <div class="row blackness">
+      <div class="col-md-4" style="margin: 0 auto"><h4 class="titClima">
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Pronóstico</h4>
+    
+        <div style="margin: 0 auto; display: block; text-align: center;">
+          <div class="cardClima">
+            <h5>Actual</h5>
+            <img [src]="predictedApi.current.condition.icon" alt="" style="display: block; margin: 0 auto">
+            <span style="font-weight: bold; display: block;">{{predictedApi.current.condition.text | clima}} </span>
+            <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{tempActual}}° </span>
+          </div>
+          <div class="cardClima">
+            <h5 style="letter-spacing: 2px !important;">Mañana</h5>
+            <img [src]="predictedApi.forecast.forecastday[1].hour[0].condition.icon" alt="" style="display: block; margin: 0 auto">
+            <span style="font-weight: bold; display: block;">{{predictedApi.forecast.forecastday[1].hour[0].condition.text | clima}}</span>
+            <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{predictedApi.forecast.forecastday[1].hour[0].temp_c}} ° </span>
+          </div>
+          <div class="cardClima">
+            <h5>2 Días</h5>
+            <img [src]="predictedApi.forecast.forecastday[2].hour[0].condition.icon" alt="" style="display: block; margin: 0 auto">
+            <span style="font-weight: bold; display: block;">{{predictedApi.forecast.forecastday[2].hour[0].condition.text | clima}}</span>
+            <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{predictedApi.forecast.forecastday[2].hour[0].temp_c}} ° </span>
+          </div>
         </div>
-        <div class="cardClima">
-          <h5 style="letter-spacing: 2px !important;">Mañana</h5>
-          <img [src]="predictedApi.forecast.forecastday[1].hour[0].condition.icon" alt="" style="display: block; margin: 0 auto">
-          <span style="font-weight: bold; display: block;">{{predictedApi.forecast.forecastday[1].hour[0].condition.text | clima}}</span>
-          <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{predictedApi.forecast.forecastday[1].hour[0].temp_c}} ° </span>
-        </div>
-        <div class="cardClima">
-          <h5>2 Días</h5>
-          <img [src]="predictedApi.forecast.forecastday[2].hour[0].condition.icon" alt="" style="display: block; margin: 0 auto">
-          <span style="font-weight: bold; display: block;">{{predictedApi.forecast.forecastday[2].hour[0].condition.text | clima}}</span>
-          <span style="color: rgb(88, 143, 171); font-size: 18pt;">{{predictedApi.forecast.forecastday[2].hour[0].temp_c}} ° </span>
-        </div>
+        <span style="font-weight: bold; text-align: center;">Condición Actual</span>
+        <img [src]="predictedApi.current.condition.icon" alt="">
+    
       </div>
-      <span style="font-weight: bold; text-align: center;">Condición Actual</span>
-      <img [src]="predictedApi.current.condition.icon" alt="">
-  
+    
+      <div class="col-md-4"><h4 class="titClima">
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Fases Lunares</h4>
+        <app-lunas></app-lunas> 
+      </div>
+      <div class="col-md-4"><h4 class="titClima">
+        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+        Imagen En Vivo</h4> 
+    
+        <img src="../../../assets/img/img1.jpg" alt="" width="100%" style="transform: scaleX(-1);">
+      </div>
     </div>
   
-    <div class="col-md-4"><h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Fases Lunares</h4>
-      <app-lunas></app-lunas> 
-    </div>
-    <div class="col-md-4"><h4 class="titClima">
-      <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-      Imagen En Vivo</h4> 
-  
-      <img src="../../../assets/img/img1.jpg" alt="" width="100%" style="transform: scaleX(-1);">
-    </div>
   </div>
-
 </div>
+
 
 
 <!-- ------------------------------------------------------------------------------------------------------------------------- -->

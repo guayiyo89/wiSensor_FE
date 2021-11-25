@@ -33,7 +33,7 @@
                     {{st.codigoGenpack}} </span></td>
                 <td>
                     <a href="" class="btn btn-success" [routerLink]="['/editGenpack', st.id_genpack]"><fa-icon [icon]="faEdit"></fa-icon></a>
-                    <a href="" class="btn btn-danger" [routerLink]="['/genpacks']" (click)="delete(st)" style="margin: 0.5em;">
+                    <a href="" class="btn btn-danger" [routerLink]="['/genpacks']" (click)="delete(st, st.id_genpack)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>
             </tr>

@@ -57,7 +57,7 @@ export class CentrosComponent implements OnInit {
     localStorage.setItem('centroID', id);
   }
 
-  delete(centro:Centro){
+  delete(centro:Centro, id:any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -68,11 +68,9 @@ export class CentrosComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result)=>{
       if(result.isConfirmed){
-        this._centro.deleteCentro(centro.id).subscribe(
+        this._centro.deleteCentro(id, centro).subscribe(
           resp => {
-            if(!resp.err){
               this.listCentro.splice(this.listCentro.indexOf(centro),1)
-            }
           }
         )
         Swal.fire('Eliminado!', '', 'info');

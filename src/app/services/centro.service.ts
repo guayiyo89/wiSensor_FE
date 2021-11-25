@@ -37,10 +37,10 @@ export class CentroService {
     return this.http.put(url, centro);
   }
 
-  deleteCentro(id:any){
-    let url = `${this.baseUrl}/${id}`;
+  deleteCentro(id:any, centro: Centro){
+    let url = `${this.baseUrl}/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, centro);
   }
 
   getItems(id:any){

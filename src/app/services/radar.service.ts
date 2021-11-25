@@ -37,9 +37,9 @@ export class RadarService {
     return this.http.put(url, radar)
   }
 
-  deleteRadar(id:any){
-    let url = `${this.baseUrl}/${id}`;
+  deleteRadar(id:any, radar: any){
+    let url = `${this.baseUrl}/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, radar)
   }
 }

@@ -52,7 +52,7 @@ export class EstacionesComponent implements OnInit {
 
   }
 
-  delete(estacion: Estacion){
+  delete(estacion: Estacion, id:any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -63,16 +63,15 @@ export class EstacionesComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._estacion.deleteEstacion(estacion.id).subscribe(
+        this._estacion.deleteEstacion(id, estacion).subscribe(
           resp => {
-            if(!resp.err){
-              this.estacionList.splice(this.estacionList.indexOf(estacion), 1)
-            }
+            this.estacionList.splice(this.estacionList.indexOf(estacion), 1)
           }
         )
         Swal.fire('Eliminado!', '', 'info');
       }
     })
   }
+  
 
 }

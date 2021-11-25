@@ -33,7 +33,7 @@
                     {{st.codigoEstacion}} </span></td>
                 <td>
                     <a href="" class="btn btn-success" [routerLink]="['/editEstacion', st.id_estacion]"><fa-icon [icon]="faEdit"></fa-icon></a>
-                    <a href="" class="btn btn-danger" [routerLink]="['/estaciones']" (click)="delete(st)" style="margin: 0.5em;">
+                    <a href="" class="btn btn-danger" [routerLink]="['/estaciones']" (click)="delete(st, st.id_estacion)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>
             </tr>

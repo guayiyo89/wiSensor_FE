@@ -111,8 +111,12 @@ export class EstacionComponent implements OnInit {
   dataVelPre: any[] = []
   tempAnio: any[] = []
   _id: any;
+
+  flag = 1
   // @ts-ignore
   estacion: Estacion
+  id_cent_est: any
+  cent_del: any
   codigo: any
   tempActual: any
 
@@ -169,11 +173,11 @@ export class EstacionComponent implements OnInit {
   flag_time_rs = 1
  
   ngOnInit(){
-    this._idCentroUser = this._user.usuario.CENTRO_ID
-    this._idPerfil = this._user.usuario.PERFIL_ID
-    this._idEmpresaUser = this._user.usuario.EMPRESA_ID
+    this._idCentroUser = this._user.usuario.id_centro
+    this._idPerfil = this._user.usuario.id_perfil
+    this._idEmpresaUser = this._user.userIds.id_empresa
 
-    console.log('IDS', this._idEmpresaCenter, this._idEmpresaUser);
+    console.log(this._user.usuario);
 
     let dateTime = new Date().toLocaleString('en-GB')
     
@@ -182,7 +186,6 @@ export class EstacionComponent implements OnInit {
     this._dataApi.getData5days().subscribe(
       dataApi => {
         this.predictedApi = dataApi
-        console.log(this.predictedApi);
       }
     )
     
@@ -194,60 +197,68 @@ export class EstacionComponent implements OnInit {
     this._route.params.subscribe(
       params => {
         this._id = +params['id'];
-        this._estacion.getEstacion(this._id).subscribe(
-          data => {
-            this.estacion = data
-            this.codigo = data.codigo;
-            
-            this.showClima(this.codigo, this.novaFecha)
-
-            this.getRS(this.codigo, this.novaFecha)
-
-            this.intervalUpdate = setInterval(() => {
+        this._estacion.getFlag(this._id).subscribe(
+          flag => { this.flag = flag.bandera }
+        )
+        if(this.flag == 1){
+          this._estacion.getEstacion(this._id).subscribe(
+            data => {
+              this.estacion = data
+              this.id_cent_est = data.id_centro
+              this.codigo = data.codigo;
+              
               this.showClima(this.codigo, this.novaFecha)
+  
               this.getRS(this.codigo, this.novaFecha)
-
-              //review for each incident
-              this._incidente.getIncidentesbyEstacion(data.codigo).subscribe(
-                items => {
-                  for(let incidente of items){
-                    if(incidente.tipo == 'Temperatura'){
-                      if(incidente.evaluacion == 'mayor'){
-                        if(this.tempActual > incidente.valor){
-                          this.generarAlerta(incidente)}
-                      }
-                      if(incidente.evaluacion == 'menor'){
-                        if(this.tempActual < incidente.valor){
-                          this.generarAlerta(incidente)}
-                      }
-                    }
-
-                    if(incidente.tipo == 'Velocidad Viento'){
-                      if(incidente.evaluacion == 'mayor'){
-                        if(this.vel_Kmh > incidente.valor){
-                          this.generarAlerta(incidente)}
+  
+              this.intervalUpdate = setInterval(() => {
+                this.showClima(this.codigo, this.novaFecha)
+                this.getRS(this.codigo, this.novaFecha)
+  
+                //review for each incident
+                this._incidente.getIncidentesbyEstacion(data.codigo).subscribe(
+                  items => {
+                    for(let incidente of items){
+                      if(incidente.tipo == 'Temperatura'){
+                        if(incidente.evaluacion == 'mayor'){
+                          if(this.tempActual > incidente.valor){
+                            this.generarAlerta(incidente)}
                         }
-                      if(incidente.evaluacion == 'menor'){
-                        if(this.vel_Kmh < incidente.valor){
-                          this.generarAlerta(incidente)}
+                        if(incidente.evaluacion == 'menor'){
+                          if(this.tempActual < incidente.valor){
+                            this.generarAlerta(incidente)}
+                        }
+                      }
+  
+                      if(incidente.tipo == 'Velocidad Viento'){
+                        if(incidente.evaluacion == 'mayor'){
+                          if(this.vel_Kmh > incidente.valor){
+                            this.generarAlerta(incidente)}
+                          }
+                        if(incidente.evaluacion == 'menor'){
+                          if(this.vel_Kmh < incidente.valor){
+                            this.generarAlerta(incidente)}
+                        }
                       }
                     }
                   }
+                )
+  
+              }, 125000)
+  
+              this._centro.getCentro(data.id_centro).subscribe(
+                center => {
+                  this.latitud = center.latitud
+                  this.longitud = center.longitud
+                  this._idEmpresaCenter = center.id_empresa
+                  this.cent_del = center.deleted_at
+                  console.log(this.cent_del)
                 }
               )
-
-            }, 125000)
-
-            this._centro.getCentro(data.id_centro).subscribe(
-              center => {
-                this.latitud = center.latitud
-                this.longitud = center.longitud
-                this._idEmpresaCenter = center.id_empresa
-              }
-            )
-
-          }// fin de getEstacion
-        )
+  
+            }// fin de getEstacion
+          )
+        }
       }//fin del params
     )
   
@@ -361,8 +372,7 @@ export class EstacionComponent implements OnInit {
 
     this._dataGm.getSpeedPress(codigo).subscribe(
       dataVelc => {
-        this.dataVelPre = dataVelc
-        console.log('DATARELOJ:', this.dataVelPre)        
+        this.dataVelPre = dataVelc       
       }
     )
 
@@ -386,8 +396,6 @@ export class EstacionComponent implements OnInit {
         let time = new Date()
 
         let val_flag = Math.abs(( time.getTime() - timeRs.getTime() )/60000)
-
-        console.log(val_flag, 'minutos');
         
         if(val_flag < 10){
           this.flag_time_rs = 0

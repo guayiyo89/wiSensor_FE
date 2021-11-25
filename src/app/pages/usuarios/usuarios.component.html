@@ -31,7 +31,7 @@
                 <td>{{user.id_perfil | perfil}}</td>
                 <td>
                     <a href="" class="btn btn-success" [routerLink]="['/editUser', user.id_users]"><fa-icon [icon]="faEdit"></fa-icon></a>
-                    <a href="" class="btn btn-danger" [routerLink]="['/usuarios']" (click)="delete(user)" style="margin: 0.5em;">
+                    <a href="" class="btn btn-danger" [routerLink]="['/usuarios']" (click)="delete(user, user.id_users)" style="margin: 0.5em;">
                         <fa-icon [icon]="faTimes"></fa-icon></a>
                 </td>
             </tr>

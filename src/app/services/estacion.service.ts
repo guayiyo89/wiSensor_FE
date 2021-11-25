@@ -37,16 +37,22 @@ export class EstacionService {
     return this.http.put(url, estacion);
   }
 
-  deleteEstacion(id:any){
-    let url = `${this.baseUrl}/${id}`;
+  deleteEstacion(id:any, estacion: Estacion){
+    let url = `${this.baseUrl}/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, estacion);
   }
 
   getAlertasbySt(cod:any){
     let url = `${this.baseUrl}/alertas/novistas/${cod}`
     url += '?token=' + this._user.token;
     return this.http.get<any[]>(url)
+  }
+
+  getFlag(id:any){
+    let url = `${this.baseUrl}/flag/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any>(url)
   }
 
 }

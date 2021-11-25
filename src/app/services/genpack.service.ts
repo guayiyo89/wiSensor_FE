@@ -32,16 +32,16 @@ export class GenpackService {
     return this.http.post(url, genpack)
   }
 
-  editGenpack(id: any, generador: Genpack){
+  editGenpack(id: any, genpack: Genpack){
     let url = `${this.baseUrl}/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.put(url, generador)
+    return this.http.put(url, genpack)
   }
 
-  deleteGenpack(id:any){
-    let url = `${this.baseUrl}/${id}`;
+  deleteGenpack(id:any, genpack:Genpack){
+    let url = `${this.baseUrl}/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, genpack)
   }
 
   //-------------------------------------------------------------------
@@ -71,10 +71,10 @@ export class GenpackService {
     return this.http.put(url, generador)
   }
 
-  deleteGenerador(id:any){
-    let url = `${this.baseUrl2}/generador/${id}`;
+  deleteGenerador(id:any, generador:any){
+    let url = `${this.baseUrl2}/generador/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, generador)
   }
 
 }

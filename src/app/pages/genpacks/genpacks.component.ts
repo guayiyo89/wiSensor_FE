@@ -43,7 +43,7 @@ export class GenpacksComponent implements OnInit {
     }
   }
 
-  delete(generador: Genpack){
+  delete(genpack: Genpack, id:any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -54,11 +54,9 @@ export class GenpacksComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._genpack.deleteGenpack(generador.id).subscribe(
+        this._genpack.deleteGenpack(id, genpack).subscribe(
           resp => {
-            if(!resp.err){
-              this.genpacksList.splice(this.genpacksList.indexOf(generador), 1)
-            }
+              this.genpacksList.splice(this.genpacksList.indexOf(genpack), 1)
           }
         )
         Swal.fire('Eliminado!', '', 'info');

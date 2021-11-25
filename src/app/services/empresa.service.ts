@@ -48,10 +48,10 @@ export class EmpresaService {
     return this.http.put(url, empresa);
   }
 
-  deleteEmpresa(id:any){
-    let url = `${this.baseUrl}/${id}`;
+  deleteEmpresa(id:any, empresa: Empresa){
+    let url = `${this.baseUrl}/del/${id}`;
     url += '?token=' + this._user.token;
-    return this.http.delete<any>(url)
+    return this.http.put(url, empresa);
   }
 
   getEstaciones(id:any){

@@ -68,7 +68,7 @@ export class UsuariosComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
-  delete(usuario: Usuario){
+  delete(usuario: Usuario, id:any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -79,11 +79,9 @@ export class UsuariosComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._user.deleteUser(usuario.id).subscribe(
+        this._user.deleteUser(id, usuario).subscribe(
           resp => {
-            if(!resp.err){
               this.userList.splice(this.userList.indexOf(usuario),1)
-            }
           }
         )
         Swal.fire('Eliminado!', '', 'info');

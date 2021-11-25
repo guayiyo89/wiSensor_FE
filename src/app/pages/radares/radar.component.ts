@@ -66,8 +66,8 @@ export class RadarComponent implements OnInit {
     minZoom: 9,
   }
 
-  velContent: any
-  distContent: any
+  velContent: number = 0
+  distContent: number = 0
   timeContent: any
   fechaContent = ''
   latCont: any

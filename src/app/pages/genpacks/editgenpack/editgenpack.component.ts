@@ -158,7 +158,7 @@ export class EditgenpackComponent implements OnInit {
     )
   }
 
-  delete(generador: any){
+  delete(generador: any, id: any){
     Swal.fire({
       title: 'Eliminar',
       text: '¿Desea eliminar el item seleccionado?',
@@ -169,11 +169,9 @@ export class EditgenpackComponent implements OnInit {
       cancelButtonText: `NO`
     }).then((result) => {
       if(result.isConfirmed){
-        this._genpack.deleteGenerador(generador.ID).subscribe(
+        this._genpack.deleteGenerador(id, generador).subscribe(
           resp => {
-            if(!resp.err){
               this.generadores.splice(this.generadores.indexOf(generador), 1)
-            }
           }
         )
         Swal.fire('Eliminado!', '', 'info');
