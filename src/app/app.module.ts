@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
@@ -133,6 +133,20 @@ import { ModulosComponent } from './pages/estructura/modulos/modulos.component';
 import { InundacionComponent } from './pages/produccion/inundacion/inundacion.component';
 import { ModulosLineComponent } from './pages/estructura/modulos-line/modulos-line.component';
 import { TruncarPipe } from './pipes/truncar.pipe';
+import { EstructurasComponent } from './pages/estructura/estructuras.component';
+import { AddEstructuraComponent } from './pages/estructura/add-estructura/add-estructura.component';
+import { EditEstructuraComponent } from './pages/estructura/edit-estructura/edit-estructura.component';
+import { AddModuloComponent } from './pages/estructura/add-modulo/add-modulo.component';
+import { EditModuloComponent } from './pages/estructura/edit-modulo/edit-modulo.component';
+import { AddGpsComponent } from './pages/estructura/add-gps/add-gps.component';
+import { EditGpsComponent } from './pages/estructura/edit-gps/edit-gps.component';
+import { AddZonaComponent } from './pages/radares/add-zona/add-zona.component';
+import { EditZonaComponent } from './pages/radares/edit-zona/edit-zona.component';
+import { EventoHoraComponent } from './pages/radares/evento-hora/evento-hora.component';
+import { EventoDuracionComponent } from './pages/radares/evento-duracion/evento-duracion.component';
+import { ZonaLogComponent } from './pages/radares/zona-log/zona-log.component';
+import { EventoTotalComponent } from './pages/radares/evento-total/evento-total.component';
+
 
 @NgModule({
   declarations: [
@@ -229,7 +243,20 @@ import { TruncarPipe } from './pipes/truncar.pipe';
     ModulosComponent,
     InundacionComponent,
     ModulosLineComponent,
-    TruncarPipe
+    TruncarPipe,
+    EstructurasComponent,
+    AddEstructuraComponent,
+    EditEstructuraComponent,
+    AddModuloComponent,
+    EditModuloComponent,
+    AddGpsComponent,
+    EditGpsComponent,
+    AddZonaComponent,
+    EditZonaComponent,
+    EventoHoraComponent,
+    EventoDuracionComponent,
+    ZonaLogComponent,
+    EventoTotalComponent
   ],
   imports: [
     BrowserModule,
@@ -260,6 +287,7 @@ import { TruncarPipe } from './pipes/truncar.pipe';
     NgbModule
   ],
   providers: [AdminGuardGuard, LoginGuardGuard, UserGuardGuard, JCentroGuardGuard, CentroService, EmpresaService, EstacionService, UsuarioService, BuscadorService, NgbActiveModal, {provide: LocationStrategy, useClass: HashLocationStrategy}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

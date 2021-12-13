@@ -1,10 +1,18 @@
-<div style="display: block">
-    <canvas baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [colors]="barChartColor"
-      [legend]="barChartLegend"
-      [chartType]="barChartType">
-    </canvas>
+
+  <div *ngIf="valor_bandera > 0">
+    
+    <div style="display: block">
+        <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [colors]="barChartColor"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </div>
+    
+      <div *ngFor="let eventos of eventosFinal">
+        <div *ngFor="let evento of eventos" >{{evento.fecha}}, {{evento.contador}} </div>
+      </div>
   </div>

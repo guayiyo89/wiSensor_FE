@@ -1,0 +1,28 @@
+<p-table [value]="detalles" [paginator]="true" [rows]="5" [totalRecords]="totalRecords"
+    [globalFilterFields]="['fecha','velocidad','distancia']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[5,10,15,20]" [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="fecha"> Fecha <p-sortIcon field="fecha" style="color: thistle;"></p-sortIcon> </th>
+            <th pSortableColumn="velocidad"> Velocidad <p-sortIcon field="velocidad"></p-sortIcon> </th>
+            <th pSortableColumn="distancia"> Distancia <p-sortIcon field="distancia"></p-sortIcon> </th>
+            <th pSortableColumn="desplazamiento"> Desplazamiento <p-sortIcon field="desplazamiento"></p-sortIcon> </th>
+            <th pSortableColumn="codigo"> Duración <p-sortIcon field="duracion"></p-sortIcon> </th>
+            <th> Visto </th>
+            <th> Trayectoria </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-dato>
+        <tr class="rowth blackness">
+            <td>{{dato.fecha | fecha}}</td>
+            <td>{{dato.velocidad | truncar}}</td>
+            <td>{{dato.distancia | truncar}}</td>
+            <td>{{dato.desplazamiento | truncar}}</td>
+            <td>{{dato.duracion}} s</td>
+            <td><fa-icon *ngIf="dato.visto==1" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon> <fa-icon id="checkId-{{dato.id}}" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon>  </td>
+            <td><fa-icon style="font-size: 1.2em; cursor: pointer; color: chartreuse;" [icon]="faExcel" (click)="exportasXLSX(dato.sp_cabecera_id)"></fa-icon> </td>
+        </tr>
+    </ng-template>
+
+</p-table>

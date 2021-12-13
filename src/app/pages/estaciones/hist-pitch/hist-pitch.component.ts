@@ -57,7 +57,7 @@ export class HistPitchComponent implements OnInit {
       } else {
         this.rellenar(this.dataPitch[0])
       }
-    }, 30000)
+    }, 300000)
   }
 
   fechaEnviar(fecha:string){

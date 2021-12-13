@@ -103,6 +103,15 @@
         [center]="center"
         [options]="options"
         (mapClick)="click($event)">
+            <map-marker
+            #markerElem
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            >
+            </map-marker>
         </google-map>
         <span style="color: grey; font-size: 9pt; font-family: Roboto;">Haga click en el mapa para obtener una ubicación referencial. <br>
             Se recomienda editar en los campos especificos para obtener la locación específica. </span>

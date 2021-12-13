@@ -1,0 +1,76 @@
+<div class="row">
+    <h2>Editar Módulo de Jaulas / Pontón</h2>
+    <div class="col-md-6">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                    <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" formControlName="descripcion" placeholder="Matrícula" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+                <div *ngIf="submitted && f.descripcion.errors">
+                    <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripcion es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group" style="display: none;">
+                <label>ID</label>
+                <input type="text" formControlName="id_et_estructura" placeholder="ID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id_et_estructura.errors }">
+                <div *ngIf="submitted && f.id_et_estructura.errors">
+                    <div *ngIf="f.id_et_estructura.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripcion es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <select formControlName="tipo" class="form-control">
+                    <option value="ponton">Pontón</option>
+                    <option value="modulo">Módulo de Jaulas</option>
+                </select>
+                <div *ngIf="submitted && f.tipo.errors">
+                    <div *ngIf="f.tipo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Es necesario asignar un Tipo.</div>
+                </div>
+            </div>
+
+            <div style="padding-top: 1em;">
+                <button (click)="volver()" type="button" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+                <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6 text-center">
+        <h3>GPS Asociados</h3>
+        <div >
+            <div *ngFor="let gps of gpsList" class="card-body blackness">
+                <div class="row">
+                    <div class="col-7">
+                        <h5>GPS {{gps.oden}}</h5>
+                        <p>{{gps.latitud}}, {{gps.longitud}} </p>
+                    </div>
+                    <div class="col-5">
+                        <!-- <a class="btn btn-success" [routerLink]="['/editModulo', gps.id]"><fa-icon [icon]="faEdit"></fa-icon></a>
+                        <a class="btn btn-danger" (click)="delete(gps, gps.id)" style="margin: 0.5em;">
+                            <fa-icon [icon]="faTimes"></fa-icon></a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p *ngIf="gpsList.length == 0" style="color: rgb(161, 168, 168); font: 1.5em sans-serif; padding-top: 2em; text-align: center;">Presione Agregar para asignar un nuevo módulo a la estructura</p>
+        <button (click)="openNew(addGen)" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Agregar</button>
+    </div>
+    
+</div>
+
+<ng-template #addGen let-modal>
+    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Módulo GPS</h3> </div>
+      <div class="modal-body bg-dark"><app-add-gps [id_modulo]="_idModulo" (myEvent)="closeModal()"></app-add-gps></div>
+    
+</ng-template>

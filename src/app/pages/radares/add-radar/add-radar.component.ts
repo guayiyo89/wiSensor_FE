@@ -26,6 +26,8 @@ export class AddRadarComponent implements OnInit {
   empresaList: Empresa[] = []
   centroList: Centro[] = []
 
+  markers: any[] = []
+
   faSave = faSave
   faBack = faArrowLeft
 
@@ -58,7 +60,6 @@ export class AddRadarComponent implements OnInit {
       modelo: ['', Validators.required],
       status: ['', Validators.required],
       empresa_id: ['', Validators.required],
-      zona: ['', Validators.required],
       latitud: ['', Validators.required],
       longitud: ['', Validators.required],
       id_centro: ['', Validators.required]
@@ -123,12 +124,27 @@ export class AddRadarComponent implements OnInit {
       }
     )
   }
+  
+  addNewMarker(latitud: any, longitud: any) {
+    if(this.markers.length > 0){
+      this.markers.pop()
+    }
+    this.markers.push({
+      position: {
+        lat: latitud,
+        lng: longitud,
+      },
+      title: 'CENTRO' + (this.markers.length + 1)
+    })
+  }
 
   click(event: google.maps.MapMouseEvent) {
     //this.latMap = event.latLng.lat()
     //this.longMap = event.latLng.lng()
     this.addForm.controls['latitud'].setValue(event.latLng.lat())
     this.addForm.controls['longitud'].setValue(event.latLng.lng())
+
+    this.addNewMarker(event.latLng.lat(), event.latLng.lng())
   }
 
   // get the form short name to access the form fields

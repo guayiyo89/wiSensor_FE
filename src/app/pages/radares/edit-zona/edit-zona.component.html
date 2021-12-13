@@ -1,0 +1,34 @@
+<div class="row">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <div *ngIf="submitted && f.nombre.errors">
+            <div *ngIf="f.nombre.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El nombre es obligatorio.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Código Zona</label>
+        <input type="text" formControlName="cod_zona" placeholder="Código Zona del Radar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cod_zona.errors }">
+        <div *ngIf="submitted && f.cod_zona.errors">
+            <div *ngIf="f.cod_zona.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El código es obligatorio, y se obtiene desde el NIO.</div>
+        </div>
+    </div>
+
+    <div class="form-group" style="display: none;">
+        <label>Id Radar</label>
+        <input type="text" formControlName="id_radar" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id_radar.errors }">
+        <div *ngIf="submitted && f.id_radar.errors">
+            <div *ngIf="f.id_radar.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripción es obligatoria.</div>
+        </div>
+    </div>
+
+
+    <div style="padding-top: 1em;">
+        <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+    </div>
+
+    </form>
+
+</div>

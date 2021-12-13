@@ -51,7 +51,7 @@ export class HistRollComponent implements OnInit {
       } else {
         this.rellenar(this.dataRoll[0])
       }
-    }, 30000)
+    }, 300000)
   }
 
   rellenar(dato:any){

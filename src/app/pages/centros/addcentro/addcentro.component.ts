@@ -7,6 +7,7 @@ import { Empresa } from 'src/app/interfaces/empresa.model';
 import { CentroService } from 'src/app/services/centro.service';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps'
 import Swal from 'sweetalert2';
 
 @Component({
@@ -30,6 +31,8 @@ export class AddcentroComponent implements OnInit {
 
   perfilUser: any
   idEmpresa: any //id empresa del Logueado
+
+  markers: any[] = []
 
   // regiones-comunas dropdown
   regionesList: any[] = comunasChile.regiones
@@ -103,6 +106,19 @@ export class AddcentroComponent implements OnInit {
     }
   }
 
+  addNewMarker(latitud: any, longitud: any) {
+    if(this.markers.length > 0){
+      this.markers.pop()
+    }
+    this.markers.push({
+      position: {
+        lat: latitud,
+        lng: longitud,
+      },
+      title: 'CENTRO' + (this.markers.length + 1)
+    })
+  }
+
   volver(){
     return this.router.navigate(['/centros'])
   }
@@ -122,6 +138,7 @@ export class AddcentroComponent implements OnInit {
   click(event: google.maps.MapMouseEvent) {
     this.addForm.controls['latitud'].setValue(event.latLng.lat())
     this.addForm.controls['longitud'].setValue(event.latLng.lng())
+    this.addNewMarker(event.latLng.lat(), event.latLng.lng())
   }
 
   changeComuna(region: any) { //Angular 11

@@ -7,6 +7,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps'
 import { ExcelServiceService } from 'src/app/services/excel-service.service';
 import Swal from 'sweetalert2';
+import { CentroService } from 'src/app/services/centro.service';
 
 @Component({
   selector: 'app-radar',
@@ -19,7 +20,7 @@ export class RadarComponent implements OnInit {
   @ViewChild('dataMarker') iconData: ElementRef;
 
   constructor( public _user: UsuarioService, public _route: ActivatedRoute, public _radar: RadarService, public _spotter: SpotterService,
-     private _excel: ExcelServiceService, private renderer2: Renderer2) { }
+     private _excel: ExcelServiceService, private renderer2: Renderer2, public _centro: CentroService) { }
 
   // for alarms
   faDot = faCircle
@@ -35,23 +36,28 @@ export class RadarComponent implements OnInit {
   fechaShow:any[] = []
 
   id: any
-
-  headers: any[] = []
-
+  id_cent_est: any
+  _idCentroUser: any
+  _idPerfil: any
+  _idEmpresaUser: any
+  _idEmpresaCenter: any
+  
   latitud = -41.46223461126455
   longitud = -72.98739194869995
-
+  
   markers: any[] = []
-
+  
   private intervalUpdate: any
   private intervalData: any
   totalRecords = 0
-
+  
   clases: any[] = []
+  headers: any[] = []
   detalles: any[] = []
+  zonasRdr: any[] = []
  
   //--------------------------------------------------------MAPA
-  zoom = 14
+  zoom = 15
   // @ts-ignore
   center: google.maps.LatLngLiteral
 
@@ -73,8 +79,15 @@ export class RadarComponent implements OnInit {
   latCont: any
   lonCont: any
 
+
+  flag = 1
+
   
   ngOnInit(){
+    this._idCentroUser = this._user.usuario.id_centro
+    this._idPerfil = this._user.usuario.id_perfil
+    this._idEmpresaUser = this._user.userIds.id_empresa
+
     this.intervalUpdate = setInterval(() => {
       this.showFecha()
     }, 900)
@@ -83,38 +96,58 @@ export class RadarComponent implements OnInit {
       params => {
         this.id = +params['id']
 
-        this._radar.getRadar(this.id).subscribe(
-          rdr => {
-            this.radar = rdr
-            navigator.geolocation.getCurrentPosition((position) => {
-              this.center = {
-                lat: rdr.latitud,
-                lng: rdr.longitud,
-              }
-              this.addRadar()
+        this._radar.getFlag(this.id).subscribe(resp =>{
+          this.flag = resp.bandera
+          console.log(this.flag)
+        })
 
-              this.cargaDetails(rdr.zona)
-              
-              this.putMarkers(rdr.zona)
-
-              this.intervalUpdate = setInterval(() => {
-                this.updateDetails(rdr.zona)
-                this.markers = []
-                this.putMarkers(rdr.zona)
+        if(this.flag == 1){
+          this._radar.getRadar(this.id).subscribe(
+            rdr => {
+              this.radar = rdr
+              navigator.geolocation.getCurrentPosition((position) => {
+                this.center = {
+                  lat: rdr.latitud,
+                  lng: rdr.longitud,
+                }
                 this.addRadar()
-              }, 10000)
-              
+  
+                this._radar.getZonas(this.id).subscribe(
+                  zonas => {
+                    this.zonasRdr = zonas
+                    this.rellenar(zonas)
+                  })
+                  
+                this.intervalUpdate = setInterval(() => {
+                  this.markers = []
+                  this.rellenar(this.zonasRdr)
+
+                }, 95000)
+
+                this._centro.getCentro(rdr.id_centro).subscribe(
+                  data => {
+                    this.id_cent_est = data.id
+                    this._idEmpresaCenter = data.id_empresa
+                  }
+                )
+              })
+  
             })
+        }
 
-          })
 
-
-      }
-      )
+      })
+      
   }
     
   ngOnDestroy(){
     clearInterval(this.intervalUpdate)
+  }
+
+  rellenar(zonas: any[]){
+    zonas.forEach(zona => {
+      this.putMarkers(zona.cod_zona)
+    })
   }
 
   putMarkers(zona:any){
@@ -167,6 +200,7 @@ export class RadarComponent implements OnInit {
   }
 
   addNewMarker(dato:any) {
+    this.markers.pop()
     this.markers.push({
       position: {
         lat: dato.latitud,
@@ -233,16 +267,19 @@ export class RadarComponent implements OnInit {
   updateDetails(zona: any){
     this._spotter.getHeaders(zona).then(
       header => {
-        this.headers.unshift(header[0])
-        this.headers.pop()
-
-        console.log(this.headers)
-        this.detalles.pop()
-
-        this._spotter.getDetail(header[0].id).subscribe(
-          details => {
-            this.detalles.unshift(details)
-          })
+        if(header[0].track_id != this.headers[0].track_id){
+          this.headers.unshift(header[0])
+          this.headers.pop()
+          console.log(this.headers)
+          this.detalles.pop()
+  
+          this._spotter.getDetail(header[0].id).subscribe(
+            details => {
+              this.detalles.unshift(details)
+            })
+          
+        }
+        
       })
   }
 

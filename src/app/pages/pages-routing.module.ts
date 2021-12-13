@@ -42,6 +42,12 @@ import { AlertasComponent } from "./estaciones/alertas/alertas.component";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { ProduccionComponent } from "./produccion/produccion.component";
 import { EstructuraComponent } from "./estructura/estructura.component";
+import { EstructurasComponent } from "./estructura/estructuras.component";
+import { AddEstructuraComponent } from "./estructura/add-estructura/add-estructura.component";
+import { EditEstructuraComponent } from "./estructura/edit-estructura/edit-estructura.component";
+import { AddModuloComponent } from "./estructura/add-modulo/add-modulo.component";
+import { EditModuloComponent } from "./estructura/edit-modulo/edit-modulo.component";
+import { AddGpsComponent } from "./estructura/add-gps/add-gps.component";
 
 const pagesRoutes: Routes = [
     {
@@ -81,7 +87,12 @@ const pagesRoutes: Routes = [
             {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
             {path: 'alertas', component:AlertsComponent, canActivate:[LoginGuardGuard]},
             {path: 'produccion', component:ProduccionComponent, canActivate:[LoginGuardGuard]},
-            {path: 'estructura', component: EstructuraComponent, canActivate: [LoginGuardGuard]},
+            {path: 'estructuras', component: EstructurasComponent, canActivate: [UserGuardGuard]}, // estructuras
+            {path: 'estructura/:id', component: EstructuraComponent, canActivate: [LoginGuardGuard]},
+            {path: 'addEstructura', component: AddEstructuraComponent, canActivate: [AdminGuardGuard]},
+            {path: 'editEstructura/:id', component: EditEstructuraComponent, canActivate: [AdminGuardGuard]},
+            {path: 'addModulo', component: AddModuloComponent, canActivate: [AdminGuardGuard]}, // modulos
+            {path: 'editModulo/:id', component: EditModuloComponent, canActivate: [AdminGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

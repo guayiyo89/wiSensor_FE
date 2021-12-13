@@ -10,6 +10,7 @@ import { UsuarioService } from './usuario.service';
 export class RadarService {
 
   baseUrl = URL_SERVICIOS + '/radar';
+  zonaUrl = URL_SERVICIOS + '/zona';
 
   constructor(public http: HttpClient, public _user: UsuarioService, private _excel: ExcelServiceService) { }
 
@@ -42,4 +43,37 @@ export class RadarService {
     url += '?token=' + this._user.token;
     return this.http.put(url, radar)
   }
+
+  getFlag(id:any){
+    let url = `${this.baseUrl}/flag/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any>(url)
+  }
+
+  getZonas(id:any){
+    let url = `${this.zonaUrl}/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
+  addZona(zona: any){
+    let url = this.zonaUrl
+    url += '?token=' + this._user.token;
+    return this.http.post(url, zona)
+  }
+
+  editZona(id: any, zona: any){
+    let url = `${this.zonaUrl}/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.put(url, zona)
+  }
+
+  deleteZona(id:any, zona: any){
+    let url = `${this.zonaUrl}/del/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.put(url, zona)
+  }
+
+
+
 }

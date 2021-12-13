@@ -4,11 +4,12 @@ import { CentroService } from 'src/app/services/centro.service';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { RadarService } from 'src/app/services/radar.service';
 import { Location } from '@angular/common';
-import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit, faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Centro } from 'src/app/interfaces/centro.model';
 import { Empresa } from 'src/app/interfaces/empresa.model';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-radar',
@@ -19,17 +20,23 @@ import Swal from 'sweetalert2';
 export class EditRadarComponent implements OnInit {
 
   constructor(public _radar: RadarService, public _empresa: EmpresaService, public _centro: CentroService, private _location: Location, private _fbuilder: FormBuilder,
-    private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute, private _modal: NgbModal, public _activeModal: NgbActiveModal) { }
 
   submitted = false;
   editForm: FormGroup;
   empresaList: Empresa[] = []
   centroList: Centro[] = []
+  markers: any[] = []
+
+  zonas: any[] = []
 
   radar: any
 
   faSave = faSave
   faBack = faArrowLeft
+  faPlus = faPlus
+  faTimes = faTimes
+  faEdit = faEdit
   _id: any
 
   //--------------------------------------------------------MAPA
@@ -61,7 +68,6 @@ export class EditRadarComponent implements OnInit {
         modelo: ['', Validators.required],
         status: ['', Validators.required],
         empresa_id: ['', Validators.required],
-        zona: ['', Validators.required],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
         id_centro: ['', Validators.required]
@@ -81,7 +87,6 @@ export class EditRadarComponent implements OnInit {
           this.editForm.controls['marca'].setValue(data.marca)
           this.editForm.controls['modelo'].setValue(data.modelo)
           this.editForm.controls['status'].setValue(data.status)
-          this.editForm.controls['zona'].setValue(data.zona)
           this.editForm.controls['latitud'].setValue(data.latitud)
           this.editForm.controls['longitud'].setValue(data.longitud)
           this.editForm.controls['id_centro'].setValue(data.id_centro)
@@ -92,6 +97,14 @@ export class EditRadarComponent implements OnInit {
               lng: data.longitud,
             }
           })
+
+          this._radar.getZonas(this._id).subscribe(
+            data => {
+              this.zonas = data
+              console.log(this.zonas);
+            })
+
+          this.addNewMarker(data.latitud, data.longitud)
         }
       )
 
@@ -142,7 +155,7 @@ export class EditRadarComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0])}
+        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0].id)}
         else { this.editForm.controls['id_centro'].setValue('')}
       },
       error => {
@@ -153,11 +166,70 @@ export class EditRadarComponent implements OnInit {
     )
   }
 
+  addNewMarker(latitud: any, longitud: any) {
+    if(this.markers.length > 1){
+      this.markers.pop()
+    }
+    this.markers.push({
+      position: {
+        lat: latitud,
+        lng: longitud,
+      },
+      title: 'CENTRO' + (this.markers.length + 1)
+    })
+  }
+
   click(event: google.maps.MapMouseEvent) {
     //this.latMap = event.latLng.lat()
     //this.longMap = event.latLng.lng()
     this.editForm.controls['latitud'].setValue(event.latLng.lat())
     this.editForm.controls['longitud'].setValue(event.latLng.lng())
+
+    this.addNewMarker(event.latLng.lat(), event.latLng.lng())
+  }
+
+  delete(zona: any, id: any){
+
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Desea eliminar el item seleccionado?',
+      icon: 'question',
+      showConfirmButton: true,
+      confirmButtonText: `SI`,
+      showCancelButton: true,
+      cancelButtonText: `NO`
+    }).then(result => {
+      if(result.isConfirmed){
+        this._radar.deleteZona(id, zona).subscribe(
+          data => {
+            this.zonas.splice(this.zonas.indexOf(zona), 1)
+          })
+          Swal.fire('Eliminado!', '', 'info');
+      }
+    })
+
+  }
+
+  //==============================================================================
+  // Modals
+  //==============================================================================
+
+  //Temperatura
+  openNew(addGen: any) {
+    this._modal.open(addGen,{ size: 'lg' } )
+  }
+
+  openEdit(editGen: any) {
+    this._modal.open(editGen,{ size: 'lg' } )
+  }
+
+  closeModal(){
+    this._activeModal.close()
+    this._radar.getZonas(this._id).subscribe(
+      data => {
+        this.zonas = data
+        console.log(this.zonas);
+      })
   }
 
   // get the form short name to access the form fields

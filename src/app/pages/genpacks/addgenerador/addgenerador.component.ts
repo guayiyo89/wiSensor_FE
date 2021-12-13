@@ -19,6 +19,7 @@ export class AddgeneradorComponent implements OnInit {
   constructor(public _genpack: GenpackService, private _fbuilder: FormBuilder, public _user: UsuarioService, public _active: NgbActiveModal) { }
 
   submitted = false;
+  //@ts-ignore
   addForm: FormGroup;
 
   faSave = faSave
@@ -61,14 +62,7 @@ export class AddgeneradorComponent implements OnInit {
 
   volver(){
     this.myEvent.emit()
-    this.addForm.controls['nombre'].setValue('')
-    this.addForm.controls['marca'].setValue('')
-    this.addForm.controls['modelo'].setValue('')
-    this.addForm.controls['capacidad'].setValue('')
-    this.addForm.controls['potencia'].setValue('')
-    this.addForm.controls['estado'].setValue(1)
-    this.addForm.controls['id_genpack'].setValue(this.id_gp)
-    this.addForm.controls['codigo'].setValue('')
+    this.addForm.reset()
   }
 
   get f() { return this.addForm.controls; }

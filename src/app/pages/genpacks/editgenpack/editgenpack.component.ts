@@ -26,12 +26,15 @@ export class EditgenpackComponent implements OnInit {
     private _fbuilder: FormBuilder, public _user: UsuarioService, public _centro: CentroService, private _route: ActivatedRoute) { }
 
     submitted = false;
+    //@ts-ignore
     editForm: FormGroup;
     empresaList: Empresa[] = []
     centroList: Centro[] = []
     generadores: any[] = []
-    genpack: Genpack
 
+    //@ts-ignore
+    genpack: Genpack
+    //@ts-ignore
     empresaUser: Empresa
 
 
@@ -148,7 +151,8 @@ export class EditgenpackComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.editForm.controls['id_centro'].setValue('')
+        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0].id)}
+        else { this.editForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)

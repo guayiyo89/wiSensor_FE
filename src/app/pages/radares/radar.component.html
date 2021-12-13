@@ -1,95 +1,143 @@
-<div class="row blackness" style="user-select: none; padding-top: 0.3em;">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
-          <div style="display: block; width: 80%; margin: 0 auto">
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
-            <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+<div *ngIf="_idPerfil > 2 && id_cent_est != _idCentroUser" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
+</div>
+
+<div *ngIf="_idPerfil == 2 && _idEmpresaCenter != _idEmpresaUser" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
+</div>
+
+
+<div *ngIf="flag == 0" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">La estación no esta disponible para su visualización.</h4>
+</div>
+
+<div *ngIf="id_cent_est && _idEmpresaCenter && flag == 1">
+  <div *ngIf="(_idPerfil > 2 && id_cent_est == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter ">
+    <div class="row blackness" style="user-select: none; padding-top: 0.3em;">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
+              <div style="display: block; width: 80%; margin: 0 auto">
+                <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
+                <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
+                <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+              </div>
+            </div>
+            
+            <div class="col-5">
+              <span style="font-weight: bold; text-align: center;">Hora Actual</span>
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
+            </div>
+      
+            <div class="col-5">
+              <span style="font-weight: bold; text-align: center;">Último registro</span>
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
+            </div>
+      
           </div>
         </div>
-        
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Hora Actual</span>
-          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
+      
+        <div class="col-md-6">
+          <app-evento-total [zonas]="zonasRdr"></app-evento-total>
         </div>
-  
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Último registro</span>
-          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
-        </div>
-  
       </div>
-    </div>
-  
-    <div class="col-md-6">
+    
+    <div class="row blackness">
+        <div class="col-md-3">
+            <google-map
+            height="500px"
+            width="100%"
+            [zoom]="zoom"
+            [center]="center"
+            [options]="options"
+            >
+                <map-marker
+                #markerElem
+                *ngFor="let marker of markers"
+                [position]="marker.position"
+                [label]="marker.label"
+                [title]="marker.title"
+                [options]="marker.options"
+                (mapClick)="clickedMarker(marker.position, marker.info)"
+                >
+                </map-marker>
+            </google-map>
+            <div #dataMarker class="card bg-dark" style="display: none; padding: 5px;">
+              (<span style="color: chartreuse; font-weight: bold;">{{latCont}} </span>,
+              <span style="color: chartreuse; font-weight: bold;">{{lonCont}}</span>)
+              <span style="display: block;">Fecha: {{fechaContent | fecha}}</span>
+              <span style="display: block;">Distancia: {{distContent | truncar}} m</span>
+              <span style="display: block;">Velocidad: {{velContent | truncar}} m/s</span>
+              <span style="display: block;">Distancia: {{timeContent}} s</span>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-5">
+          <h4 class="titClima"> 
+             Eventos - Últimos 15 días</h4> 
 
+          <app-evento-dia *ngIf="zonasRdr.length > 0" [zonas]="zonasRdr"></app-evento-dia>
+
+          <h4 class="titClima"> 
+            Eventos - Últimas 24 horas</h4> 
+          
+          <app-evento-hora *ngIf="zonasRdr.length > 0" [zonas]="zonasRdr"></app-evento-hora>
+          <!-- <p-table [value]="detalles" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+          [globalFilterFields]="['fecha','velocidad','distancia']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
+    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="fecha"> Fecha <p-sortIcon field="fecha" style="color: thistle;"></p-sortIcon> </th>
+                    <th pSortableColumn="velocidad"> Velocidad <p-sortIcon field="velocidad"></p-sortIcon> </th>
+                    <th pSortableColumn="distancia"> Distancia <p-sortIcon field="distancia"></p-sortIcon> </th>
+                    <th pSortableColumn="desplazamiento"> Desplazamiento <p-sortIcon field="desplazamiento"></p-sortIcon> </th>
+                    <th pSortableColumn="codigo"> Duración <p-sortIcon field="duracion"></p-sortIcon> </th>
+                    <th> Visto </th>
+                    <th> Trayectoria </th>
+                </tr>
+            </ng-template>
+    
+            <ng-template pTemplate="body" let-dato>
+                <tr class="rowth blackness" (click)="detalleView(dato.sp_cabecera_id)">
+                  <td>{{dato.fecha | fecha}}</td>
+                  <td>{{dato.velocidad | truncar}}</td>
+                  <td>{{dato.distancia | truncar}}</td>
+                  <td>{{dato.desplazamiento | truncar}}</td>
+                  <td>{{dato.duracion}} s</td>
+                  <td><fa-icon *ngIf="dato.visto==1" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon> <fa-icon id="checkId-{{dato.id}}" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon>  </td>
+                  <td><fa-icon style="font-size: 1.2em; cursor: pointer; color: chartreuse;" [icon]="faExcel" (click)="exportasXLSX(dato.sp_cabecera_id)"></fa-icon> </td>
+                </tr>
+            </ng-template>
+    
+        </p-table> -->
+    
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="titClima">Gráficas Duracion / Distancia</h4> 
+          <div *ngFor="let zona of zonasRdr">
+            <h4>{{zona.nombre}} </h4>
+            <app-evento-duracion [id_data]="zona.cod_zona"></app-evento-duracion>
+          </div>
+        </div>
+
+    </div>
+
+
+    <div class="row blackness">
+      <div *ngFor="let zona of zonasRdr">
+        
+        <h5>{{zona.nombre}}</h5>
+        <app-zona-log [id_zona]="zona.cod_zona"></app-zona-log>
+
+      </div>
     </div>
   </div>
 
-<div class="row blackness">
-    <div class="col-md-4">
-        <google-map
-        height="500px"
-        width="100%"
-        [zoom]="zoom"
-        [center]="center"
-        [options]="options"
-        >
-            <map-marker
-            #markerElem
-            *ngFor="let marker of markers"
-            [position]="marker.position"
-            [label]="marker.label"
-            [title]="marker.title"
-            [options]="marker.options"
-            (mapClick)="clickedMarker(marker.position, marker.info)"
-            >
-            </map-marker>
-        </google-map>
-        <div #dataMarker class="card bg-dark" style="display: none; padding: 5px;">
-          (<span style="color: chartreuse; font-weight: bold;">{{latCont}} </span>,
-          <span style="color: chartreuse; font-weight: bold;">{{lonCont}}</span>)
-          <span style="display: block;">Fecha: {{fechaContent | fecha}}</span>
-          <span style="display: block;">Distancia: {{distContent | truncar}} m</span>
-          <span style="display: block;">Velocidad: {{velContent | truncar}} m/s</span>
-          <span style="display: block;">Distancia: {{timeContent}} s</span>
-        </div>
-    </div>
 
 
-    <div class="col-md-8">
-      
-      <p-table [value]="detalles" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
-      [globalFilterFields]="['fecha','velocidad','distancia']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
-
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="fecha"> Fecha <p-sortIcon field="fecha" style="color: thistle;"></p-sortIcon> </th>
-                <th pSortableColumn="velocidad"> Velocidad <p-sortIcon field="velocidad"></p-sortIcon> </th>
-                <th pSortableColumn="distancia"> Distancia <p-sortIcon field="distancia"></p-sortIcon> </th>
-                <th pSortableColumn="desplazamiento"> Desplazamiento <p-sortIcon field="desplazamiento"></p-sortIcon> </th>
-                <th pSortableColumn="codigo"> Duración <p-sortIcon field="duracion"></p-sortIcon> </th>
-                <th> Visto </th>
-                <th> Trayectoria </th>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-dato>
-            <tr class="rowth blackness" (click)="detalleView(dato.sp_cabecera_id)">
-              <td>{{dato.fecha | fecha}}</td>
-              <td>{{dato.velocidad | truncar}}</td>
-              <td>{{dato.distancia | truncar}}</td>
-              <td>{{dato.desplazamiento | truncar}}</td>
-              <td>{{dato.duracion}} s</td>
-              <td><fa-icon *ngIf="dato.visto==1" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon> <fa-icon id="checkId-{{dato.id}}" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon>  </td>
-              <td><fa-icon style="font-size: 1.2em; cursor: pointer; color: chartreuse;" [icon]="faExcel" (click)="exportasXLSX(dato.sp_cabecera_id)"></fa-icon> </td>
-            </tr>
-        </ng-template>
-
-    </p-table>
-
-    </div>
 </div>
+
 
 <!-- (mapClick)="openInfo(markerElem, marker.info)" -->

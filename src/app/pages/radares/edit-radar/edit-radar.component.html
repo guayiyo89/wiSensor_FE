@@ -1,5 +1,5 @@
 <div class="row">
-    <h2>Agregar nueva estación</h2>
+    <h2>Editar Radar</h2>
     <div class="col-md-6">
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -74,13 +74,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Zona</label>
-                <input type="text" formControlName="zona" placeholder="Zona" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zona.errors }">
-                <div *ngIf="submitted && f.zona.errors">
-                    <div *ngIf="f.zona.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label>Latitud</label>
@@ -121,9 +114,50 @@
         [center]="center"
         [options]="options"
         (mapClick)="click($event)">
+            <map-marker
+            #markerElem
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            >
+            </map-marker>
         </google-map>
         <span style="color: grey; font-size: 9pt; font-family: Roboto;">Haga click en el mapa para obtener una ubicación referencial. <br>
             Se recomienda editar en los campos especificos para obtener la locación específica. </span>
     </div>
 
+    
 </div>
+
+<h2>Zonas</h2>
+
+<div *ngIf="zonas.length > 0">
+    <div class="row" *ngFor="let zona of zonas">
+        <div class="col-6">{{zona.nombre}} | <span style="padding: 3px; font-size: 9pt; background-color: darkcyan;">{{zona.cod_zona}}</span></div>
+        <div class="col-6 text-right">
+            <a class="btn btn-danger" (click)="delete(zona, zona.id)" style="margin: 0.5em;"> <fa-icon [icon]="faTimes"></fa-icon> </a>
+            <a class="btn btn-success" (click)="openEdit(editGen)"><fa-icon [icon]="faEdit"></fa-icon></a>
+        </div>
+
+        <ng-template #editGen let-modal>
+            <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Zona</h3> </div>
+              <div class="modal-body bg-dark"><app-edit-zona [zona]="zona" (myEvent)="closeModal()"></app-edit-zona> </div>
+        </ng-template>
+        
+    </div>
+</div>
+
+<p *ngIf="zonas.length == 0" style="font-size: 1.5em;">Asigne una zona al Radar.</p>
+
+<div style="padding-top: 1em;">
+    <button (click)="openNew(addGen)" class="noselect"> <fa-icon [icon]="faPlus"></fa-icon> Agregar</button>
+</div>
+
+<ng-template #addGen let-modal>
+    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Zona</h3> </div>
+      <div class="modal-body bg-dark"><add-zona [id_rdr]="_id" (myEvent)="closeModal()"></add-zona> </div>
+</ng-template>

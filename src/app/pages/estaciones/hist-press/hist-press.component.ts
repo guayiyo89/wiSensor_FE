@@ -18,6 +18,7 @@ export class HistPressComponent implements OnInit {
     {data: [], label: 'Presion'}
   ];
   public chartPresOptY: ChartOptions = {
+    elements: {line: {tension: 0}},
     responsive: true
   };
   public chartPresLabelY: Label[] = [];

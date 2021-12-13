@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faChartLine, faFish, faMapMarkerAlt, faUsers, faSearch, faBell, faPowerOff, faExclamationTriangle, faShieldAlt, faCloudSunRain, faBolt, faCog, faCarBattery } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faFish, faMapMarkerAlt, faUsers, faSearch, faBell, faPowerOff, faExclamationTriangle, faShieldAlt, faCloudSunRain, faBolt, faCog, faCarBattery, faShip } from '@fortawesome/free-solid-svg-icons';
 import { CentroService } from '../services/centro.service';
 import { UsuarioService } from '../services/usuario.service';
 
@@ -32,6 +32,7 @@ export class WelcomeComponent implements OnInit {
   faLogout = faPowerOff
   faCog = faCog
   faBattery = faCarBattery
+  faShip = faShip
 
   constructor(private _route: ActivatedRoute, public _user: UsuarioService, public _centro: CentroService) { }
 

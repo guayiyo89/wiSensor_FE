@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faBolt, faCheckCircle, faCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Genpack } from 'src/app/interfaces/generador.model';
+import { CentroService } from 'src/app/services/centro.service';
 import { GenpackService } from 'src/app/services/genpack.service';
 import { GenpackdataService } from 'src/app/services/genpackdata.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -14,17 +15,23 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class GenpackComponent implements OnInit {
 
-  constructor(public _genpack: GenpackService, public _user: UsuarioService, public _route: ActivatedRoute, public _genpackdata: GenpackdataService) { }
+  constructor(public _genpack: GenpackService, public _user: UsuarioService, public _route: ActivatedRoute, public _genpackdata: GenpackdataService,
+    public _centro: CentroService) { }
 
   private intervalUpdate: any
   _idPerfil: any
   _idCentroUser: any
   _idEmpresaUser: any
 
+  _idEmpresaCenter: any
+  id_cent_est: any
+
   fechaShow:any[] = []
 
   dataGenpack: any[] = []
   dataGPnow: any
+
+  flag = 1
   
   // @ts-ignore
   genpack: Genpack
@@ -51,23 +58,35 @@ export class GenpackComponent implements OnInit {
     this._route.params.subscribe(
       params => {
         this.id = +params['id']
-        this._genpack.getGenpack(this.id).subscribe(
-          data => {
-            this.genpack = data
-            this.getdata_gp(data.codigo)
 
-            this.intervalUpdate = setInterval(() => {
+        this._genpack.getFlag(this.id).subscribe( (resp: any) => {
+          this.flag = resp.bandera})
+
+        if(this.flag == 1){
+          this._genpack.getGenpack(this.id).subscribe(
+            data => {
+              this.genpack = data
               this.getdata_gp(data.codigo)
-            }, 5000)
-          }
-        )
-        this._genpack.getGeneradores(this.id).subscribe(
-          data => {
-            console.log(this.id)
-            this.generadores = data
-            console.log(data)
-          }
-        )
+
+              this.intervalUpdate = setInterval(() => {
+                this.getdata_gp(data.codigo)
+              }, 5000)
+
+              this._centro.getCentro(data.id_centro).subscribe(
+                data => {
+                  this.id_cent_est = data.id
+                  this._idEmpresaCenter = data.id_empresa
+                })
+            }
+          )
+          this._genpack.getGeneradores(this.id).subscribe(
+            data => {
+              console.log(this.id)
+              this.generadores = data
+              console.log(data)
+            }
+          )
+        }
       }//params
     )
 
@@ -88,6 +107,10 @@ export class GenpackComponent implements OnInit {
         this.dataGPnow = dataGP[0]
         console.log(dataGP)
       })
+  }
+
+  ngOnDestroy(){
+    clearInterval(this.intervalUpdate)
   }
 
 }

@@ -41,15 +41,9 @@ export class EditgeneradorComponent implements OnInit {
     this._genpack.getGenerador(this.id).subscribe(
       data => {
         this.generador = data
+        this.editForm.patchValue(this.generador)
         console.log(data)
-        this.editForm.controls['nombre'].setValue(data.NOMBRE)
-        this.editForm.controls['marca'].setValue(data.MARCA)
-        this.editForm.controls['modelo'].setValue(data.MODELO)
-        this.editForm.controls['capacidad'].setValue(data.CAPACIDAD)
-        this.editForm.controls['potencia'].setValue(data.POTENCIA)
-        this.editForm.controls['estado'].setValue(data.ESTADO)
-        this.editForm.controls['id_genpack'].setValue(data.ID_GENPACK)
-        this.editForm.controls['codigo'].setValue(data.CODIGO)
+        
       }
     )
   }

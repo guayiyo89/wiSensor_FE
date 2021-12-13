@@ -32,6 +32,8 @@ export class EditcentroComponent implements OnInit {
   // @ts-ignore
   empresaUser: Empresa
 
+  markers: any[] = []
+
   perfilUser: any
   idEmpresa: any //id empresa del Logueado
 
@@ -100,6 +102,8 @@ export class EditcentroComponent implements OnInit {
               lng: data.longitud,
             }
           })
+
+          this.addNewMarker(data.latitud, data.longitud)
         }
       )
    });
@@ -140,11 +144,26 @@ export class EditcentroComponent implements OnInit {
     )
   }
 
+  addNewMarker(latitud: any, longitud: any) {
+    if(this.markers.length > 1){
+      this.markers.pop()
+    }
+    this.markers.push({
+      position: {
+        lat: latitud,
+        lng: longitud,
+      },
+      title: 'CENTRO' + (this.markers.length + 1)
+    })
+  }
+
   click(event: google.maps.MapMouseEvent) {
     //this.latMap = event.latLng.lat()
     //this.longMap = event.latLng.lng()
     this.editForm.controls['latitud'].setValue(event.latLng.lat())
     this.editForm.controls['longitud'].setValue(event.latLng.lng())
+
+    this.addNewMarker(event.latLng.lat(), event.latLng.lng())
   }
 
   changeComuna(region: any) { //Angular 11

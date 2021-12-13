@@ -77,4 +77,10 @@ export class GenpackService {
     return this.http.put(url, generador)
   }
 
+  getFlag(id:any){
+    let url = `${this.baseUrl}/flag/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any>(url)
+  }
+
 }

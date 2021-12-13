@@ -19,6 +19,7 @@ export class HistVelcComponent implements OnInit {
     {data: [], label: 'Velocidad'}
   ];
   public chartVelcOptY: ChartOptions = {
+    elements: {line: {tension: 0}},
     responsive: true
   };
   public chartVelcLabelY: Label[] = [];

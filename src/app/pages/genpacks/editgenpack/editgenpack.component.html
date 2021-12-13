@@ -127,8 +127,8 @@
 
                 <ng-template #editGen let-modal>
                     <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Editar Genpack</h3> </div>
-                    <app-editgenerador [id]="gen.ID" (myEvent)="closeModal()"></app-editgenerador>
+                      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Editar Generador</h3> </div>
+                    <app-editgenerador [id]="gen.id" (myEvent)="closeModal()"></app-editgenerador>
                 </ng-template>
 
             </div>
@@ -141,6 +141,6 @@
 
 <ng-template #addGen let-modal>
     <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Genpack</h3> </div>
+      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Generador</h3> </div>
     <app-addgenerador [id_gp]="_id" (myEvent)="closeModal()"></app-addgenerador>
 </ng-template>

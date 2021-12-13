@@ -1,133 +1,153 @@
-<div class="row blackness" style="user-select: none; padding-top: 0.3em;">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
-          <div style="display: block; width: 80%; margin: 0 auto">
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
-            <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
-            <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
-          </div>
-        </div>
-        
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Hora Actual</span>
-          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
-        </div>
-  
-        <div class="col-5">
-          <span style="font-weight: bold; text-align: center;">Último registro</span>
-          <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
-        </div>
-  
-      </div>
-    </div>
-  
-    <div class="col-md-6">
+<div *ngIf="_idPerfil > 2 && id_cent_est != _idCentroUser" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
+</div>
 
-    </div>
-  </div>
+<div *ngIf="_idPerfil == 2 && _idEmpresaCenter != _idEmpresaUser" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">Ud. No tiene autorización para ver este centro. Presione para volver.</h4>
+</div>
 
+<div *ngIf="flag == 0" style="user-select: none; padding-top: 0.7em;">
+  <h4 style="color:slategray">La estación no esta disponible para su visualización.</h4>
+</div>
 
-  <div class="row blackness" *ngIf="dataGenpack.length > 0">
-    <div class="col-md-3">
-      <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-         Batería</h4> 
-        <app-bateria [voltaje] = "dataGenpack[0].battery_volt"></app-bateria>
-    </div>
+<div *ngIf="id_cent_est && _idEmpresaCenter && flag == 1">
 
-    <div class="col-md-3">
-      <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-         Voltaje Actual</h4> 
-        <div style="padding-top: 1em; text-align: center; height: 100%; vertical-align: middle;">
-          <fa-icon [icon]="faBolt" style="transform: scale(0.7); color: rgb(208, 243, 10); padding-right: 0.3em; font-size: 25pt;"></fa-icon>
-          <span style="font-weight: bold; font-size: 3em;">{{dataGenpack[0].battery_volt}}</span> <span style="font-size: 2.2em;"> V</span>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-      <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-        Encendido del Generador</h4>
-      <div class="row">
-        <div class="col-6 text-center">
-          <span style="font-weight: bold; letter-spacing: 1px;"> Desde la última desconexión:</span>
-          <div style="background-color: rgb(12, 133, 76); display: block; padding: 3px; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 1em;"> 
-            <span style="display: block; letter-spacing: 3px; font-weight: bold; font-size: 1em;">ON</span> 
-            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">56 h</span>
-          </div>
-        </div>
-        <div class="col-6 text-center">
-          <span style="font-weight: bold; letter-spacing: 1px;"> Total:</span>
-          <div style="background-color: rgb(12, 133, 76); display: block; padding: 3px; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 1em;"> 
-            <span style="display: block; letter-spacing: 3px; font-weight: bold; font-size: 1em;">ON</span> 
-            <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">1056 h</span>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
+  <div *ngIf="(_idPerfil > 2 && id_cent_est == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter ">
     
-  </div>
-
-  <div class="row blackness" *ngIf="dataGenpack.length > 0">
-    <div class="col-md-8">
-      <div class="row w-100">
+    <div class="row blackness" style="user-select: none; padding-top: 0.3em;">
         <div class="col-md-6">
-          <h4 class="titClima"> 
-            <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-             Voltaje</h4>
-            <app-voltaje [dataVolt]="dataGenpack"></app-voltaje>
+          <div class="row">
+            <div class="col-2 text-center" style="border-right: rgb(98, 112, 125) 1px solid; vertical-align: middle;">
+              <div style="display: block; width: 80%; margin: 0 auto">
+                <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[1]}}</span>
+                <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[2]}}</span>
+                <span style="letter-spacing: 1px; font-weight: bold; text-transform: uppercase; font-size: 16pt; display: block; margin-bottom: 2px;">{{fechaShow[3]}}</span>        
+              </div>
+            </div>
+            
+            <div class="col-5">
+              <span style="font-weight: bold; text-align: center;">Hora Actual</span>
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">{{fechaShow[4]}}</span>
+            </div>
+      
+            <div class="col-5">
+              <span style="font-weight: bold; text-align: center;">Último registro</span>
+              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
+            </div>
+      
+          </div>
         </div>
-    
+      
         <div class="col-md-6">
-          <h4 class="titClima"> 
-            <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-             Estado Generador</h4>
-            <app-potencia [dataEst]="dataGenpack"></app-potencia>
+    
         </div>
-
-      </div>
-
-      <div class="row w-100">
-        <div class="col-12">
-          <h4 class="titClima"> 
-            <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-             Combustible 10 últimos días</h4>
-             <app-combustible-dias></app-combustible-dias>
-        </div>
-      </div>
-
-      <div class="row w-100">
-        <div class="col-6 text-center">
-          <span style="font-weight: bold; display: block;"> Dato Random</span>
-          <span style="font-weight: bold; display: block; font-size: 3em;"> 68</span>
-
-          <span style="font-weight: bold; display: block;"> Capacidad Actual/Total</span>
-          <span style=" display: block; font-size: 2.5em;"> 1068 / 1400 Lt</span>
-
-        </div>
-
-        <div class="col-6">
-          <h4 class="titClima"> 
-            <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-             Combustible Actual (%)</h4>
-          <app-combustible-actual></app-combustible-actual>
-        </div>
-      </div>
     </div>
     
-    <div *ngIf="generadores.length > 0" class="col-md-4">
-      <h4 class="titClima"> 
-        <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
-         Estado Generador</h4>
-         
-      <div *ngFor="let generador of generadores">
-        <app-generador [id_generador]="generador.ID"></app-generador>
+    <div class="row blackness" *ngIf="dataGenpack.length > 0">
+      <div class="col-md-3">
+        <h4 class="titClima"> 
+          <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Batería</h4> 
+          <app-bateria [voltaje] = "dataGenpack[0].battery_volt"></app-bateria>
       </div>
+  
+      <div class="col-md-3">
+        <h4 class="titClima"> 
+          <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Voltaje Actual</h4> 
+          <div style="padding-top: 1em; text-align: center; height: 100%; vertical-align: middle;">
+            <fa-icon [icon]="faBolt" style="transform: scale(0.7); color: rgb(208, 243, 10); padding-right: 0.3em; font-size: 25pt;"></fa-icon>
+            <span style="font-weight: bold; font-size: 3em;">{{dataGenpack[0].battery_volt}}</span> <span style="font-size: 2.2em;"> V</span>
+          </div>
+      </div>
+  
+      <div class="col-md-6">
+        <h4 class="titClima"> 
+          <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+          Encendido del Generador</h4>
+        <div class="row">
+          <div class="col-6 text-center">
+            <span style="font-weight: bold; letter-spacing: 1px;"> Desde la última desconexión:</span>
+            <div style="background-color: rgb(12, 133, 76); display: block; padding: 3px; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 1em;"> 
+              <span style="display: block; letter-spacing: 3px; font-weight: bold; font-size: 1em;">ON</span> 
+              <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">56 h</span>
+            </div>
+          </div>
+          <div class="col-6 text-center">
+            <span style="font-weight: bold; letter-spacing: 1px;"> Total:</span>
+            <div style="background-color: rgb(12, 133, 76); display: block; padding: 3px; border-radius: 5px; width: 45%; margin: 0 auto; margin-top: 1em;"> 
+              <span style="display: block; letter-spacing: 3px; font-weight: bold; font-size: 1em;">ON</span> 
+              <span style="display: block; letter-spacing: 2px; font-weight: bold; font-size: 2em;">1056 h</span>
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+      
     </div>
-
+  
+    <div class="row blackness" *ngIf="dataGenpack.length > 0">
+      <div class="col-md-8">
+        <div class="row w-100">
+          <div class="col-md-6">
+            <h4 class="titClima"> 
+              <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+                Voltaje</h4>
+              <app-voltaje [dataVolt]="dataGenpack"></app-voltaje>
+          </div>
+      
+          <div class="col-md-6">
+            <h4 class="titClima"> 
+              <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+                Estado Generador</h4>
+              <app-potencia [dataEst]="dataGenpack"></app-potencia>
+          </div>
+  
+        </div>
+  
+        <div class="row w-100">
+          <div class="col-12">
+            <h4 class="titClima"> 
+              <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+                Combustible 10 últimos días</h4>
+                <app-combustible-dias></app-combustible-dias>
+          </div>
+        </div>
+  
+        <div class="row w-100">
+          <div class="col-6 text-center">
+            <span style="font-weight: bold; display: block;"> Dato Random</span>
+            <span style="font-weight: bold; display: block; font-size: 3em;"> 68</span>
+  
+            <span style="font-weight: bold; display: block;"> Capacidad Actual/Total</span>
+            <span style=" display: block; font-size: 2.5em;"> 1068 / 1400 Lt</span>
+  
+          </div>
+  
+          <div class="col-6">
+            <h4 class="titClima"> 
+              <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+                Combustible Actual (%)</h4>
+            <app-combustible-actual></app-combustible-actual>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="generadores.length > 0" class="col-md-4">
+        <h4 class="titClima"> 
+          <fa-icon [icon]="faDot" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
+            Estado Generador</h4>
+            
+        <div *ngFor="let generador of generadores">
+          <app-generador [id_generador]="generador.ID"></app-generador>
+        </div>
+      </div>
+  
+  
+    </div>
 
   </div>
+
+</div>
+

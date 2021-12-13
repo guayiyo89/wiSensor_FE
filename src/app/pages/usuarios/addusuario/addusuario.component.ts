@@ -58,7 +58,7 @@ export class AddusuarioComponent implements OnInit {
     this.nomCentro(this.idEmpresa);
     this.nomEmpresaUser(this.idEmpresa);
     this.nomEmpresa();
-    console.log(this.perfilUser, this.empresaUser);
+
 
     this.addForm = this._fbuilder.group({
       id: [],
@@ -71,6 +71,8 @@ export class AddusuarioComponent implements OnInit {
       id_perfil: ['', Validators.required],
       id_centro: ['', Validators.required]
     })
+
+    console.log(this._user.userIds.id_centro)
 
     this.addForm.controls['status'].setValue(1)
     this.addForm.controls['empresa_id'].setValue(this.idEmpresa)

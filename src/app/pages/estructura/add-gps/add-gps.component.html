@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-6">
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Órden</label>
+                <input type="number" formControlName="orden" placeholder="Órden" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.orden.errors }">
+                <div *ngIf="submitted && f.orden.errors">
+                    <div *ngIf="f.orden.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Debe asignar un óden al sensor.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Latitud</label>
+                <input type="number" formControlName="latitud" placeholder="Latitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.latitud.errors }">
+                <div *ngIf="submitted && f.latitud.errors">
+                    <div *ngIf="f.latitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La latitud es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Longitud</label>
+                <input type="number" formControlName="longitud" placeholder="Longitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.longitud.errors }">
+                <div *ngIf="submitted && f.longitud.errors">
+                    <div *ngIf="f.longitud.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La longitud es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" formControlName="id_et_modulo" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id_et_modulo.errors }">
+                <div *ngIf="submitted && f.id_et_modulo.errors">
+                    <div *ngIf="f.id_et_modulo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La latitud es obligatoria.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        </form>
+    </div>
+</div>

@@ -35,5 +35,20 @@ export class SpotterService {
     let url = `${this.baseUrl}/spotter_d_visto/${id}`
     return this.http.put<any>(url, detalle)
   }
+  
+  getByHora(zona: any){
+    let url = `${this.baseUrl}/spotter_hours/${zona}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
+  }
+
+  getByDia(zona: any){
+    let url = `${this.baseUrl}/spotter_days/${zona}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
+  }
+
+  getByDist(zona: any){
+    let url = `${this.baseUrl}/spotter_dist/${zona}`
+    return this.http.get<any[]>(url)
+  }
 
 }

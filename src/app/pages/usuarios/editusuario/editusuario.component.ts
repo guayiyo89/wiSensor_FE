@@ -159,7 +159,8 @@ export class EditusuarioComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        this.editForm.controls['centro_id'].setValue('')
+        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0].id)}
+        else { this.editForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)
