@@ -37,8 +37,6 @@ import { PasswordComponent } from "./usuarios/password/password.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
 import { ConfComponent } from "./conf/conf.component";
 import { WelcomeComponent } from "./welcome.component";
-import { AlertasService } from "../services/alertas.service";
-import { AlertasComponent } from "./estaciones/alertas/alertas.component";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { ProduccionComponent } from "./produccion/produccion.component";
 import { EstructuraComponent } from "./estructura/estructura.component";
@@ -47,7 +45,6 @@ import { AddEstructuraComponent } from "./estructura/add-estructura/add-estructu
 import { EditEstructuraComponent } from "./estructura/edit-estructura/edit-estructura.component";
 import { AddModuloComponent } from "./estructura/add-modulo/add-modulo.component";
 import { EditModuloComponent } from "./estructura/edit-modulo/edit-modulo.component";
-import { AddGpsComponent } from "./estructura/add-gps/add-gps.component";
 
 const pagesRoutes: Routes = [
     {

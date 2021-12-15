@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { CentroService } from 'src/app/services/centro.service';
@@ -20,6 +20,7 @@ import Swal from 'sweetalert2';
   ]
 })
 export class EditModuloComponent implements OnInit {
+  @Input() _Estructura: any
 
   constructor(public _user: UsuarioService, public _empresa: EmpresaService, public _centro: CentroService, public _modulo: ModulosService, public _gps: GpsModulosService,
     private _fbuider: FormBuilder, private location: Location, private _idPass: IdPassService, private route: ActivatedRoute, private _modal: NgbModal, public _activeModal: NgbActiveModal) { }
@@ -27,7 +28,6 @@ export class EditModuloComponent implements OnInit {
     submitted = false;
     //@ts-ignore
     editForm: FormGroup
-    idEstructura: any
     _idModulo: any
 
     gpsList: any[] = []
@@ -42,11 +42,14 @@ export class EditModuloComponent implements OnInit {
 
   faSave = faSave
   faBack = faArrowLeft
+  faEdit = faEdit
+  faTrash = faTrash
 
   ngOnInit(): void {
     this.perfilUser = this._user.usuario.id_perfil
     this.idEmpresa = this._user.userIds.id_empresa
     this.getId()
+    console.log(this._Estructura);
     this.editForm = this._fbuider.group({
       id: [''],
       nombre: ['', [Validators.required]],
@@ -63,7 +66,6 @@ export class EditModuloComponent implements OnInit {
         this._gps.getGpsModulos(this._idModulo).then(
           data => {
             this.gpsList = data
-            console.log(this.gpsList);
           })
       })
     })
@@ -88,13 +90,35 @@ export class EditModuloComponent implements OnInit {
     }
   }
 
+  delete(gps: any, id: any){
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Desea eliminar el item seleccionado?',
+      icon: 'question',
+      showConfirmButton: true,
+      confirmButtonText: `SI`,
+      showCancelButton: true,
+      cancelButtonText: `NO`
+    }).then((result) => {
+      if(result.isConfirmed){
+        this._gps.deleteGpsModulo(id,gps).then(
+          data => {
+            this.gpsList.splice(this.gpsList.indexOf(gps), 1)
+          }
+        )
+        //aqui va el eliminar
+        Swal.fire('Eliminado!', '', 'info');
+      }
+    })
+  }
+
   volver(){
     return this.location.back()
   }
 
 
   getId(){
-    this._idPass.bulma$.pipe(take(1)).subscribe(id => this.idEstructura = id)
+    this._idPass.bulma$.pipe(take(1)).subscribe(id => this._Estructura = id)
   }
 
   //Temperatura

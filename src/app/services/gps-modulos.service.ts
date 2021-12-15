@@ -33,11 +33,11 @@ export class GpsModulosService {
   updateGpsModulo(gps_modulo: any, id:any){
     let url = this.baseUrl + '/' + id;
     url += '?token=' + this._user.token;
-    return this.http.put(url, gps_modulo).toPromise().then(res => <any> res)
+    return this.http.put(url, gps_modulo)
   }
 
   deleteGpsModulo(id: any, gps_modulo: any){
-    let url = this.baseUrl + '/' + id;
+    let url = this.baseUrl + '/del/' + id;
     url += '?token=' + this._user.token;
     return this.http.put(url, gps_modulo).toPromise().then(res => <any> res)
   }
@@ -45,6 +45,12 @@ export class GpsModulosService {
   getDataGpsModulo(cod: any, orden: any){
     let url = this.baseUrl + '/data/' + cod + '/' + orden;
     url += '?token=' + this._user.token;
+    return this.http.get(url).toPromise().then(res => <any> res)
+  }
+
+
+  getFakeData(lat:any, lng:any){
+    let url = URL_SERVICIOS + '/est_fake/' + lat + '/' + lng;
     return this.http.get(url).toPromise().then(res => <any> res)
   }
 }

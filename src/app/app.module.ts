@@ -146,6 +146,7 @@ import { EventoHoraComponent } from './pages/radares/evento-hora/evento-hora.com
 import { EventoDuracionComponent } from './pages/radares/evento-duracion/evento-duracion.component';
 import { ZonaLogComponent } from './pages/radares/zona-log/zona-log.component';
 import { EventoTotalComponent } from './pages/radares/evento-total/evento-total.component';
+import { MapHistComponent } from './pages/radares/map-hist/map-hist.component';
 
 
 @NgModule({
@@ -256,7 +257,8 @@ import { EventoTotalComponent } from './pages/radares/evento-total/evento-total.
     EventoHoraComponent,
     EventoDuracionComponent,
     ZonaLogComponent,
-    EventoTotalComponent
+    EventoTotalComponent,
+    MapHistComponent
   ],
   imports: [
     BrowserModule,

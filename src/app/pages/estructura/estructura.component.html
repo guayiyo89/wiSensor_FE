@@ -1,9 +1,25 @@
-<div class="row">
+<div *ngIf="ponton" class="row blackness">
+    <h3>{{ponton.nombre}}</h3>
     <div class="col-md-5 text-center">
         <app-modulos></app-modulos>
     </div>
     <div class="col-md-7">
-        <app-modulos-line></app-modulos-line>
+        
     </div>
+</div>
+<div *ngIf="!ponton" class="row blackness">
+    <h3>No hay Pontón Asignado</h3></div>
+
+<div *ngIf="modulos.length > 0">
+    <div *ngFor="let mod of modulos" class="row blackness">
+        <h3>{{mod.nombre}}</h3>
+        <div class="col-md-5 text-center">
+            <app-modulos></app-modulos>
+        </div>
+        <div class="col-md-7" *ngIf="latitud && longitud && mod.id">
+            <app-modulos-line [_idModulo]="mod.id" [_lat]="latitud" [_lng]="longitud" ></app-modulos-line>
+        </div>
+    </div>
+
 </div>
 

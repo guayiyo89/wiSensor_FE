@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faArrowLeft, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { take } from 'rxjs/operators';
 import { Empresa } from 'src/app/interfaces/empresa.model';
 import { CentroService } from 'src/app/services/centro.service';
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   ]
 })
 export class AddModuloComponent implements OnInit {
-  @Input() _idEstructura: any
+  @Input() _Estructura: any
 
   constructor(public _user: UsuarioService, public _empresa: EmpresaService, public _centro: CentroService, public _modulo: ModulosService,
     private _fbuider: FormBuilder, private location: Location, private _idPass: IdPassService) { }
@@ -39,11 +39,13 @@ export class AddModuloComponent implements OnInit {
   faSave = faSave
   faBack = faArrowLeft
   faEdit = faEdit
+  faTrash = faTrash
 
   ngOnInit(): void {
     this.perfilUser = this._user.usuario.id_perfil
     this.idEmpresa = this._user.userIds.id_empresa
     this.getId()
+    console.log(this._Estructura)
     this.addForm = this._fbuider.group({
       id: [''],
       nombre: ['', [Validators.required]],
@@ -52,7 +54,7 @@ export class AddModuloComponent implements OnInit {
       id_et_estructura: ['', [Validators.required]],
     })
 
-    this.addForm.controls['id_et_estructura'].setValue(this.idEstructura)
+    this.addForm.controls['id_et_estructura'].setValue(this._Estructura.id)
 
 
   }
@@ -79,7 +81,7 @@ export class AddModuloComponent implements OnInit {
 
 
   getId(){
-    this._idPass.bulma$.pipe(take(1)).subscribe(id => this.idEstructura = id)
+    this._idPass.bulma$.pipe(take(1)).subscribe(id => this._Estructura = id)
   }
 
 // get the form short name to access the form fields

@@ -4,10 +4,12 @@ import { faBolt, faCheck, faCheckCircle, faCircle, faExclamationTriangle, faFile
 import { RadarService } from 'src/app/services/radar.service';
 import { SpotterService } from 'src/app/services/spotter.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps'
+import { MapInfoWindow, MapMarker, GoogleMap, MapPolygon } from '@angular/google-maps'
 import { ExcelServiceService } from 'src/app/services/excel-service.service';
 import Swal from 'sweetalert2';
 import { CentroService } from 'src/app/services/centro.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-radar',
@@ -20,7 +22,7 @@ export class RadarComponent implements OnInit {
   @ViewChild('dataMarker') iconData: ElementRef;
 
   constructor( public _user: UsuarioService, public _route: ActivatedRoute, public _radar: RadarService, public _spotter: SpotterService,
-     private _excel: ExcelServiceService, private renderer2: Renderer2, public _centro: CentroService) { }
+     private _excel: ExcelServiceService, private renderer2: Renderer2, public _centro: CentroService, private _fbuilder: FormBuilder, private _modal: NgbModal) { }
 
   // for alarms
   faDot = faCircle
@@ -28,6 +30,11 @@ export class RadarComponent implements OnInit {
   faOk = faCheck
   faBolt = faBolt
   faExcel = faFileDownload
+
+  // for the historical data
+  submitted = false
+  fechaForm: FormGroup;
+  fecha_data: any
 
   radar: any
   trayectoria: any[] = []
@@ -91,8 +98,13 @@ export class RadarComponent implements OnInit {
     this.intervalUpdate = setInterval(() => {
       this.showFecha()
     }, 900)
+
+    this.fechaForm = this._fbuilder.group({
+      fecha: ['', Validators.required],
+    })
     
     this._route.params.subscribe(
+      
       params => {
         this.id = +params['id']
 
@@ -110,27 +122,27 @@ export class RadarComponent implements OnInit {
                   lat: rdr.latitud,
                   lng: rdr.longitud,
                 }
-                this.addRadar()
-  
-                this._radar.getZonas(this.id).subscribe(
-                  zonas => {
-                    this.zonasRdr = zonas
-                    this.rellenar(zonas)
-                  })
-                  
-                this.intervalUpdate = setInterval(() => {
-                  this.markers = []
-                  this.rellenar(this.zonasRdr)
-
-                }, 95000)
-
-                this._centro.getCentro(rdr.id_centro).subscribe(
-                  data => {
-                    this.id_cent_est = data.id
-                    this._idEmpresaCenter = data.id_empresa
-                  }
-                )
+                
               })
+              this.addRadar()
+              this._radar.getZonas(this.id).subscribe(
+                zonas => {
+                  this.zonasRdr = zonas
+                  this.rellenar(zonas)
+                })
+                
+              this.intervalUpdate = setInterval(() => {
+                this.markers = []
+                this.rellenar(this.zonasRdr)
+
+              }, 90000)
+
+              this._centro.getCentro(rdr.id_centro).subscribe(
+                data => {
+                  this.id_cent_est = data.id
+                  this._idEmpresaCenter = data.id_empresa
+                }
+              )
   
             })
         }
@@ -151,7 +163,13 @@ export class RadarComponent implements OnInit {
   }
 
   putMarkers(zona:any){
-    this._spotter.getMarkers(zona).then(
+    //fecha hora actual
+    let fechaHoy = this.convertFecha(new Date().toLocaleString('en-GB'))
+    const fechaHoyHoy = new Date()
+    let fechaHoy1 = this.convertFecha(new Date(fechaHoyHoy.getTime() - 1*(60*60000)).toLocaleString('en-GB'))
+    console.log(fechaHoy, fechaHoy1, 'fechaHoy')
+
+    this._spotter.getMarkers(zona, fechaHoy, fechaHoy1).then(
       marks => {
         for(let dato of marks){
           this._spotter.getDetail(dato.id).subscribe(
@@ -284,8 +302,7 @@ export class RadarComponent implements OnInit {
   }
 
   clickedMarker(position: any, info: any) {
-    console.log(position.lat, info)
-    console.log(this.iconData.nativeElement.id)
+
     this.latCont = position.lat
     this.lonCont = position.lng
     this.renderer2.setStyle(this.iconData.nativeElement, 'display', 'block')
@@ -294,6 +311,37 @@ export class RadarComponent implements OnInit {
     this.velContent = parseFloat(infoContent[1])
     this.distContent = parseFloat(infoContent[2])
     this.timeContent = infoContent[3]
+  }
+
+  onSubmit(){
+    this.submitted = true
+
+    if(this.fechaForm.valid){
+      console.log('abrir modal', this.zonasRdr)
+    }
+  }
+
+  convertFecha(fecha: string) {
+    let laFecha = fecha.split(',')
+    let fechas = laFecha[0].split('/')
+    let dia = fechas[0]
+    let mes = fechas[1]
+    let anio = fechas[2]
+    let hora = laFecha[1].split(':')[0]
+
+    return `${anio}-${mes}-${dia}${hora}`
+  }
+
+  convertFechaForm(fecha:any){
+    let new_fecha = fecha.split('T')
+    let hora = new_fecha[1].split(':')
+
+    return new_fecha[0] + ' ' + hora[0]
+  }
+
+  openTable(dataNode: any){
+    this._modal.open(dataNode, {size: 'lg'})
+    this.fecha_data = this.convertFechaForm(this.fechaForm.value.fecha)
   }
     
 

@@ -50,15 +50,25 @@
             <div *ngFor="let gps of gpsList" class="card-body blackness">
                 <div class="row">
                     <div class="col-7">
-                        <h5>GPS {{gps.oden}}</h5>
+                        <h5>GPS {{gps.orden}}</h5>
                         <p>{{gps.latitud}}, {{gps.longitud}} </p>
                     </div>
                     <div class="col-5">
+                        <button (click)="openEdit(editGen)" class="noselect"> <fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button (click)="delete(gps, gps.id)" class="noselect"> <fa-icon [icon]="faTrash"></fa-icon></button>
+                        
                         <!-- <a class="btn btn-success" [routerLink]="['/editModulo', gps.id]"><fa-icon [icon]="faEdit"></fa-icon></a>
                         <a class="btn btn-danger" (click)="delete(gps, gps.id)" style="margin: 0.5em;">
                             <fa-icon [icon]="faTimes"></fa-icon></a> -->
                     </div>
                 </div>
+
+                <ng-template #editGen let-modal>
+                    <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                      <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Módulo GPS</h3> </div>
+                      <div class="modal-body bg-dark"><app-edit-gps [id_modulo]="gps.id" [coordenadas]="_Estructura" (myEvent)="closeModal()"></app-edit-gps></div>    
+                </ng-template>
+
             </div>
         </div>
 
@@ -71,6 +81,5 @@
 <ng-template #addGen let-modal>
     <div class="modal-header bg-dark"><button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span></button> <h3 class="titClima">Agregar Módulo GPS</h3> </div>
-      <div class="modal-body bg-dark"><app-add-gps [id_modulo]="_idModulo" (myEvent)="closeModal()"></app-add-gps></div>
-    
+      <div class="modal-body bg-dark"><app-add-gps [id_modulo]="_idModulo" [coordenadas]="_Estructura" (myEvent)="closeModal()"></app-add-gps></div>    
 </ng-template>

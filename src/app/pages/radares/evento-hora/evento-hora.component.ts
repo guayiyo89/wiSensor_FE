@@ -36,15 +36,15 @@ export class EventoHoraComponent implements OnInit {
       })
     })
 
-    this.intervalUpdate = setInterval(() => {
-      let val = 0
-      this.zonas.forEach(zona => {
-        this._spotter.getByHora(zona.cod_zona).then(data => {
-          this.rellenarNuevo(data[0], val)
-        })
-        val++
-      })
-    }, 5000)
+    // this.intervalUpdate = setInterval(() => {
+    //   let val = 0
+    //   this.zonas.forEach(zona => {
+    //     this._spotter.getByHora(zona.cod_zona).then(data => {
+    //       this.rellenarNuevo(data[0], val)
+    //     })
+    //     val++
+    //   })
+    // }, 5000)
  
   }
 
@@ -124,7 +124,7 @@ export class EventoHoraComponent implements OnInit {
   }
 
   rellenarNuevo(dato: any, num: number) {
-    console.log(num)
+    
     let count = 0
 
     let novaFecha = this.convertFecha(new Date().toLocaleString('en-GB'))

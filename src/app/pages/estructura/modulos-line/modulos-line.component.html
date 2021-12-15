@@ -1,10 +1,26 @@
-<div style="display: block; height: 100%;">
-    <canvas baseChart style="height: 100%;"
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [colors]="barChartColor"
-      [legend]="barChartLegend"
-      [chartType]="barChartType">
-    </canvas>
-  </div>
+<div *ngIf="coordenadas.length > 0">
+    <google-map
+        height="380px"
+        width="90%"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options">
+        <map-polygon [options]="pol_options">
+            <map-polygon-point *ngFor="let coord of coordenadas" [position]="coord"></map-polygon-point>
+        </map-polygon>
+        <map-polygon [options]="pol_options2">
+            <map-polygon-point *ngFor="let coords of deformacion" [position]="coords"></map-polygon-point>
+        </map-polygon>
+            <map-marker
+            #markerElem
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            >
+            </map-marker>
+    </google-map>
+</div>
+{{_lat}}
+{{_lng}}

@@ -24,43 +24,26 @@
             </td>
         </tr>
         <tr>
-            <td style="padding: 2em; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
+            <td style="padding: 2em; border-left: rgba(151, 151, 151, 0.425) 6px solid; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
                 <span style="display: block; color: rgb(197, 197, 197);">Nodo 4</span>
                 <div class="circle" *ngIf="valores[5] <= 90 && valores[5] >= 60" (click)="openTable(dataNode)">{{valores[5]}}</div>
                 <div class="circle" *ngIf="valores[5] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[5]}}</div>
                 <div class="circle" *ngIf="valores[5] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[5]}}</div>  
             </td>
-            <td style="padding: 2em;">
+            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
                 <span style="display: block; color: rgb(197, 197, 197);">Nodo 5</span>
                 <div class="circle" *ngIf="valores[4] <= 90 && valores[4] >= 60" (click)="openTable(dataNode)">{{valores[4]}}</div>
                 <div class="circle" *ngIf="valores[4] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[4]}}</div>
                 <div class="circle" *ngIf="valores[4] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[4]}}</div>    
             </td>
-            <td style="padding: 2em; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
+            <td style="padding: 2em; border-right: rgba(151, 151, 151, 0.425) 6px solid; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
                 <span style="display: block; color: rgb(197, 197, 197);">Nodo 6</span>
                 <div class="circle" *ngIf="valores[3] <= 90 && valores[3] >= 60" (click)="openTable(dataNode)">{{valores[3]}}</div>
                 <div class="circle" *ngIf="valores[3] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[3]}}</div>
                 <div class="circle" *ngIf="valores[3] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[3]}}</div>  
             </td>
         </tr>
-        <tr>
-            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 7</span>
-                <div class="circle" *ngIf="valores[6] <= 90 && valores[6] >= 60" (click)="openTable(dataNode)">{{valores[6]}}</div>
-                <div class="circle" *ngIf="valores[6] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[6]}}</div>
-                <div class="circle" *ngIf="valores[6] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[6]}}</div>  
-            </td>
-            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 8</span>
-                <div class="circle" *ngIf="valores[7] <= 90 && valores[7] >= 60" (click)="openTable(dataNode)">{{valores[7]}}</div>
-                <div class="circle" *ngIf="valores[7] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[7]}}</div>
-                <div class="circle" *ngIf="valores[7] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[7]}}</div>   
-            </td>
-            <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 9</span>
-                <div class="circle" (click)="openTable(dataNode)">{{valores[8]}}</div> 
-            </td>
-        </tr>
+
     </tbody>
 </table>
 

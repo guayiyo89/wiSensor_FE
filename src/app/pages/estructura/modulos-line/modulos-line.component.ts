@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { GpsModulosService } from 'src/app/services/gps-modulos.service';
+import { MapInfoWindow, MapMarker, GoogleMap, MapPolygon, } from '@angular/google-maps'
 
 @Component({
   selector: 'app-modulos-line',
@@ -9,59 +11,107 @@ import { Color, Label } from 'ng2-charts';
   ]
 })
 export class ModulosLineComponent implements OnInit {
+  @Input() _idModulo: any
+  @Input() _lat: number = 0
+  @Input() _lng: number = 0
 
-  constructor() { }
+  constructor(public _gps: GpsModulosService) { }
 
-  public barChartOptions: ChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{ticks:{fontColor: '#CCCCCC'}}],
-     yAxes: [{ticks: { fontColor: '#CCCCCC'}}] },
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
-    }
-  };
-  public barChartLabels: Label[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '14', '15', '16', '17', '18', '19', '20','21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
-  public barChartType: ChartType = 'line';
-  public barChartLegend = true;
+  gpsList: any[] = []
+  markers: any[] = []
 
-  public barChartColor: Color[] = [{
-  
-  }];
+  coordenadas: any[] = []
+  deformacion: any[] = []
 
-  public barChartData: ChartDataSets[] = [
-    { data: [], label: 'Nodo 1', borderColor: '#23eb23' },
-    { data: [], label: 'Nodo 2', borderColor: '#1d9cdb', backgroundColor: 'rgba(0, 0, 0, 0)' },
-    { data: [], label: 'Nodo 3', borderColor: '#fabf0f', backgroundColor: 'rgba(0, 0, 0, 0)' },
-    { data: [], label: 'Nodo 4', borderColor: '#9a44ad', backgroundColor: 'rgba(0, 0, 0, 0)' },
-    { data: [], label: 'Nodo 5', borderColor: '#fa0a3e', backgroundColor: 'rgba(0, 0, 0, 0)' },
-  ];
+  zoom = 17
+  // @ts-ignore
+  center: google.maps.LatLngLiteral
+
+  options: google.maps.MapOptions = {
+    mapTypeId: 'hybrid',
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    fullscreenControl: false,
+    streetViewControl: false,
+    maxZoom: 17,
+    minZoom: 9,
+  }
+
+  pol_options: google.maps.PolygonOptions = {
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#f0db22',
+    fillOpacity: 0.35,
+    clickable: false
+  }
+
+  pol_options2: google.maps.PolygonOptions = {
+    strokeColor: '#f0db22',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#f0db22',
+    fillOpacity: 0.35,
+    clickable: false
+  }
 
   ngOnInit(): void {
-    for(let i = 0; i < 30; i++){
-      let numero = this.getRandomInt(80,97)
-      this.barChartData[0].data?.push(numero)
+    console.log(this._lat, this._lng)
 
-      let numero1 = this.getRandomInt(82,98)
-      this.barChartData[1].data?.push(numero1)
+    this._gps.getGpsModulos(this._idModulo).then((resp: any) => {
+      this.gpsList = resp.data
+      resp.forEach((gps:any) => {
+        this.addNewMarker(gps)
+        let coords = {lat: gps.latitud, lng: gps.longitud}
+        this.coordenadas.push(coords)
+        //re-calculate gps
+        this._gps.getFakeData(gps.latitud, gps.longitud).then((resp: any) => {
+          this.addMarkers(resp.data.lat, resp.data.lng)
+          let coords2 = {lat: resp.data.lat, lng: resp.data.lng}
+          this.deformacion.push(coords2)
+        })
+      });
+    })
+    
+    console.log(this.coordenadas)
+    //draw the polygon which rounds the module
+    this.pol_options.paths = this.coordenadas
+    this.pol_options2.paths = this.deformacion
 
-      numero = this.getRandomInt(78,94)
-      this.barChartData[2].data?.push(numero)
-
-      numero = this.getRandomInt(85,95)
-      this.barChartData[3].data?.push(numero)
-
-      numero = this.getRandomInt(85,96)
-      this.barChartData[4].data?.push(numero)
+    if(this._lat != 0 && this._lng != 0){
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: this._lat,
+          lng: this._lng,
+        }
+      })
     }
   }
 
   getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  addNewMarker(gps: any) {
+    this.markers.push({
+      position: {
+        lat: gps.latitud,
+        lng: gps.longitud,
+      },
+      title: 'CENTRO' + (this.markers.length + 1),
+      options: { icon: './assets/img/dot.png' },
+      label: {text: ' ' + gps.orden, color: '#FFFFFF', backgroundColor: '#000000'}
+    })
+  }
+
+  addMarkers(latitud: any, longitud: any) {
+    this.markers.push({
+      position: {
+        lat: latitud,
+        lng: longitud,
+      }
+    })
   }
 
 }

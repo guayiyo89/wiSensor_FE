@@ -21,8 +21,13 @@ export class SpotterService {
     return this.http.get<any>(url)
   }
 
-  getMarkers(zona: any){
-    let url = `${this.baseUrl}/spotter_marker/${zona}`
+  getMarkers(zona: any, fecha1: any, fecha2: any){
+    let url = `${this.baseUrl}/spotter_marker/${zona}/${fecha1}/${fecha2}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
+  }
+
+  getMarkersHist(zona: any, fecha1: any){
+    let url = `${this.baseUrl}/spotter_marker_hist/${zona}/${fecha1}`
     return this.http.get(url).toPromise().then(res => res as any[]);
   }
 

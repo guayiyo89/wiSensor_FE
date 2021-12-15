@@ -47,11 +47,13 @@ export class EditEstructuraComponent implements OnInit {
   faTimes = faTimes
   faEdit = faEdit
 
+  latitud: any
+  longitud: any
+
   ngOnInit(): void {
     this.perfilUser = this._user.usuario.id_perfil
     this.idEmpresa = this._user.userIds.id_empresa
     this.nomEmpresa()
-    this.nomCentro(this.idEmpresa)
     this.editForm = this._fbuilder.group({
       id: [''],
       nombre: ['', [Validators.required]],
@@ -59,14 +61,19 @@ export class EditEstructuraComponent implements OnInit {
       empresa_id: ['', [Validators.required]],
       id_centro: ['', [Validators.required]],
     })
-
+    
     this.route.params.subscribe(params => {
       this._id = params['id']
       this.estructura.getEstructura(params['id']).then(
         data => {
           this.editForm.patchValue(data)
           this._centro.getCentro(data.id_centro).subscribe(
-            center => this.editForm.controls['empresa_id'].setValue(center.id_empresa)
+            center => {
+              this.editForm.controls['empresa_id'].setValue(center.id_empresa)
+              this.latitud = center.latitud
+              this.longitud = center.longitud
+              this.nomCentro(center.id_empresa)
+            }
           )
         }
       )
@@ -137,11 +144,30 @@ export class EditEstructuraComponent implements OnInit {
     })
   }
 
+  getCoordenadas(id: any){
+    this._centro.getCentro(id.target.value).subscribe(
+      data => {
+        this.latitud = data.latitud
+        this.longitud = data.longitud
+        console.log(this.latitud, this.longitud)
+      }
+    )
+  }
+
   changeCentros(id: any){
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        if(this.centroList.length > 0) {this.editForm.controls['id_centro'].setValue(this.centroList[0].id)}
+        if(this.centroList.length > 0) {
+          this.editForm.controls['id_centro'].setValue(this.centroList[0].id)
+          this._centro.getCentro(this.centroList[0].id).subscribe(
+            data => {
+              this.latitud = data.latitud
+              this.longitud = data.longitud
+              console.log(this.latitud, this.longitud)
+            }
+          )
+        }
         else { this.editForm.controls['id_centro'].setValue('')}
       },
       error => {
@@ -198,7 +224,7 @@ export class EditEstructuraComponent implements OnInit {
     }
 
     enviarId(id: any){
-      this._idPass.enviar(id)
+      this._idPass.enviar(id, this.latitud, this.longitud)
     }
   // get the form short name to access the form fields
   get f() { return this.editForm.controls; }

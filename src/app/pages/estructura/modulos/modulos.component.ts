@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import mermaid from 'mermaid';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { GpsModulosService } from 'src/app/services/gps-modulos.service';
 
 
 @Component({
@@ -13,18 +13,37 @@ import { Color, Label } from 'ng2-charts';
   ]
 })
 export class ModulosComponent implements OnInit {
+  @Input() _idModulo: any
+  @Input() _lat: number = 0
+  @Input() _lng: number = 0
 
   pitch = 3.2
   roll = -4.5
 
+  gpsList: any[] = []
+  coordenadas: any[] = []
+  deformacion: any[] = []
+
   flowChart: any;
   stringFlowChart: any = "";
-  constructor(private _modal: NgbModal) {
-    this.createFlowchart();
+  constructor(private _modal: NgbModal, public _gps: GpsModulosService) {
   }
 
   ngOnInit(){
-    mermaid.initialize({})
+    this._gps.getGpsModulos(this._idModulo).then((resp: any) => {
+      this.gpsList = resp.data
+      resp.forEach((gps:any) => {
+        let coords = {lat: gps.latitud, lng: gps.longitud}
+        this.coordenadas.push(coords)
+        //re-calculate gps
+        this._gps.getFakeData(gps.latitud, gps.longitud).then((resp: any) => {
+          let coords2 = {lat: resp.data.lat, lng: resp.data.lng}
+          this.deformacion.push(coords2)
+        })
+        
+      });
+    })
+
     for(let i = 0; i < 30; i++){
       let numero = this.getRandomInt(1,5)
       this.barChartData[0].data?.push(numero)
@@ -60,24 +79,6 @@ export class ModulosComponent implements OnInit {
 
   guayo = 25
 
-  createFlowchart() {
-    this.flowChart = [
-       "graph LR",
-        `id1((Start)) --- id2((${this.guayo}))`,
-        "id2 --- id3((Ques 3))",
-        "id1 --> id4((Ques 4))",
-        "id4 --> id5((Ques 55))",
-        "id3 --- id6((Ques 6))",
-        "id6 --- id9((Ques 9))",
-        "id9 --- id8((Ques 8))",
-        "id8 --> id7((Ques 7))",
-        "id5 --> id6",
-        "id5 --> id2",
-        "id5 --> id8",
-        "id4 --> id7",
-    ];
-    this.stringFlowChart = this.flowChart.join("\n");
-  }
 
   // Radiacion
   openTable(dataNode: any){
@@ -86,6 +87,24 @@ export class ModulosComponent implements OnInit {
 
   getRandomInt(min: number, max: number) {
     return Math.random() * (max - min) + min;
+  }
+
+  haversin(lat1: any, lon1: any, lat2: any, lon2: any){
+
+    let R = 6365
+    let deltaLon = (lon1 - lon2) * Math.PI / 180
+    let deltaLat  = (lat1 - lat2) * Math.PI / 180
+    let h = (1 - Math.cos(deltaLat))/2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(deltaLon))/2
+    // distance x. DeltaLat must be equal to zero
+    let h_x = Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(deltaLon))/2
+    // distance y. DeltaLon must be equal to zero
+    let h_y = (1 - Math.cos(deltaLat))/2
+
+    let d_tot = 2 * R * Math.asin(Math.sqrt(h))
+    let d_x = 2 * R * Math.asin(Math.sqrt(h_x))
+    let d_y = 2 * R * Math.asin(Math.sqrt(h_y))
+
+    return {total: d_tot, dx: d_x, dy: d_y}
   }
 
 

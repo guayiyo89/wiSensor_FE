@@ -68,7 +68,15 @@
               <span style="display: block;">Fecha: {{fechaContent | fecha}}</span>
               <span style="display: block;">Distancia: {{distContent | truncar}} m</span>
               <span style="display: block;">Velocidad: {{velContent | truncar}} m/s</span>
-              <span style="display: block;">Distancia: {{timeContent}} s</span>
+              <span style="display: block;">Duración: {{timeContent}} s</span>
+            </div>
+
+            <div class="blackness text-center">
+              <h4 class="titClima"> Mapa Histórico </h4>
+              <form [formGroup]="fechaForm" (ngSubmit)="onSubmit()">
+                <input type="datetime-local" id="fecha_busqueda" formControlName="fecha" style="border-radius: 3px; border:rgb(44, 44, 44) 1px solid">
+                <button type="submit" class="noselect" (click)="openTable(dataNode)">Seleccionar</button>
+              </form>
             </div>
         </div>
     
@@ -139,5 +147,8 @@
 
 </div>
 
+<ng-template #dataNode let-modal class="modal-dark bg-dark">
+  <app-map-hist *ngIf="fecha_data" [zonas]="zonasRdr" [fecha]="fecha_data" [latitud]="radar.latitud" [longitud]="radar.longitud"></app-map-hist>
+</ng-template>
 
 <!-- (mapClick)="openInfo(markerElem, marker.info)" -->
