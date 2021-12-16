@@ -56,6 +56,12 @@ export class RadarService {
     return this.http.get<any[]>(url)
   }
 
+  getByCentro(id:any){
+    let url = `${this.baseUrl}/centro/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
   addZona(zona: any){
     let url = this.zonaUrl
     url += '?token=' + this._user.token;

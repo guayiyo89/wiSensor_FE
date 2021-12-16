@@ -22,7 +22,10 @@
             </google-map>
         </div>
         <div class="col-6">
-            <h3>{{fecha}}:00</h3>
+            <div class="row">
+                <div class="col-6">Fecha:<h4>{{fecha}}:00</h4></div>
+                <div class="col-6 text-right">Eventos: <h3 style="color: rgb(255, 208, 0);">{{markers.length}}</h3></div>
+            </div>
 
             <div style="display: block">
                 <canvas baseChart

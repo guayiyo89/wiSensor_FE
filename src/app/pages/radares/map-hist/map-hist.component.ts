@@ -75,8 +75,7 @@ export class MapHistComponent implements OnInit {
   }
 
   clickedMarker(position: any, info: any) {
-    console.log(position.lat, info)
-    console.log(this.iconData.nativeElement.id)
+
     this.latCont = position.lat
     this.lonCont = position.lng
     this.renderer2.setStyle(this.iconData.nativeElement, 'display', 'block')

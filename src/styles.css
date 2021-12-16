@@ -404,3 +404,22 @@ button{
   .p-column-filter-row{
       padding-bottom: 5px !important;
   }
+
+  .radarBtn{
+      padding: 1em;
+      padding-bottom: 0.5em;
+      font-family: Roboto, Arial, Helvetica, sans-serif;
+      font-size: 1.5em;
+      color: rgb(201, 201, 201);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      height: 60px;
+      margin: 1em;
+      display: inline-block;
+      cursor: pointer;
+  }
+
+  .radarBtn:hover{
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+  }

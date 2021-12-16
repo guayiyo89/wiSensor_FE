@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faChartLine, faFish, faMapMarkerAlt, faUsers, faSearch, faBell, faPowerOff, faExclamationTriangle, faShieldAlt, faCloudSunRain, faBolt, faCog, faCarBattery, faShip } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CentroService } from '../services/centro.service';
+import { RadarService } from '../services/radar.service';
 import { UsuarioService } from '../services/usuario.service';
 
 @Component({
@@ -34,7 +36,9 @@ export class WelcomeComponent implements OnInit {
   faBattery = faCarBattery
   faShip = faShip
 
-  constructor(private _route: ActivatedRoute, public _user: UsuarioService, public _centro: CentroService) { }
+  radares: any[] = []
+
+  constructor(private _route: ActivatedRoute, public _user: UsuarioService, public _centro: CentroService, private _modal: NgbModal, public _radar: RadarService) { }
 
   ngOnInit(){
     this.username = this._user.usuario.nombre
@@ -52,7 +56,15 @@ export class WelcomeComponent implements OnInit {
       items => {
         this.itemCentro = items[0]
         console.log(this.itemCentro)
+        this._radar.getByCentro(this._centroId).subscribe(
+          radares => {this.radares = radares
+            console.log(this.radares)}
+        )
       })
+  }
+
+  openTable(dataNode: any){
+    this._modal.open(dataNode, {size: 'lg'})
   }
 
 }

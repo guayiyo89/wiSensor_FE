@@ -99,5 +99,6 @@ export class EventoDuracionComponent implements OnInit {
 
     return dia_graph + '-' + mes_graph + '  ' + hora_graph_h + ':' + hora_graph_m
   }
+  
 
 }
