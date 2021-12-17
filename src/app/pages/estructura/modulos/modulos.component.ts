@@ -24,25 +24,33 @@ export class ModulosComponent implements OnInit {
   coordenadas: any[] = []
   deformacion: any[] = []
 
+  desplazamientos: any[] = []
+
   flowChart: any;
   stringFlowChart: any = "";
   constructor(private _modal: NgbModal, public _gps: GpsModulosService) {
   }
 
   ngOnInit(){
-    this._gps.getGpsModulos(this._idModulo).then((resp: any) => {
-      this.gpsList = resp.data
-      resp.forEach((gps:any) => {
-        let coords = {lat: gps.latitud, lng: gps.longitud}
-        this.coordenadas.push(coords)
-        //re-calculate gps
-        this._gps.getFakeData(gps.latitud, gps.longitud).then((resp: any) => {
-          let coords2 = {lat: resp.data.lat, lng: resp.data.lng}
-          this.deformacion.push(coords2)
-        })
-        
-      });
-    })
+    if(this._idModulo){
+      this._gps.getGpsModulos(this._idModulo).then((resp: any) => {
+        this.gpsList = resp
+        console.log(resp)
+        resp.forEach((gps:any) => {
+          let coords = {lat: gps.latitud, lng: gps.longitud}
+          this.coordenadas.push(coords)
+          //re-calculate gps
+          this._gps.getFakeData(gps.latitud, gps.longitud).then((resp: any) => {
+            let coords2 = {lat: resp.data.lat, lng: resp.data.lng}
+            this.deformacion.push(coords2)
+            this.desplazamientos.push(this.haversin(coords.lat, coords.lng, coords2.lat, coords2.lng))
+          })
+          
+        });
+      })
+
+    }
+
 
     for(let i = 0; i < 30; i++){
       let numero = this.getRandomInt(1,5)
@@ -104,7 +112,7 @@ export class ModulosComponent implements OnInit {
     let d_x = 2 * R * Math.asin(Math.sqrt(h_x))
     let d_y = 2 * R * Math.asin(Math.sqrt(h_y))
 
-    return {total: d_tot, dx: d_x, dy: d_y}
+    return {total: parseFloat((d_tot).toFixed(3))*1000, dx: d_x, dy: d_y}
   }
 
 

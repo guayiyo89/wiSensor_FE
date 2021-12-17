@@ -34,7 +34,7 @@ export class ModulosLineComponent implements OnInit {
     disableDoubleClickZoom: true,
     fullscreenControl: false,
     streetViewControl: false,
-    maxZoom: 17,
+    maxZoom: 20,
     minZoom: 9,
   }
 
@@ -61,6 +61,7 @@ export class ModulosLineComponent implements OnInit {
 
     this._gps.getGpsModulos(this._idModulo).then((resp: any) => {
       this.gpsList = resp.data
+      console.log(this.gpsList)
       resp.forEach((gps:any) => {
         this.addNewMarker(gps)
         let coords = {lat: gps.latitud, lng: gps.longitud}

@@ -1,46 +1,46 @@
 
 
 
-<table style="user-select: none;">
+<table *ngIf="_idModulo && gpsList.length > 0" style="user-select: none;">
     <tbody>
         <tr>
             <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid; border-left: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 1</span>
-                <div class="circle" *ngIf="valores[0] <= 90 && valores[0] >= 60" (click)="openTable(dataNode)">{{valores[0]}}</div>
-                <div class="circle" *ngIf="valores[0] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[0]}}</div>
-                <div class="circle" *ngIf="valores[0] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[0]}}</div>  
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[0].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[0].total <= 11 && desplazamientos[0].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[0].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[0].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[0].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[0].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[0].total}}</div>  
             </td>
             <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 2</span>
-                <div class="circle" *ngIf="valores[1] <= 90 && valores[1] >= 60" (click)="openTable(dataNode)">{{valores[1]}}</div>
-                <div class="circle" *ngIf="valores[1] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[1]}}</div>
-                <div class="circle" *ngIf="valores[1] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[1]}}</div>    
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[1].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[1].total <= 11 && desplazamientos[1].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[1].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[1].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[1].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[1].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[1].total}}</div>    
             </td>
             <td style="padding: 2em; border-top: rgba(151, 151, 151, 0.425) 6px solid; border-right: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 3</span>
-                <div class="circle" *ngIf="valores[2] <= 90 && valores[2] >= 60" (click)="openTable(dataNode)">{{valores[2]}}</div>
-                <div class="circle" *ngIf="valores[2] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[2]}}</div>
-                <div class="circle" *ngIf="valores[2] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[2]}}</div>  
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[2].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[2].total <= 11 && desplazamientos[2].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[2].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[2].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[2].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[2].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[2].total}}</div>  
             </td>
         </tr>
         <tr>
             <td style="padding: 2em; border-left: rgba(151, 151, 151, 0.425) 6px solid; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 4</span>
-                <div class="circle" *ngIf="valores[5] <= 90 && valores[5] >= 60" (click)="openTable(dataNode)">{{valores[5]}}</div>
-                <div class="circle" *ngIf="valores[5] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[5]}}</div>
-                <div class="circle" *ngIf="valores[5] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[5]}}</div>  
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[5].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[5].total <= 11 && desplazamientos[5].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[5].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[5].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[5].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[5].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[5].total}}</div>  
             </td>
             <td style="padding: 2em; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 5</span>
-                <div class="circle" *ngIf="valores[4] <= 90 && valores[4] >= 60" (click)="openTable(dataNode)">{{valores[4]}}</div>
-                <div class="circle" *ngIf="valores[4] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[4]}}</div>
-                <div class="circle" *ngIf="valores[4] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[4]}}</div>    
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[4].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[4].total <= 11 && desplazamientos[4].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[4].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[4].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[4].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[4].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[4].total}}</div>    
             </td>
             <td style="padding: 2em; border-right: rgba(151, 151, 151, 0.425) 6px solid; border-bottom: rgba(151, 151, 151, 0.425) 6px solid;">
-                <span style="display: block; color: rgb(197, 197, 197);">Nodo 6</span>
-                <div class="circle" *ngIf="valores[3] <= 90 && valores[3] >= 60" (click)="openTable(dataNode)">{{valores[3]}}</div>
-                <div class="circle" *ngIf="valores[3] < 60" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{valores[3]}}</div>
-                <div class="circle" *ngIf="valores[3] > 90" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{valores[3]}}</div>  
+                <span style="display: block; color: rgb(197, 197, 197);">Nodo {{gpsList[3].orden}}</span>
+                <div class="circle" *ngIf="desplazamientos[3].total <= 11 && desplazamientos[3].total >= 5" (click)="openTable(dataNode)">{{desplazamientos[3].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[3].total > 11" style="border-color: rgb(238, 32, 5);" (click)="openTable(dataNode)">{{desplazamientos[3].total}}</div>
+                <div class="circle" *ngIf="desplazamientos[3].total < 5" style="border-color: rgb(102, 170, 14);" (click)="openTable(dataNode)">{{desplazamientos[3].total}}</div>  
             </td>
         </tr>
 

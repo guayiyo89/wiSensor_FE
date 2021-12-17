@@ -27,6 +27,8 @@ export class MapHistComponent implements OnInit {
   latCont: any
   lonCont: any
 
+  totalDia = 0
+
 
   zoom = 17
   // @ts-ignore
@@ -68,6 +70,14 @@ export class MapHistComponent implements OnInit {
             })
           })
         })
+      })
+
+      this.zonas.forEach(zona => {
+        let fecha_dia = this.fecha.split(' ')[0]
+        this._spotter.getMarkersHist(zona.cod_zona, fecha_dia).then(resp => {
+          this.totalDia = this.totalDia + resp.length
+        })
+        
       })
     }
 

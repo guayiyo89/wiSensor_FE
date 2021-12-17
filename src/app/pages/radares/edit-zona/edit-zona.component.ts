@@ -27,6 +27,7 @@ export class EditZonaComponent implements OnInit {
     this.editForm = this.fbuilder.group({
       id: [''],
       nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
       cod_zona: ['', [Validators.required]],
       id_radar: ['', [Validators.required]]
     })

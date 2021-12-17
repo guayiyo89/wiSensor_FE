@@ -9,6 +9,14 @@
     </div>
 
     <div class="form-group">
+        <label>Descripción</label>
+        <input type="text" formControlName="descripcion" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+        <div *ngIf="submitted && f.descripcion.errors">
+            <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Agregue una descripción.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
         <label>Código Zona</label>
         <input type="text" formControlName="cod_zona" placeholder="Código Zona del Radar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cod_zona.errors }">
         <div *ngIf="submitted && f.cod_zona.errors">

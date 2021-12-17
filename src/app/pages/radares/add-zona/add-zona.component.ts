@@ -27,6 +27,7 @@ export class AddZonaComponent implements OnInit {
     this.addForm = this.fbuilder.group({
       id: [''],
       nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
       cod_zona: ['', [Validators.required]],
       id_radar: ['', [Validators.required]]
     })

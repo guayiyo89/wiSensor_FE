@@ -13,6 +13,15 @@
 
 <div *ngIf="id_cent_est && _idEmpresaCenter && flag == 1">
   <div *ngIf="(_idPerfil > 2 && id_cent_est == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter ">
+    <div class="row blackness">
+      <div class="col-md-6"><h1 *ngIf="radar">{{radar.nombre}}</h1></div>
+      <div class="col-md-6">
+        <ul>
+          <li *ngFor="let zona of zonasRdr">{{zona.nombre}}: {{zona.descripcion}} </li>
+        </ul>
+      </div>
+    </div>
+
     <div class="row blackness" style="user-select: none; padding-top: 0.3em;">
         <div class="col-md-6">
           <div class="row">
@@ -30,8 +39,13 @@
             </div>
       
             <div class="col-5">
-              <span style="font-weight: bold; text-align: center;">Último registro</span>
-              <span style="letter-spacing: 3px; font-weight: bold; text-transform: uppercase; font-size: 2.5em; display: block;">N/A</span>
+              <div class="blackness text-center">
+                <h4 class="titClima"> Mapa Histórico </h4>
+                <form [formGroup]="fechaForm" (ngSubmit)="onSubmit()">
+                  <input type="datetime-local" id="fecha_busqueda" formControlName="fecha" style="border-radius: 3px; border:rgb(44, 44, 44) 1px solid">
+                  <button type="submit" class="noselect" (click)="openTable(dataNode)">Seleccionar</button>
+                </form>
+              </div>
             </div>
       
           </div>
@@ -71,13 +85,7 @@
               <span style="display: block;">Duración: {{timeContent}} s</span>
             </div>
 
-            <div class="blackness text-center">
-              <h4 class="titClima"> Mapa Histórico </h4>
-              <form [formGroup]="fechaForm" (ngSubmit)="onSubmit()">
-                <input type="datetime-local" id="fecha_busqueda" formControlName="fecha" style="border-radius: 3px; border:rgb(44, 44, 44) 1px solid">
-                <button type="submit" class="noselect" (click)="openTable(dataNode)">Seleccionar</button>
-              </form>
-            </div>
+            
         </div>
     
     
