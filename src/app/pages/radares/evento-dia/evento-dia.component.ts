@@ -91,14 +91,12 @@ export class EventoDiaComponent implements OnInit {
     }
 
     console.log(this.eventosFinal, 'EVENTOS FINAL');
-
-
     
-
   }
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{}], yAxes: [{ticks: {beginAtZero: true}}] },
     plugins: {

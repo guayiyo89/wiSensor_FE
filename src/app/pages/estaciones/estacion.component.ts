@@ -182,12 +182,6 @@ export class EstacionComponent implements OnInit {
     let dateTime = new Date().toLocaleString('en-GB')
     
     this.novaFecha = this.fechaEnviar(dateTime)
-
-    this._dataApi.getData5days().subscribe(
-      dataApi => {
-        this.predictedApi = dataApi
-      }
-    )
     
     this.intervalUpdate = setInterval(() => {
       this.showFecha()
@@ -253,6 +247,12 @@ export class EstacionComponent implements OnInit {
                   this._idEmpresaCenter = center.id_empresa
                   this.cent_del = center.deleted_at
                   console.log(this.cent_del)
+
+                  this._dataApi.getData5days(center.latitud, center.longitud).subscribe(
+                    dataApi => {
+                      this.predictedApi = dataApi
+                    }
+                  )
                 }
               )
   
@@ -376,11 +376,6 @@ export class EstacionComponent implements OnInit {
       }
     )
 
-    this._dataGm.getFakeData().subscribe(
-      val => {
-        this.fake = val
-      }
-    )
   }
 
   getRS(codigo: any, fecha:any){

@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-dato>
-        <tr class="rowth blackness">
+        <tr class="rowth blackness" (click)="openTray(dataTray)">
             <td>{{dato.fecha | fecha}}</td>
             <td>{{dato.velocidad | truncar}}</td>
             <td>{{dato.distancia | truncar}}</td>
@@ -22,6 +22,10 @@
             <td>{{dato.duracion}} s</td>
             <td><fa-icon *ngIf="dato.visto==1" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon> <fa-icon id="checkId-{{dato.id}}" style="font-size: 1.2em; cursor: pointer; color: rgb(24, 145, 44);" [icon]="faOk"></fa-icon>  </td>
             <td><fa-icon style="font-size: 1.2em; cursor: pointer; color: chartreuse;" [icon]="faExcel" (click)="exportasXLSX(dato.sp_cabecera_id)"></fa-icon> </td>
+
+            <ng-template #dataTray let-modal class="modal-dark bg-dark">
+                <app-tray-event [id_header]="dato.sp_cabecera_id" [detail]="dato" ></app-tray-event>
+            </ng-template>
         </tr>
     </ng-template>
 

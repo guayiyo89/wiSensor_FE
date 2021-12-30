@@ -55,7 +55,7 @@ export class GraficoD3Component implements OnInit {
           data => {
             this._codigo = data.codigo
             console.log(this.novaFecha)
-            this._dataGm.getWinds(this._codigo, '2021-10-12').subscribe(
+            this._dataGm.getWinds(this._codigo, this.novaFecha).subscribe(
               winds => {
                 this.valAngles = winds
 

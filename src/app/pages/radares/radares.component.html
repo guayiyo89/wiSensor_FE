@@ -13,7 +13,7 @@
                 <th *ngIf="perfilUser == 1" style="max-width: 100px;" pSortableColumn="nombreEmpresa"> Empresa <p-sortIcon field="nombreEmpresa"></p-sortIcon> </th>
                 <th style="max-width: 120px;" pSortableColumn="nombreCentro"> Centro <p-sortIcon field="nombreCentro"></p-sortIcon> </th>
                 <th style="max-width: 120px;" pSortableColumn="marcaEstacion"> Marca / Modelo <p-sortIcon field="marcaEstacion"></p-sortIcon> </th>
-                <th pSortableColumn="codigo"> Código <p-sortIcon field="codigo"></p-sortIcon> </th>
+                
                 <th> </th>
             </tr>
             <tr>
@@ -29,8 +29,7 @@
                 <td *ngIf="perfilUser == 1">{{st.nombreEmpresa}}</td>
                 <td>{{st.nombreCentro}}</td>
                 <td style="max-width: 120px;">{{st.marcaRadar}} / {{st.modeloRadar}}</td>
-                <td><span style="border: 1px solid white; display: block; padding: 1px; border-radius: 3px; text-align: center; width: 50%; font-size: 10pt;"> 
-                    {{st.codigoRadar}} </span></td>
+                
                 <td>
                     <a href="" class="btn btn-success" [routerLink]="['/editRadar', st.id_Radar]"><fa-icon [icon]="faEdit"></fa-icon></a>
                     <a href="" class="btn btn-danger" [routerLink]="['/radares']" (click)="delete(st, st.id_Radar)" style="margin: 0.5em;">

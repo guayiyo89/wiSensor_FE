@@ -53,6 +53,9 @@ export class RadarComponent implements OnInit {
   longitud = -72.98739194869995
   
   markers: any[] = []
+  lastMarkers: any[] = []
+
+  trayMarkers: any[] = []
   
   private intervalUpdate: any
   private intervalData: any
@@ -64,7 +67,7 @@ export class RadarComponent implements OnInit {
   zonasRdr: any[] = []
  
   //--------------------------------------------------------MAPA
-  zoom = 15
+  zoom = 16
   // @ts-ignore
   center: google.maps.LatLngLiteral
 
@@ -75,16 +78,18 @@ export class RadarComponent implements OnInit {
     disableDoubleClickZoom: true,
     fullscreenControl: false,
     streetViewControl: false,
-    maxZoom: 17,
-    minZoom: 9,
+    maxZoom: 20,
+    minZoom: 14,
   }
 
   velContent: number = 0
   distContent: number = 0
   timeContent: any
+  claseContent: any
   fechaContent = ''
   latCont: any
   lonCont: any
+  id_header: any
 
 
   flag = 1
@@ -133,9 +138,10 @@ export class RadarComponent implements OnInit {
                 
               this.intervalUpdate = setInterval(() => {
                 this.markers = []
+                this.lastMarkers = []
                 this.rellenar(this.zonasRdr)
 
-              }, 90000)
+              }, 95000)
 
               this._centro.getCentro(rdr.id_centro).subscribe(
                 data => {
@@ -164,21 +170,26 @@ export class RadarComponent implements OnInit {
 
   putMarkers(zona:any){
     //fecha hora actual
-    let fechaHoy = this.convertFecha(new Date().toLocaleString('en-GB'))
-    const fechaHoyHoy = new Date()
-    let fechaHoy1 = this.convertFecha(new Date(fechaHoyHoy.getTime() - 1*(60*60000)).toLocaleString('en-GB'))
-    console.log(fechaHoy, fechaHoy1, 'fechaHoy')
-
-    this._spotter.getMarkers(zona, fechaHoy, fechaHoy1).then(
+    this._spotter.getMarkers(zona).then(
       marks => {
         for(let dato of marks){
           this._spotter.getDetail(dato.id).subscribe(
             details => {
-              this.addMarker(details)
+              this.addMarker(details, dato.clasificacion)
             })
         }
-      }
-    )
+      })
+
+    this._spotter.getLastTime(zona).then(
+      marks => {
+        for(let dato of marks){
+          this._spotter.getDetail(dato.id).subscribe(
+            details => {
+              this.addLastMarker(details, dato.clasificacion)
+            })
+        }
+      })
+
   }
   
   showFecha(){
@@ -205,27 +216,50 @@ export class RadarComponent implements OnInit {
     })
   }
 
-  addMarker(dato:any) {
+  addMarker(dato:any, clase:any) {
     this.markers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}`,
-      options: { animation: google.maps.Animation.BOUNCE },
+      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      
     })
   }
 
-  addNewMarker(dato:any) {
-    this.markers.pop()
-    this.markers.push({
+  addLastMarker(dato:any, clase:any) {
+    this.lastMarkers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
-      title: 'Evento ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}`
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      options: { animation: google.maps.Animation.BOUNCE },
+      
+    })
+  }
+
+  addTrayMarker(dato:any, clase:any) {
+    this.trayMarkers.push({
+      position: {
+        lat: dato.latitud,
+        lng: dato.longitud,
+      },
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
+      options: { icon: './assets/img/dot_tray.png' },
+    })
+  }
+
+  drawTray(idHead: any){
+    this._spotter.getTrayectoria(idHead).subscribe(resp => {
+      console.log(resp)
+      this.trayMarkers = []
+      resp.forEach(row => {
+        this.addTrayMarker(row, this.claseContent)
+      })
     })
   }
 
@@ -248,7 +282,7 @@ export class RadarComponent implements OnInit {
   detalleView(id_head:any){
     this._spotter.getDetail(id_head).subscribe(
       detalles => {
-        this.addNewMarker(detalles)
+        
         
         if(detalles.visto == 0){
           this._spotter.getVisto(id_head, detalles).subscribe(
@@ -311,6 +345,8 @@ export class RadarComponent implements OnInit {
     this.velContent = parseFloat(infoContent[1])
     this.distContent = parseFloat(infoContent[2])
     this.timeContent = infoContent[3]
+    this.claseContent = infoContent[4]
+    this.id_header = infoContent[5]
   }
 
   onSubmit(){
@@ -343,6 +379,7 @@ export class RadarComponent implements OnInit {
     this._modal.open(dataNode, {size: 'lg'})
     this.fecha_data = this.convertFechaForm(this.fechaForm.value.fecha)
   }
+
     
 
 }

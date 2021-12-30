@@ -1,0 +1,35 @@
+<div *ngIf="id_header" class="bg-dark">
+    <div class="row">
+        <div class="col-6">
+            <google-map
+                height="500px"
+                width="100%"
+                [zoom]="zoom"
+                [center]="center"
+                [options]="options"
+                >
+                    <map-marker
+                    #markerElem
+                    *ngFor="let marker of markers"
+                    [position]="marker.position"
+                    [label]="marker.label"
+                    [title]="marker.title"
+                    [options]="marker.options"
+                    
+                    >
+                    </map-marker>
+            </google-map>
+        </div>
+        <div class="col-6">
+            <div class="row" *ngIf="trayectoria.length > 0 && id_header">
+                <div class="col-12">Inicio: <h3 style="color: rgb(255, 208, 0);">{{trayectoria[0].fecha | fecha}}</h3></div>
+                <div class="col-6">Velocidad Media: <h3 style="color: rgb(255, 208, 0);">{{detail.velocidad | truncar}} m/s</h3></div>
+                <div class="col-6">Duración: <h3 style="color: rgb(255, 208, 0);">{{detail.duracion}} s</h3></div>
+                <div class="col-6">Distancia: <h3 style="color: rgb(255, 208, 0);">{{detail.distancia | truncar}} m</h3></div>
+                <div class="col-6">Desplazamiento: <h3 style="color: rgb(255, 208, 0);">{{detail.desplazamiento | truncar}} m</h3></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

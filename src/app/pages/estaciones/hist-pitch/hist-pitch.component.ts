@@ -1,3 +1,4 @@
+import { options } from '@amcharts/amcharts4/core';
 import { Component, Inject, Input, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
@@ -28,7 +29,7 @@ export class HistPitchComponent implements OnInit {
     {data: [], label: 'Pitch'}
   ];
   public chartPitchOptY: ChartOptions = {
-    responsive: true
+    responsive: true,
   };
   public chartPitchLabelY: Label[] = [];
   public chartPitchTypeY: ChartType = 'line';

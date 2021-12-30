@@ -13,7 +13,7 @@ export class OrientationComponent implements OnInit {
 
 value = 0
 
-inicial = 325.6
+inicial = 222.5
 
 resto = 0
 

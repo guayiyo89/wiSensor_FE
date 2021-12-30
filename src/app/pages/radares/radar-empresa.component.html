@@ -1,0 +1,6 @@
+
+<div class="row blackness" *ngIf="acumByHora.length > 0">
+    <div *ngFor="let radar of radarList; let i = index" >
+        {{radar.nombreRadar}}, {{acumByHora[i]}}, {{acumByDia[i]}}
+    </div>
+</div>

@@ -19,6 +19,17 @@
                     (mapClick)="clickedMarker(marker.position, marker.info)"
                     >
                     </map-marker>
+
+                    <map-marker
+                    #markerElem
+                    *ngFor="let marker of traymarkers"
+                    [position]="marker.position"
+                    [label]="marker.label"
+                    [title]="marker.title"
+                    [options]="marker.options"
+                    
+                    >
+                    </map-marker>
             </google-map>
         </div>
         <div class="col-6">
@@ -40,11 +51,14 @@
             
             <div #dataMarker class="card bg-dark" style="display: none; padding: 5px;">
                 (<span style="color: chartreuse; font-weight: bold;">{{latCont}} </span>,
-                <span style="color: chartreuse; font-weight: bold;">{{lonCont}}</span>)
+                <span style="color: chartreuse; font-weight: bold;">{{lonCont}}</span>) <br>
+                <span style=" background-color: rgb(31, 145, 84); font-size: 9pt; text-transform: uppercase; padding: 3px; font-weight: bold;" *ngIf="claseContent=='person'">Persona</span>
+                <span style=" background-color: rgb(18, 145, 150); font-size: 9pt; text-transform: uppercase; padding: 3px; font-weight: bold;" *ngIf="claseContent=='boatMedium'">Bote Mediano</span>
                 <span style="display: block;">Fecha: {{fechaContent | fecha}}</span>
                 <span style="display: block;">Distancia: {{distContent | truncar}} m</span>
                 <span style="display: block;">Velocidad: {{velContent | truncar}} m/s</span>
                 <span style="display: block;">Duración: {{timeContent}} s</span>
+                <button style="display: block; cursor: pointer; background-color: rgb(240, 166, 8); font-size: 9pt; text-transform: uppercase; padding: 3px; font-weight: bold; color: black; border: none;" (click)="drawTray(id_header)">VER TRAYECTORIA</button>
             </div>
         </div>
     </div>

@@ -19,13 +19,16 @@ export class MapHistComponent implements OnInit {
   constructor(private renderer2: Renderer2, public _spotter: SpotterService) { }
 
   markers: any[] = []
+  traymarkers: any[] = []
 
   velContent: number = 0
   distContent: number = 0
   timeContent: any
   fechaContent = ''
+  claseContent: any
   latCont: any
   lonCont: any
+  id_header: any
 
   totalDia = 0
 
@@ -47,8 +50,6 @@ export class MapHistComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('DATA MARKER', this.zonas)
-
     navigator.geolocation.getCurrentPosition((position) => {
       this.center = {
         lat: this.latitud,
@@ -59,10 +60,10 @@ export class MapHistComponent implements OnInit {
     if(this.fecha){
       this.zonas.forEach(zona => {
         this._spotter.getMarkersHist(zona.cod_zona, this.fecha).then(resp => {
-          console.log(this.fecha)
+
           resp.forEach(header => {
             this._spotter.getDetail(header.id).subscribe(det => {
-              this.addMarker(det)
+              this.addMarker(det, header.clasificacion)
               this.barChartData[0].data?.push(det.distancia)
               this.barChartData[1].data?.push(det.duracion)
               let fecha_aux = this.fechaGraph(det.fecha)
@@ -94,17 +95,40 @@ export class MapHistComponent implements OnInit {
     this.velContent = parseFloat(infoContent[1])
     this.distContent = parseFloat(infoContent[2])
     this.timeContent = infoContent[3]
+    this.claseContent = infoContent[4]
+    this.id_header = infoContent[5]
   }
 
-  addMarker(dato:any) {
+  addMarker(dato:any, clase:any) {
     this.markers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}`,
-      options: { animation: google.maps.Animation.BOUNCE },
+      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`
+    })
+  }
+
+  addTrayMarker(dato:any, clase:any) {
+    this.traymarkers.push({
+      position: {
+        lat: dato.latitud,
+        lng: dato.longitud,
+      },
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
+      options: { icon: './assets/img/dot_tray.png' },
+    })
+  }
+
+  drawTray(idHead: any){
+    this._spotter.getTrayectoria(idHead).subscribe(resp => {
+      console.log(resp)
+      this.traymarkers = []
+      resp.forEach(row => {
+        this.addTrayMarker(row, this.claseContent)
+      })
     })
   }
 
@@ -148,6 +172,7 @@ export class MapHistComponent implements OnInit {
 
     return hora_graph_h + ':' + hora_graph_m
   }
+
 
 
 }

@@ -147,6 +147,8 @@ import { EventoDuracionComponent } from './pages/radares/evento-duracion/evento-
 import { ZonaLogComponent } from './pages/radares/zona-log/zona-log.component';
 import { EventoTotalComponent } from './pages/radares/evento-total/evento-total.component';
 import { MapHistComponent } from './pages/radares/map-hist/map-hist.component';
+import { RadarEmpresaComponent } from './pages/radares/radar-empresa.component';
+import { TrayEventComponent } from './pages/radares/tray-event/tray-event.component';
 
 
 @NgModule({
@@ -258,7 +260,9 @@ import { MapHistComponent } from './pages/radares/map-hist/map-hist.component';
     EventoDuracionComponent,
     ZonaLogComponent,
     EventoTotalComponent,
-    MapHistComponent
+    MapHistComponent,
+    RadarEmpresaComponent,
+    TrayEventComponent
   ],
   imports: [
     BrowserModule,

@@ -78,6 +78,12 @@ export class EmpresaService {
     return this.http.get<Usuario[]>(url)
   }
 
+  getRadares(id:any){
+    let url = `${this.baseUrl}/radares/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
   getUsers(id:any){
     let url = `${this.baseUrl}/usuarios/${id}`;
     url += '?token=' + this._user.token;

@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 <label>Centro</label>
-                <select formControlName="id_centro" class="form-control">
+                <select formControlName="id_centro" class="form-control" (change)="getCoordenadas($event)">
                     <option *ngFor="let centro of centroList" value="{{centro.id}}">{{centro.nombre}}</option>
                 </select>
                 <div *ngIf="submitted && f.id_centro.errors">

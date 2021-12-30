@@ -423,3 +423,20 @@ button{
       background-color: rgba(0, 0, 0, 0.5);
       color: white;
   }
+
+  .iconbg{
+      height: 50px;
+      width: auto;
+      margin-top: 3px;
+  }
+
+  .shipFront{
+      background-color: rgb(189, 189, 189) !important;
+      mask: url("./assets/img/shipfront.svg") no-repeat center / contain;;
+  }
+
+  .shipCostado{
+      background-color: rgb(189, 189, 189) !important;
+      mask: url("./assets/img/ship-costado.svg") no-repeat center / contain;;
+      transform: scaleX(-1);
+  }

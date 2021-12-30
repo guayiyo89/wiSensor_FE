@@ -35,21 +35,12 @@ export class EventoHoraComponent implements OnInit {
         num = num + 1
       })
     })
-
-    // this.intervalUpdate = setInterval(() => {
-    //   let val = 0
-    //   this.zonas.forEach(zona => {
-    //     this._spotter.getByHora(zona.cod_zona).then(data => {
-    //       this.rellenarNuevo(data[0], val)
-    //     })
-    //     val++
-    //   })
-    // }, 5000)
  
   }
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{}], yAxes: [{ticks: {beginAtZero: true}}] },
     plugins: {
@@ -96,7 +87,8 @@ export class EventoHoraComponent implements OnInit {
       let novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - i*(60*60000)).toLocaleString('en-GB'))
 
       if(num == 0){
-        this.barChartLabels.push(novaFecha)
+        let fechaLabel = novaFecha.split(' ')
+        this.barChartLabels.push(fechaLabel[1]+':00')
       }
       if(data[count].fecha != novaFecha){
 
@@ -108,7 +100,8 @@ export class EventoHoraComponent implements OnInit {
           let novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - (i+1)*(60*60000)).toLocaleString('en-GB'))
           console.log(novaFecha, 'MIFECHA');
           if(num == 0){
-            this.barChartLabels.push(novaFecha)
+            let fechaLabel = novaFecha.split(' ')
+            this.barChartLabels.push(fechaLabel[1]+':00')
           }
           this.barChartData[num].data?.push(0)
           i = i + 1

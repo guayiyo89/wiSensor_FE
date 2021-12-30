@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faCheck, faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelServiceService } from 'src/app/services/excel-service.service';
 import { SpotterService } from 'src/app/services/spotter.service';
 
@@ -12,7 +13,7 @@ import { SpotterService } from 'src/app/services/spotter.service';
 export class ZonaLogComponent implements OnInit {
   @Input() id_zona: any
 
-  constructor(public _spotter: SpotterService, private _excel: ExcelServiceService) { }
+  constructor(public _spotter: SpotterService, private _excel: ExcelServiceService, private _modal: NgbModal) { }
   faExcel = faFileDownload
   faOk = faCheck
 
@@ -77,6 +78,10 @@ export class ZonaLogComponent implements OnInit {
 
   ngOnDestroy(){
     clearInterval(this.intervalUpdate)
+  }
+
+  openTray(dataTray: any){
+    this._modal.open(dataTray, {size: 'lg'})
   }
 
 }

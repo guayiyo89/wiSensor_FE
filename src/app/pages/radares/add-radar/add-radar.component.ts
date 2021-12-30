@@ -114,13 +114,41 @@ export class AddRadarComponent implements OnInit {
     this._empresa.getCentros(id.target.value).subscribe(
       data => {
         this.centroList = data
-        if(this.centroList.length > 0) {this.addForm.controls['id_centro'].setValue(this.centroList[0].id)}
+        if(this.centroList.length > 0) {
+          this.addForm.controls['id_centro'].setValue(this.centroList[0].id)
+          this.addForm.controls['latitud'].setValue(this.centroList[0].latitud)
+          this.addForm.controls['longitud'].setValue(this.centroList[0].longitud)
+
+          navigator.geolocation.getCurrentPosition((position) => {
+            this.center = {
+              lat: this.centroList[0].latitud,
+              lng: this.centroList[0].longitud,
+            }
+          })
+        }
         else { this.addForm.controls['id_centro'].setValue('')}
       },
       error => {
         console.log(error)
         this.centroList = []
         this.addForm.controls['id_centro'].setValue('')
+      }
+    )
+  }
+
+  getCoordenadas(id: any){
+    this._centro.getCentro(id.target.value).subscribe(
+      (data) => {
+        this.addForm.controls['latitud'].setValue(data.latitud)
+        this.addForm.controls['longitud'].setValue(data.longitud)
+
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.center = {
+            lat: data.latitud,
+            lng: data.longitud,
+          }
+        })
+        
       }
     )
   }

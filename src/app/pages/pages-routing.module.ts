@@ -45,6 +45,7 @@ import { AddEstructuraComponent } from "./estructura/add-estructura/add-estructu
 import { EditEstructuraComponent } from "./estructura/edit-estructura/edit-estructura.component";
 import { AddModuloComponent } from "./estructura/add-modulo/add-modulo.component";
 import { EditModuloComponent } from "./estructura/edit-modulo/edit-modulo.component";
+import { RadarEmpresaComponent } from "./radares/radar-empresa.component";
 
 const pagesRoutes: Routes = [
     {
@@ -90,6 +91,7 @@ const pagesRoutes: Routes = [
             {path: 'editEstructura/:id', component: EditEstructuraComponent, canActivate: [AdminGuardGuard]},
             {path: 'addModulo', component: AddModuloComponent, canActivate: [AdminGuardGuard]}, // modulos
             {path: 'editModulo/:id', component: EditModuloComponent, canActivate: [AdminGuardGuard]},
+            {path: 'listRadares', component: RadarEmpresaComponent, canActivate: [UserGuardGuard]},
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

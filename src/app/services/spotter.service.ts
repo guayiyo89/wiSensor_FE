@@ -16,13 +16,18 @@ export class SpotterService {
     return this.http.get(url).toPromise().then(res => res as any[]);
   }
 
+  getLastTime(zona: any){
+    let url = `${this.baseUrl}/spotter_last/${zona}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
+  }
+
   getDetail(id: any){
     let url = `${this.baseUrl}/spotter_d/${id}`
     return this.http.get<any>(url)
   }
 
-  getMarkers(zona: any, fecha1: any, fecha2: any){
-    let url = `${this.baseUrl}/spotter_marker/${zona}/${fecha1}/${fecha2}`
+  getMarkers(zona: any){
+    let url = `${this.baseUrl}/spotter_marker/${zona}`
     return this.http.get(url).toPromise().then(res => res as any[]);
   }
 
