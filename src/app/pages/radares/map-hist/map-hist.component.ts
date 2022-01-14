@@ -63,10 +63,10 @@ export class MapHistComponent implements OnInit {
 
           resp.forEach(header => {
             this._spotter.getDetail(header.id).subscribe(det => {
-              this.addMarker(det, header.clasificacion)
+              this.addMarker(det, header.clasificacion, header.updated_at)
               this.barChartData[0].data?.push(det.distancia)
               this.barChartData[1].data?.push(det.duracion)
-              let fecha_aux = this.fechaGraph(det.fecha)
+              let fecha_aux = this.fechaGraph(header.updated_at)
               this.barChartLabels.push(fecha_aux)
             })
           })
@@ -99,14 +99,14 @@ export class MapHistComponent implements OnInit {
     this.id_header = infoContent[5]
   }
 
-  addMarker(dato:any, clase:any) {
+  addMarker(dato:any, clase:any, fecha:any) {
     this.markers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`
     })
   }
 

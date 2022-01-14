@@ -149,6 +149,10 @@ import { EventoTotalComponent } from './pages/radares/evento-total/evento-total.
 import { MapHistComponent } from './pages/radares/map-hist/map-hist.component';
 import { RadarEmpresaComponent } from './pages/radares/radar-empresa.component';
 import { TrayEventComponent } from './pages/radares/tray-event/tray-event.component';
+import { EventoHoraTotalComponent } from './pages/radares/evento-hora-total/evento-hora-total.component';
+import { AddIncidenteRdrComponent } from './pages/incidentes/add-incidente-rdr/add-incidente-rdr.component';
+import { EditIncidenteRdrComponent } from './pages/incidentes/edit-incidente-rdr/edit-incidente-rdr.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 
 @NgModule({
@@ -262,7 +266,11 @@ import { TrayEventComponent } from './pages/radares/tray-event/tray-event.compon
     EventoTotalComponent,
     MapHistComponent,
     RadarEmpresaComponent,
-    TrayEventComponent
+    EventoHoraTotalComponent,
+    TrayEventComponent,
+    AddIncidenteRdrComponent,
+    EditIncidenteRdrComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

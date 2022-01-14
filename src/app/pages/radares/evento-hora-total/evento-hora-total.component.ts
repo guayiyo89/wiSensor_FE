@@ -5,13 +5,13 @@ import { Color, Label } from 'ng2-charts';
 import { SpotterService } from 'src/app/services/spotter.service';
 
 @Component({
-  selector: 'app-evento-hora',
-  templateUrl: './evento-hora.component.html',
+  selector: 'app-evento-hora-total',
+  templateUrl: './evento-hora-total.component.html',
   styles: [
   ]
 })
-export class EventoHoraComponent implements OnInit {
-  @Input() zonas: any[] = []
+export class EventoHoraTotalComponent implements OnInit {
+  @Input() serial: any
   listEventos: any[] = []
   eventosFinal: any[] = []
   fechaza: any
@@ -25,17 +25,17 @@ export class EventoHoraComponent implements OnInit {
   ngOnInit(): void {
     let num = 0
     let fechaHoy = new Date().toLocaleString('en-GB')
-    console.log(this.zonas);
-    this.valor_bandera = this.zonas.length
 
-    this.zonas.forEach(zona => {
-      
-      this._spotter.getByHora(zona.cod_zona).then(data => {
-        this.rellenar(data, num)
-        this.barChartData[num].label = zona.nombre
-        num = num + 1
-      })
-    })
+    this._spotter.getByHour(this.serial).then( (resp: any) => {
+      this.rellenar(resp)
+    }).catch( (err) => {console.log(err)})
+
+    this.intervalUpdate = setInterval(() => {
+      this._spotter.getByHour(this.serial).then( (resp: any) => {
+        this.rellenarNuevo(resp)
+      }).catch( (err) => {console.log(err)})
+    }, 60000 * 20)
+
  
   }
 
@@ -44,11 +44,11 @@ export class EventoHoraComponent implements OnInit {
     maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{
-      ticks: {fontColor: '#eeeeee'},
+      ticks: {fontColor: '#e1e1e1'},
     }], 
     yAxes: [{ticks: {
       beginAtZero: true,
-      fontColor: '#eeeeee'
+      fontColor: '#e1e1e1'
     }}] },
     plugins: {
       datalabels: {
@@ -57,20 +57,17 @@ export class EventoHoraComponent implements OnInit {
       }
     }
   };
-  
+
   public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
 
   public barChartColor: Color[] = [{
-    backgroundColor: 'rgba(16, 181, 159, 0.55)',
+    backgroundColor: 'rgba(250, 185, 5, 0.66)',
   }];
 
   public barChartData: ChartDataSets[] = [
-    { data: [], label: 'Zona 1' },
-    { data: [], label: 'Zona 2' },
-    { data: [], label: 'Zona 3' },
-    { data: [], label: 'Zona 4' }
+    { data: [], label: 'Zona 1' }
   ];
 
   convertFecha(fecha: string) {
@@ -85,7 +82,7 @@ export class EventoHoraComponent implements OnInit {
   }
 
 
-  rellenar(data: any[], num: number) {
+  rellenar(data: any[]) {
     let count = 0
     for(let i = 0; i < 24; i++){
       const fechaHoyHoy = new Date()
@@ -94,55 +91,63 @@ export class EventoHoraComponent implements OnInit {
 
       let novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - i*(60*60000)).toLocaleString('en-GB'))
 
-      if(num == 0){
-        let fechaLabel = novaFecha.split(' ')
-        this.barChartLabels.push(fechaLabel[1]+':00')
-      }
+
+      let fechaLabel = novaFecha.split(' ')
+      this.barChartLabels.push(fechaLabel[1]+':00')
+
       if(data[count].fecha != novaFecha){
 
         let d1 = new Date(novaFecha + ':00')
         let d2 = new Date(data[count].fecha + ':00')
         let dif = Math.abs(d1.getTime() - d2.getTime() )/(60000*60)
-        this.barChartData[num].data?.push(0)
+        this.barChartData[0].data?.push(0)
         for(let j = 0; j < dif-1; j++){
           let novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - (i+1)*(60*60000)).toLocaleString('en-GB'))
           console.log(novaFecha, 'MIFECHA');
-          if(num == 0){
-            let fechaLabel = novaFecha.split(' ')
-            this.barChartLabels.push(fechaLabel[1]+':00')
-          }
-          this.barChartData[num].data?.push(0)
+          let fechaLabel = novaFecha.split(' ')
+          this.barChartLabels.push(fechaLabel[1]+':00')
+          
+          this.barChartData[0].data?.push(0)
           i = i + 1
         }
         // this.barChartData[num].data?.push(data[count].contador)
         // //novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - (i+1)*(60*60000)).toLocaleString('en-GB'))
         //count = count + 1
       } else {
-        this.barChartData[num].data?.push(data[count].contador)
+        this.barChartData[0].data?.push(data[count].contador)
         count = count + 1
       }
     }
   }
 
-  rellenarNuevo(dato: any, num: number) {
-    
-    let count = 0
+  rellenarNuevo(data: any[]) {
+    this._spotter.getByHour(this.serial).then( (resp: any) => {
+      this.rellenar(resp)
+    }).catch( (err) => {console.log(err)})
+    this.barChartData[0].data?.splice(0, this.barChartData[0].data?.length)
+    this.barChartLabels.splice(0, this.barChartLabels.length)
 
-    let novaFecha = this.convertFecha(new Date().toLocaleString('en-GB'))
-
-    if(num == 0){
-      this.barChartLabels.push(novaFecha)
-      this.barChartLabels.pop()
-    }
-    if(dato.fecha != novaFecha){
-      this.barChartData[num].data?.unshift(0)
-      this.barChartData[num].data?.pop()
-    } else {
-      this.barChartData[num].data?.unshift(dato.contador)
-      this.barChartData[num].data?.pop()
-      count = count + 1
-    }
 
   }
+
+  // rellenarNuevo(dato: any) {
+    
+  //   let count = 0
+
+  //   let novaFecha = this.convertFecha(new Date().toLocaleString('en-GB'))
+
+  //   this.barChartLabels.push(novaFecha)
+  //   this.barChartLabels.pop()
+
+  //   if(dato.fecha != novaFecha){
+  //     this.barChartData[0].data?.unshift(0)
+  //     this.barChartData[0].data?.pop()
+  //   } else {
+  //     this.barChartData[0].data?.unshift(dato.contador)
+  //     this.barChartData[0].data?.pop()
+  //     count = count + 1
+  //   }
+
+  // }
 
 }

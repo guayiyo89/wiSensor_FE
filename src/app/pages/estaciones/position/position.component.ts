@@ -16,8 +16,8 @@ export class PositionComponent implements OnInit {
   @Input() lon1: any
   @Input() lat2: any
   @Input() lon2: any
-
-
+  //@ts-ignore;
+  chupalo 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) { }
 
   private intervalUpdate: any

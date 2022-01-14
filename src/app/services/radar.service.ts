@@ -80,6 +80,12 @@ export class RadarService {
     return this.http.put(url, zona)
   }
 
+  getByEmpresa(id:any){
+    let url = `${this.baseUrl}/empresa/${id}`;
+    url += '?token=' + this._user.token;
+    return this.http.get<any[]>(url)
+  }
+
 
 
 }

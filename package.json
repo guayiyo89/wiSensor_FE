@@ -34,6 +34,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "mermaid": "^8.13.3",
+    "nativescript-ng2-vlc-player": "^1.0.2",
     "ng-canvas-gauges": "^6.0.4",
     "ng-sidebar": "^9.4.2",
     "ng2-charts": "^2.3.0",

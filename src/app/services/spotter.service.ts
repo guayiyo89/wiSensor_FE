@@ -51,6 +51,11 @@ export class SpotterService {
     return this.http.get(url).toPromise().then(res => res as any[]);
   }
 
+  getByHour(serial: any){
+    let url = `${this.baseUrl}/spotter_byHour/${serial}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
+  }
+
   getByDia(zona: any){
     let url = `${this.baseUrl}/spotter_days/${zona}`
     return this.http.get(url).toPromise().then(res => res as any[]);

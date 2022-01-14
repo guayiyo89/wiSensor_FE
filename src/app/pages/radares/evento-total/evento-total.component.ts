@@ -10,6 +10,7 @@ import { SpotterService } from 'src/app/services/spotter.service';
 })
 export class EventoTotalComponent implements OnInit {
   @Input() zonas: any[] = [];
+  @Input() serial: any
 
   valTotalhora = 0
   valTotaldia = 0
@@ -19,22 +20,25 @@ export class EventoTotalComponent implements OnInit {
   constructor(public _spotter: SpotterService) { }
 
   ngOnInit(): void {
-    this.getDatos(this.zonas)
+    this.getDatos(this.zonas, this.serial)
+    
+    this._spotter.getByHour(this.serial).then(data => {
+      this.valTotalhora  = data[0].contador
+    })
 
     this.intervalUpdate = setInterval(() => {
-      this.getDatos(this.zonas)
-    }, 30000)
+      this.getDatos(this.zonas, this.serial)
+    }, 5000)
     
   }
 
-  getDatos(zonas: any[]){
+  getDatos(zonas: any[], serial: any){
     this.valTotalhora = 0
     this.valTotaldia = 0
+    this._spotter.getByHour(serial).then(data => {
+      this.valTotalhora  = data[0].contador
+    })
     zonas.forEach(zona => {
-      this._spotter.getByHora(zona.cod_zona).then(data => {
-        let val_aux = data[0].contador
-        this.valTotalhora  = val_aux + this.valTotalhora
-      })
 
       this._spotter.getByDia(zona.cod_zona).then(data => {
         let val_aux1 = data[0].contador

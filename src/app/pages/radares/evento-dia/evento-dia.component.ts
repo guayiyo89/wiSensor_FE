@@ -24,12 +24,9 @@ export class EventoDiaComponent implements OnInit {
 
   ngOnInit(): void {
     let num = 0
-    console.log(this.zonas);
-
     this.valor_bandera = this.zonas.length
 
     let fechaHoy = new Date().toLocaleString('en-GB')
-    console.log(fechaHoy,'ddd', this.convertFecha(fechaHoy));
     this.fechaza = this.convertFecha(fechaHoy)
 
     this.zonas.forEach(zona => {
@@ -54,7 +51,7 @@ export class EventoDiaComponent implements OnInit {
               
               for(let j = 0; j < dif-1; j++){
                 let novaFecha = this.convertFecha(new Date(fechaHoyHoy.getTime() - (i+1)).toLocaleString('en-GB'))
-                console.log(novaFecha, 'MIFECHA');
+                
                 if(num == 0){
                   this.barChartLabels.push(novaFecha)
                 }
@@ -77,7 +74,6 @@ export class EventoDiaComponent implements OnInit {
       console.log(num, '-----------------------')
     })
 
-    console.log(this.listEventos, 'AQUI');
     let largo = this.listEventos.length
 
     for (let i = 0; i < largo; i++) {
@@ -98,7 +94,13 @@ export class EventoDiaComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{}], yAxes: [{ticks: {beginAtZero: true}}] },
+    scales: { xAxes: [{
+      ticks: {fontColor: '#e1e1e1'},
+    }], 
+    yAxes: [{ticks: {
+      beginAtZero: true,
+      fontColor: '#e1e1e1'
+    }}] },
     plugins: {
       datalabels: {
         anchor: 'end',
@@ -106,6 +108,7 @@ export class EventoDiaComponent implements OnInit {
       }
     }
   };
+
   public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;

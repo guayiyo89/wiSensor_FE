@@ -36,7 +36,7 @@ export class ActividadHoraComponent implements OnInit {
             color: 'rgba(191, 235, 19,0.2)',
           },
           ticks: {
-            fontColor: '#bfeb13',
+            fontColor: '#ffffff',
           }
         }
       ]

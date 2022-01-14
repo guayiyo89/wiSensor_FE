@@ -15,7 +15,7 @@
 
     <ng-template pTemplate="body" let-dato>
         <tr class="rowth blackness" (click)="openTray(dataTray)">
-            <td>{{dato.fecha | fecha}}</td>
+            <td>{{dato.created_at | fecha}}</td>
             <td>{{dato.velocidad | truncar}}</td>
             <td>{{dato.distancia | truncar}}</td>
             <td>{{dato.desplazamiento | truncar}}</td>

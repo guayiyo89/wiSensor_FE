@@ -54,7 +54,7 @@ export class TrayEventComponent implements OnInit {
       },
       title: 'Marker title ' + (this.markers.length + 1),
       options: { icon: './assets/img/dot_tray.png' },
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
+      info: `${dato.created_at}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
     })
   }
 

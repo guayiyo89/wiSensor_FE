@@ -62,7 +62,11 @@ export class EventoDuracionComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{ticks:{fontSize: 9, fontColor: 'rgba(255,255,255,0.5)'}}], yAxes: [{ticks: {beginAtZero: true}, id: 'y-axis-1', position: 'left'}, {ticks: {beginAtZero: true}, id: 'y-axis-2', position: 'right'}] },
+    scales: { xAxes: [{ticks:{fontSize: 9, fontColor: 'rgba(255,255,255,0.5)'}}],
+     yAxes: [{ticks: 
+      {beginAtZero: true, fontColor: 'rgba(255,255,255,0.5)'}, id: 'y-axis-1', position: 'left'},
+      {ticks: {beginAtZero: true, fontColor: 'rgba(255,255,255,0.5)'}, id: 'y-axis-2', position: 'right'}
+    ] },
     plugins: {
       datalabels: {
         anchor: 'end',

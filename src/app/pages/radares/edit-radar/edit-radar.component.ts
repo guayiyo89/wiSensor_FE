@@ -68,6 +68,7 @@ export class EditRadarComponent implements OnInit {
         modelo: ['', Validators.required],
         status: ['', Validators.required],
         empresa_id: ['', Validators.required],
+        url_video: [''],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
         id_centro: ['', Validators.required]
@@ -87,6 +88,7 @@ export class EditRadarComponent implements OnInit {
           this.editForm.controls['marca'].setValue(data.marca)
           this.editForm.controls['modelo'].setValue(data.modelo)
           this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['url_video'].setValue(data.url_video)
           this.editForm.controls['latitud'].setValue(data.latitud)
           this.editForm.controls['longitud'].setValue(data.longitud)
           this.editForm.controls['id_centro'].setValue(data.id_centro)

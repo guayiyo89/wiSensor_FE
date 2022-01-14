@@ -14,11 +14,10 @@
 <div *ngIf="id_cent_est && _idEmpresaCenter && flag == 1">
   <div *ngIf="(_idPerfil > 2 && id_cent_est == _idCentroUser) || (_idPerfil == 2 && _idEmpresaCenter == _idEmpresaUser) || _idPerfil == 1 && _idEmpresaCenter ">
     <div class="row blackness">
-      <div class="col-md-6"><h1 *ngIf="radar">{{radar.nombre}}</h1></div>
+      <div class="col-md-6"><h1 *ngIf="radar">{{radar.nombre}} <span> <fa-icon (click)="openZone(dataZone)" [icon]="faInfo" style="color: rgb(255, 208, 0); cursor: pointer;"></fa-icon> </span> </h1></div>
       <div class="col-md-6">
-        <ul>
-          <li *ngFor="let zona of zonasRdr">{{zona.nombre}}: {{zona.descripcion}} </li>
-        </ul>
+        <button *ngIf="radar.url_video" class="noselect" (click)="miVideo()" >Video en Vivo</button>
+
       </div>
     </div>
 
@@ -42,7 +41,7 @@
               <div class="blackness text-center">
                 <h4 class="titClima"> Mapa Histórico </h4>
                 <form [formGroup]="fechaForm" (ngSubmit)="onSubmit()">
-                  <input type="datetime-local" id="fecha_busqueda" formControlName="fecha" style="border-radius: 3px; border:rgb(44, 44, 44) 1px solid">
+                  <input type="datetime-local" id="fecha_busqueda" min="2021-11-01" max="2022-12-31" formControlName="fecha" style="border-radius: 3px; border:rgb(44, 44, 44) 1px solid">
                   <button type="submit" class="noselect" (click)="openTable(dataNode)">Seleccionar</button>
                 </form>
               </div>
@@ -52,7 +51,7 @@
         </div>
       
         <div class="col-md-6">
-          <app-evento-total [zonas]="zonasRdr"></app-evento-total>
+          <app-evento-total *ngIf="radar" [zonas]="zonasRdr" [serial]="radar.codigo"></app-evento-total>
         </div>
       </div>
     
@@ -117,7 +116,8 @@
           <h4 class="titClima" style="margin-top: 1em;"> 
             Eventos - Últimas 24 horas</h4> 
           
-          <app-evento-hora *ngIf="zonasRdr.length > 0" [zonas]="zonasRdr"></app-evento-hora>
+          <!-- <app-evento-hora *ngIf="zonasRdr.length > 0" [zonas]="zonasRdr"></app-evento-hora> -->
+          <app-evento-hora-total *ngIf="radar" [serial]="radar.codigo"></app-evento-hora-total>
           
           <h4 class="titClima"> 
              Eventos - Últimos 15 días</h4> 
@@ -155,6 +155,15 @@
 
 <ng-template #dataNode let-modal class="modal-dark bg-dark">
   <app-map-hist *ngIf="fecha_data" [zonas]="zonasRdr" [fecha]="fecha_data" [latitud]="radar.latitud" [longitud]="radar.longitud"></app-map-hist>
+</ng-template>
+
+<ng-template #dataZone let-modal class="modal-dark bg-dark">
+  <div class="bg-dark" style="padding: 5px;">
+    <h3>Detalle de Zonas</h3>
+    <ul>
+      <li *ngFor="let zona of zonasRdr">{{zona.nombre}}: {{zona.descripcion}} </li>
+    </ul>   
+  </div>
 </ng-template>
 
 

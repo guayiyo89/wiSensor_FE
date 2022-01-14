@@ -1,0 +1,67 @@
+<div class="row">
+    <h2>Agregar nuevo Incidente de Alarma</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-6">
+
+        <div class="form-group">
+            <label>Código</label>
+            <input type="text" formControlName="codigo" placeholder="Código Incidente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }">
+            <div *ngIf="submitted && f.codigo.errors">
+                <div *ngIf="f.codigo.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El código es obligatorio.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" formControlName="descripcion" placeholder="Descripción" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+            <div *ngIf="submitted && f.descripcion.errors">
+                <div *ngIf="f.descripcion.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">La descripción es obligatoria.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Severidad</label>
+            <select class="form-control" formControlName="severidad">
+                <option value="warning">Advertencia</option>
+                <option value="error">Crítica</option>
+            </select>
+            <div *ngIf="submitted && f.severidad.errors">
+                <div *ngIf="f.severidad.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">....</div>
+            </div>
+        </div>
+        
+        <div *ngIf="perfil_user == 2" class="form-group">
+            <label>Radar</label>
+            <select formControlName="id_radar" class="form-control">
+                <option *ngFor="let radar of radarList" value="{{ radar.id_Radar }}">{{ radar.nombreRadar }} </option>
+            </select>
+            <div *ngIf="submitted && f.id_radar.errors">
+                <div *ngIf="f.id_radar.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Por favor asigne un radar</div>
+            </div>
+        </div>
+
+        <div *ngIf="perfil_user > 2" class="form-group" style="visibility: hidden;">
+            <label>Radar</label>
+            <input type="text" formControlName="id_radar" placeholder="id_radar" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id_radar.errors }">
+            <div *ngIf="submitted && f.id_radar.errors">
+                <div *ngIf="f.id_radar.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Por favor asigne un radar</div>
+            </div>
+        </div>
+
+        <div class="form-group" style="padding-top: 0.5em;">
+            <label style="display: block;">Hora Inicio</label>
+            <input type="time" formControlName="hora_inicio">
+        </div>
+        
+        <div class="form-group">
+            <label style="display: block;">Hora Final</label>
+            <input type="time" formControlName="hora_final">
+        </div>
+
+        <div style="padding-top: 1em;">
+            <button (click)="volver()" type="button" class="noselect"> <fa-icon [icon]="faBack"></fa-icon> Volver</button>
+            <button type="submit" class="noselect"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faBolt, faCheck, faCheckCircle, faCircle, faExclamationTriangle, faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faCheck, faCheckCircle, faCircle, faExclamationTriangle, faFileDownload, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { RadarService } from 'src/app/services/radar.service';
 import { SpotterService } from 'src/app/services/spotter.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -24,12 +24,19 @@ export class RadarComponent implements OnInit {
   constructor( public _user: UsuarioService, public _route: ActivatedRoute, public _radar: RadarService, public _spotter: SpotterService,
      private _excel: ExcelServiceService, private renderer2: Renderer2, public _centro: CentroService, private _fbuilder: FormBuilder, private _modal: NgbModal) { }
 
+
   // for alarms
   faDot = faCircle
   faAlert = faExclamationTriangle
   faOk = faCheck
   faBolt = faBolt
   faExcel = faFileDownload
+  faInfo = faInfoCircle
+
+  urlBase = 'http://wisensor.cl:7000/stream/player/'
+
+  urlVideo: string = ''
+
 
   // for the historical data
   submitted = false
@@ -100,10 +107,11 @@ export class RadarComponent implements OnInit {
     this._idPerfil = this._user.usuario.id_perfil
     this._idEmpresaUser = this._user.userIds.id_empresa
 
+    
     this.intervalUpdate = setInterval(() => {
       this.showFecha()
     }, 900)
-
+    
     this.fechaForm = this._fbuilder.group({
       fecha: ['', Validators.required],
     })
@@ -117,11 +125,12 @@ export class RadarComponent implements OnInit {
           this.flag = resp.bandera
           console.log(this.flag)
         })
-
+        
         if(this.flag == 1){
           this._radar.getRadar(this.id).subscribe(
             rdr => {
               this.radar = rdr
+              this.urlVideo = this.urlBase + rdr.url_video
               navigator.geolocation.getCurrentPosition((position) => {
                 this.center = {
                   lat: rdr.latitud,
@@ -157,7 +166,7 @@ export class RadarComponent implements OnInit {
       })
       
   }
-    
+  
   ngOnDestroy(){
     clearInterval(this.intervalUpdate)
   }
@@ -172,20 +181,23 @@ export class RadarComponent implements OnInit {
     //fecha hora actual
     this._spotter.getMarkers(zona).then(
       marks => {
+        console.log(marks)
         for(let dato of marks){
           this._spotter.getDetail(dato.id).subscribe(
             details => {
-              this.addMarker(details, dato.clasificacion)
+              this.addMarker(details, dato.clasificacion, dato.updated_at)
             })
         }
       })
 
     this._spotter.getLastTime(zona).then(
       marks => {
+        console.log(marks)
         for(let dato of marks){
           this._spotter.getDetail(dato.id).subscribe(
             details => {
-              this.addLastMarker(details, dato.clasificacion)
+              console.log(details)
+              this.addLastMarker(details, dato.clasificacion, dato.updated_at)
             })
         }
       })
@@ -216,39 +228,39 @@ export class RadarComponent implements OnInit {
     })
   }
 
-  addMarker(dato:any, clase:any) {
+  addMarker(dato:any, clase:any, fecha:any) {
     this.markers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
       
     })
   }
 
-  addLastMarker(dato:any, clase:any) {
+  addLastMarker(dato:any, clase: any, fecha: any) {
     this.lastMarkers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
       options: { animation: google.maps.Animation.BOUNCE },
       
     })
   }
 
-  addTrayMarker(dato:any, clase:any) {
+  addTrayMarker(dato:any, clase:any, fecha:any) {
     this.trayMarkers.push({
       position: {
         lat: dato.latitud,
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
-      info: `${dato.fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}`,
       options: { icon: './assets/img/dot_tray.png' },
     })
   }
@@ -258,7 +270,7 @@ export class RadarComponent implements OnInit {
       console.log(resp)
       this.trayMarkers = []
       resp.forEach(row => {
-        this.addTrayMarker(row, this.claseContent)
+        this.addTrayMarker(row, this.claseContent, this.fechaContent)
       })
     })
   }
@@ -378,6 +390,14 @@ export class RadarComponent implements OnInit {
   openTable(dataNode: any){
     this._modal.open(dataNode, {size: 'lg'})
     this.fecha_data = this.convertFechaForm(this.fechaForm.value.fecha)
+  }
+
+  openZone(dataZone: any){
+    this._modal.open(dataZone, {size: 'lg'})
+  }
+
+  miVideo(){
+    window.open(this.urlVideo, '_blank')
   }
 
     

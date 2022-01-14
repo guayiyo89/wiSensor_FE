@@ -1,0 +1,17 @@
+<div>
+    
+    <div style="display: block; height: 250px">
+        <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [colors]="barChartColor"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </div>
+    
+      <div *ngFor="let eventos of eventosFinal">
+        <div *ngFor="let evento of eventos" >{{evento.fecha}}, {{evento.contador}} </div>
+      </div>
+  </div>

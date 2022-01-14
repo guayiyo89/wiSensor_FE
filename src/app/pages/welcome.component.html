@@ -1,5 +1,5 @@
 <div class="container" style="padding-top: 1em; padding-bottom: 1em;">
-    <h1>Bienvenido a wiSensor {{username}}! </h1>
+    <h1>Bienvenido a wiSensor {{username}} </h1>
     <div style="margin: auto;">
         
         <div style="margin: 0 auto;" *ngIf="_perfil == 1">
@@ -34,14 +34,14 @@
         </div>
 
         <div style="margin: 0 auto;" *ngIf="_perfil == 3">
-            <li *ngIf="itemCentro.id_estacion != null" class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_estacion != 0" class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
                 <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
-            <li *ngIf="itemCentro.id_genpack != null" class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_genpack != 0" class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
                 <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
-            <li *ngIf="radares.length > 0" (click)="openTable(dataNode)" class="btnMain" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_radar != 0" [routerLink]="['/radar', itemCentro.id_radar]" class="btnMain" style="cursor: pointer;">
                 <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
-            <li class="btnMain" style="cursor: pointer;">
-                <fa-icon [icon]="faShip" class="iconMenu"></fa-icon><span class="btnText">Estructura</span></li>    
+            <!-- <li class="btnMain" style="cursor: pointer;">
+                <fa-icon [icon]="faShip" class="iconMenu"></fa-icon><span class="btnText">Estructura</span></li>     -->
             <li class="btnMain" [routerLink]="['/alertas']" style="cursor: pointer;">
                 <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>
             <li class="btnMain" [routerLink]="['/configuracion']" style="cursor: pointer;">
@@ -49,14 +49,13 @@
         </div>
 
         <ul *ngIf="_perfil == 4 && itemCentro">
-            <li class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_estacion != 0" class="btnMain" [routerLink]="['/estacion', itemCentro.id_estacion]" style="cursor: pointer;">
                 <fa-icon [icon]="faWeather" class="iconMenu"></fa-icon><span class="btnText">Clima</span></li>
-            <li class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_genpack != 0" class="btnMain" [routerLink]="['/genpack', itemCentro.id_genpack]" style="cursor: pointer;">
                 <fa-icon [icon]="faBolt" class="iconMenu"></fa-icon><span class="btnText">Energía</span></li>
-            <li class="btnMain" style="cursor: pointer;">
-                <fa-icon [icon]="faShip" class="iconMenu"></fa-icon><span class="btnText">Estructura</span></li> 
-            <li class="btnMain" style="cursor: pointer;">
+            <li *ngIf="itemCentro.id_radar != 0" [routerLink]="['/radar', itemCentro.id_radar]" class="btnMain" style="cursor: pointer;">
                 <fa-icon [icon]="faShield" class="iconMenu"></fa-icon><span class="btnText">Seguridad</span></li>
+
             <li class="btnMain" [routerLink]="['/alertas']" style="cursor: pointer;">
                 <fa-icon [icon]="faAlert" class="iconMenu"></fa-icon><span class="btnText">Alertas</span></li>
         </ul>

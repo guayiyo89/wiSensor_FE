@@ -60,6 +60,7 @@ export class AddRadarComponent implements OnInit {
       modelo: ['', Validators.required],
       status: ['', Validators.required],
       empresa_id: ['', Validators.required],
+      url_video: [''],
       latitud: ['', Validators.required],
       longitud: ['', Validators.required],
       id_centro: ['', Validators.required]

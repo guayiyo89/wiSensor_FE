@@ -46,6 +46,8 @@ import { EditEstructuraComponent } from "./estructura/edit-estructura/edit-estru
 import { AddModuloComponent } from "./estructura/add-modulo/add-modulo.component";
 import { EditModuloComponent } from "./estructura/edit-modulo/edit-modulo.component";
 import { RadarEmpresaComponent } from "./radares/radar-empresa.component";
+import { AddIncidenteRdrComponent } from "./incidentes/add-incidente-rdr/add-incidente-rdr.component";
+import { EditIncidenteRdrComponent } from "./incidentes/edit-incidente-rdr/edit-incidente-rdr.component";
 
 const pagesRoutes: Routes = [
     {
@@ -58,40 +60,52 @@ const pagesRoutes: Routes = [
             {path: 'empresa/:id', component:EmpresaComponent, canActivate:[AdminGuardGuard]},
             {path: 'addEmpresa', component:AddempresaComponent, canActivate:[AdminGuardGuard]},
             {path: 'editEmpresa/:id', component:EditempresaComponent, canActivate:[AdminGuardGuard]},
+
             {path: 'estaciones', component:EstacionesComponent, canActivate:[UserGuardGuard]},//estaciones
             {path: 'estacion/:id', component:EstacionComponent, canActivate:[LoginGuardGuard]},
             {path: 'addEstacion', component:AddestacionComponent, canActivate:[AdminGuardGuard]},
             {path: 'editEstacion/:id', component:EditestacionComponent, canActivate:[JCentroGuardGuard]},
+
             {path: 'centros', component:CentrosComponent, canActivate:[LoginGuardGuard]},//centros
             {path: 'centro/:id', component:CentroComponent, canActivate:[LoginGuardGuard]},
             {path: 'addCentro', component:AddcentroComponent, canActivate:[UserGuardGuard]},
             {path: 'editCentro/:id', component:EditcentroComponent, canActivate:[UserGuardGuard]},
+
             {path: 'usuarios', component:UsuariosComponent, canActivate:[UserGuardGuard]},//usuarios
             {path: 'addUser', component:AddusuarioComponent, canActivate:[UserGuardGuard]},
             {path: 'editUser/:id', component:EditusuarioComponent, canActivate:[LoginGuardGuard]},
             {path: 'password', component:PasswordComponent, canActivate:[LoginGuardGuard]},
             {path: 'welcome', component:WelcomeComponent, canActivate:[LoginGuardGuard]},
+
             {path: 'genpacks', component:GenpacksComponent, canActivate:[UserGuardGuard]}, // genpacks
             {path: 'genpack/:id', component:GenpackComponent, canActivate:[LoginGuardGuard]},
             {path: 'addGenpack', component:AddgenpackComponent, canActivate:[AdminGuardGuard]},
             {path: 'editGenpack/:id', component:EditgenpackComponent, canActivate:[AdminGuardGuard]},
+
             {path: 'radares', component:RadaresComponent, canActivate:[AdminGuardGuard]}, // radares
             {path: 'radar/:id', component:RadarComponent, canActivate:[LoginGuardGuard]},
             {path: 'addRadar', component:AddRadarComponent, canActivate:[AdminGuardGuard]},
             {path: 'editRadar/:id', component:EditRadarComponent, canActivate:[AdminGuardGuard]},
+
             {path: 'incidentes', component:IncidentesComponent, canActivate:[LoginGuardGuard]},
             {path: 'configuracion', component:ConfComponent, canActivate:[LoginGuardGuard]},
             {path: 'addIncidente', component:AddincidenteComponent, canActivate:[JCentroGuardGuard]},
             {path: 'editIncidente/:id', component:EditincidenteComponent, canActivate:[LoginGuardGuard]},
             {path: 'alertas', component:AlertsComponent, canActivate:[LoginGuardGuard]},
+            {path: 'addRdrIncidente', component:AddIncidenteRdrComponent, canActivate:[LoginGuardGuard]},
+            {path: 'editRdrIncidente/:id', component:EditIncidenteRdrComponent, canActivate:[LoginGuardGuard]},
+            
             {path: 'produccion', component:ProduccionComponent, canActivate:[LoginGuardGuard]},
+
             {path: 'estructuras', component: EstructurasComponent, canActivate: [UserGuardGuard]}, // estructuras
             {path: 'estructura/:id', component: EstructuraComponent, canActivate: [LoginGuardGuard]},
             {path: 'addEstructura', component: AddEstructuraComponent, canActivate: [AdminGuardGuard]},
             {path: 'editEstructura/:id', component: EditEstructuraComponent, canActivate: [AdminGuardGuard]},
+
             {path: 'addModulo', component: AddModuloComponent, canActivate: [AdminGuardGuard]}, // modulos
             {path: 'editModulo/:id', component: EditModuloComponent, canActivate: [AdminGuardGuard]},
             {path: 'listRadares', component: RadarEmpresaComponent, canActivate: [UserGuardGuard]},
+
             {path: '404', component: NoPageFoundComponent },
             {path: '**', redirectTo: '/404'}
         ]

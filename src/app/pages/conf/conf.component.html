@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container blackness">
   <ng-template pTemplate="caption">
     <h1>Configuración</h1>
   </ng-template>
@@ -50,6 +50,33 @@
     <button [routerLink]="['/addIncidente']" class="noselect" type="button">
       <fa-icon [icon]="faBack"></fa-icon> Agregar</button>
 
+    <button [routerLink]="['/addRdrIncidente']" class="noselect" type="button">
+      <fa-icon [icon]="faBack"></fa-icon> Agregar</button>
+
   </div>
 
+</div>
+
+<div class="container blackness">
+  <h3>Incidentes de Seguridad</h3>
+  <table class="table table-dark">
+    <tr>
+      <th>Código</th>
+      <th>Severidad</th>
+      <th>Intervalo</th>
+      <th>Descripción</th>
+
+    </tr>
+    <tr *ngFor="let incidente of RdrIncidentes">
+      <td>{{incidente.codigo}}</td>
+      <td>{{incidente.severidad}}</td>
+      <td>{{incidente.hora_inicio}} / {{incidente.hora_final}} </td>
+      <td>{{incidente.descripcion}}</td>
+
+      <td>
+        <a class="btn btn-success" [routerLink]="['/editRdrIncidente', incidente.id]" ><fa-icon [icon]="faEdit"></fa-icon></a>
+        <a class="btn btn-danger" (click)="delete(incidente, incidente.id)" ><fa-icon [icon]="faTimes"></fa-icon></a>
+      </td>
+    </tr>
+  </table>
 </div>
