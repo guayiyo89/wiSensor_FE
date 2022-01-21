@@ -353,8 +353,8 @@ export class EstacionComponent implements OnInit {
         let val_flag = Math.abs(( fechaActual.getTime() - fechaReg.getTime() )/60000)
 
          if(val_flag < 10){
-           this.flag_time = 0
-         }else this.flag_time = 1
+           this.flag_time = 1
+         }else this.flag_time = 0
 
         this.horaRegistro_clima = this.formatoFecha(dataClima[0].data_time)
 
@@ -393,8 +393,8 @@ export class EstacionComponent implements OnInit {
         let val_flag = Math.abs(( time.getTime() - timeRs.getTime() )/60000)
         
         if(val_flag < 10){
-          this.flag_time_rs = 0
-        }else this.flag_time_rs = 1
+          this.flag_time_rs = 1
+        }else this.flag_time_rs = 0
       }
     )
 

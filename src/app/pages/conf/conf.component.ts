@@ -27,6 +27,7 @@ export class ConfComponent implements OnInit {
   faEdit = faEdit
   faBack = faArrowLeft
   faTimes = faTimes;
+  faPlus = faPlus;
   ListIncidentes: any[] = [];
 
   RdrIncidentes: any[] = []
@@ -37,10 +38,13 @@ export class ConfComponent implements OnInit {
   }
 
   totalRecords = 0
+  perfil_user: any
+  empresa_user: any
 
   ngOnInit(): void {
     let CentroUsuario = this._usuario.usuario.id_centro;
-    let perfil_user = this._usuario.usuario.id_perfil;
+    this.perfil_user = this._usuario.usuario.id_perfil;
+    this.empresa_user = this._usuario.usuario.id_empresa;
 
     this._incidentes.GetIncidenteCentrosEmpresa(CentroUsuario).then(data => {
       this.ListIncidentes = data;
@@ -48,13 +52,18 @@ export class ConfComponent implements OnInit {
       console.log(data);
     });
 
-    this._centro.getItems(CentroUsuario).subscribe(
-      res => {
-        this._incidenteRdr.getIncidentes(res[0].id_radar).then(data => {
-          this.RdrIncidentes = data;
-          console.log(data);
+    if(this.perfil_user < 3){
+      
+    } else{
+      this._centro.getItems(CentroUsuario).subscribe(
+        res => {
+          this._incidenteRdr.getIncidentes(res[0].id_radar).then(data => {
+            this.RdrIncidentes = data;
+            console.log(data);
+          })
         })
-      })
+    }
+
 
     //this._incidenteRdr.getIncidentes().then(data => {})
 

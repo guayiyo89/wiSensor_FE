@@ -136,7 +136,6 @@ export class RadarComponent implements OnInit {
                   lat: rdr.latitud,
                   lng: rdr.longitud,
                 }
-                
               })
               this.addRadar()
               this._radar.getZonas(this.id).subscribe(
@@ -179,13 +178,35 @@ export class RadarComponent implements OnInit {
 
   putMarkers(zona:any){
     //fecha hora actual
-    this._spotter.getMarkers(zona).then(
+    this._spotter.getMarkers(zona, 5, 15).then(
       marks => {
         console.log(marks)
         for(let dato of marks){
           this._spotter.getDetail(dato.id).subscribe(
             details => {
               this.addMarker(details, dato.clasificacion, dato.updated_at)
+            })
+        }
+      })
+
+    this._spotter.getMarkers(zona, 15, 30).then(
+      marks => {
+        console.log(marks)
+        for(let dato of marks){
+          this._spotter.getDetail(dato.id).subscribe(
+            details => {
+              this.addMarker2(details, dato.clasificacion, dato.updated_at)
+            })
+        }
+      })
+
+    this._spotter.getMarkers(zona, 30, 60).then(
+      marks => {
+        console.log(marks)
+        for(let dato of marks){
+          this._spotter.getDetail(dato.id).subscribe(
+            details => {
+              this.addMarker3(details, dato.clasificacion, dato.updated_at)
             })
         }
       })
@@ -236,7 +257,31 @@ export class RadarComponent implements OnInit {
       },
       title: 'Marker title ' + (this.markers.length + 1),
       info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
-      
+      options: { icon: './assets/img/ptoNaranjo.png' }
+    })
+  }
+
+  addMarker2(dato:any, clase:any, fecha:any) {
+    this.markers.push({
+      position: {
+        lat: dato.latitud,
+        lng: dato.longitud,
+      },
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      options: { icon: './assets/img/ptoAmarillo.png' }
+    })
+  }
+
+  addMarker3(dato:any, clase:any, fecha:any) {
+    this.markers.push({
+      position: {
+        lat: dato.latitud,
+        lng: dato.longitud,
+      },
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
+      options: { icon: './assets/img/ptoVerde.png' }
     })
   }
 
@@ -248,7 +293,9 @@ export class RadarComponent implements OnInit {
       },
       title: 'Marker title ' + (this.markers.length + 1),
       info: `${fecha}/${dato.velocidad}/${dato.distancia}/${dato.duracion}/${clase}/${dato.sp_cabecera_id}`,
-      options: { animation: google.maps.Animation.BOUNCE },
+      options: { animation: google.maps.Animation.BOUNCE, 
+        icon: './assets/img/ptoRojo.png'
+      },
       
     })
   }

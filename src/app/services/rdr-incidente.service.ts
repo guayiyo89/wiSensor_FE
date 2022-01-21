@@ -41,4 +41,10 @@ export class RdrIncidenteService {
     url += '?token=' + this._user.token;
     return this.http.get(url).toPromise().then(res => <any[]> res)
   }
+
+  getIncidentesByEmpresa(id:any){
+    let url = `${this.baseUrl}/empresa/${id}`
+    url += '?token=' + this._user.token;
+    return this.http.get(url).toPromise().then(res => <any[]> res)
+  }
 }

@@ -26,8 +26,8 @@ export class SpotterService {
     return this.http.get<any>(url)
   }
 
-  getMarkers(zona: any){
-    let url = `${this.baseUrl}/spotter_marker/${zona}`
+  getMarkers(zona: any, inicio: number, final: number){
+    let url = `${this.baseUrl}/spotter_marker/${zona}/${inicio}/${final}`
     return this.http.get(url).toPromise().then(res => res as any[]);
   }
 
@@ -64,6 +64,11 @@ export class SpotterService {
   getByDist(zona: any){
     let url = `${this.baseUrl}/spotter_dist/${zona}`
     return this.http.get<any[]>(url)
+  }
+
+  getByMinutes(serial: any, mins: number){
+    let url = `${this.baseUrl}/spotter_last_min/${serial}/${mins}`
+    return this.http.get(url).toPromise().then(res => res as any[]);
   }
 
 }

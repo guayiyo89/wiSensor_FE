@@ -98,7 +98,7 @@
         <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 0" style="transform: scale(0.7); color: rgb(50, 182, 30); padding-right: 0.3em; font-size: small;"></fa-icon>
         <fa-icon [icon]="faDot" *ngIf="flag_time_rs == 1" style="transform: scale(0.7); color: rgb(201, 13, 13); padding-right: 0.3em; font-size: small;"></fa-icon>
           Orientación</h4> 
-        <app-orientation [yaw]="dataRsNow.header"></app-orientation>
+        <app-orientation [yaw]="dataRsNow.header" [inicial]="estacion.pos_inicial"></app-orientation>
       </div>
     </div>
     

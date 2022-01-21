@@ -10,10 +10,9 @@ import { faCheckCircle, faExclamationCircle, faExclamationTriangle } from '@fort
 })
 export class OrientationComponent implements OnInit {
 @Input() yaw: any
+@Input() inicial: any
 
 value = 0
-
-inicial = 222.5
 
 resto = 0
 

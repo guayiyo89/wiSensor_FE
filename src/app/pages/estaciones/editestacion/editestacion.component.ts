@@ -66,6 +66,7 @@ export class EditestacionComponent implements OnInit {
           marca: ['', Validators.required],
           codigo: ['', Validators.required],
           status: ['', Validators.required],
+          pos_inicial: ['', Validators.required],
           empresa_id: ['', Validators.required],
           id_centro: ['', Validators.required]
         })
@@ -86,6 +87,7 @@ export class EditestacionComponent implements OnInit {
           this.editForm.controls['marca'].setValue(data.marca)
           this.editForm.controls['codigo'].setValue(data.codigo)
           this.editForm.controls['status'].setValue(data.status)
+          this.editForm.controls['pos_inicial'].setValue(data.pos_inicial)
           this.editForm.controls['id_centro'].setValue(data.id_centro)
         }
         

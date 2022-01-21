@@ -1,6 +1,35 @@
 
 <div class="row blackness" *ngIf="acumByHora.length > 0">
-    <div *ngFor="let radar of radarList; let i = index" >
-        {{radar.nombreRadar}}, {{acumByHora[i]}}, {{acumByDia[i]}}
+    <div class="col-md-8">
+        <div class="row" style=" background-color: rgb(29, 29, 29); border-radius: 4px; padding: 0.5em; margin-top: 3px;" >
+            <div class="col-6" style="font-size: 1em;"> Radar</div>
+            <div class="col-2" style="font-size: 0.8em;">Eventos 15 min.</div>
+            <div class="col-2" style="font-size: 0.8em;">Eventos 1 hora</div>
+            <div class="col-2" style="font-size: 0.8em;">Eventos 24 horas</div>
+        </div>
+        <div class="row" *ngFor="let radar of radarList; let i = index" [routerLink]="['/radar', radar.id_Radar]" style=" cursor: pointer; background-color: rgb(56, 55, 56); border-radius: 6px; padding: 0.5em; margin-top: 3px;" >
+            <div class="col-6" style="font-size: 1.53em;"> {{radar.nombreRadar}}</div>
+            <div class="col-2" style="font-size: 1.53em;">{{acumBy15[i]}}</div>
+            <div class="col-2" style="font-size: 1.53em;">{{acumByHora[i]}}</div>
+            <div class="col-2" style="font-size: 1.53em;">{{acumByDia[i]}}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <google-map
+              height="550px"
+              width="100%"
+              [zoom]="zoom"
+              [center]="center"
+              [options]="options"
+              >
+                <map-marker
+                #markerElem
+                *ngFor="let marker of markers"
+                [position]="marker.position"
+                [label]="marker.label"
+                [title]="marker.title"
+                [options]="marker.options"
+                ></map-marker>
+            </google-map>
     </div>
 </div>

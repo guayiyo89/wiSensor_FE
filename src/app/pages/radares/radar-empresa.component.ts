@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { sum } from 'd3';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { RadarService } from 'src/app/services/radar.service';
 import { SpotterService } from 'src/app/services/spotter.service';
@@ -17,10 +16,29 @@ export class RadarEmpresaComponent implements OnInit {
   radarList: any[] = []
   markers: any[] = []
 
+  interval: any
+
   cantidad: number = 0
 
   acumByHora: any[] = []
   acumByDia: any[] = []
+  acumBy15: any[] = []
+
+  //--------------------------------------------------------MAPA
+  zoom = 10
+  // @ts-ignore
+  center: google.maps.LatLngLiteral
+
+  options: google.maps.MapOptions = {
+    mapTypeId: 'satellite',
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    fullscreenControl: false,
+    streetViewControl: false,
+    maxZoom: 17,
+    minZoom: 7,
+  }
 
   constructor(public _rdrEmpresa: EmpresaService, public _user: UsuarioService, public _rdr: RadarService, public spotter: SpotterService) { }
 
@@ -30,47 +48,48 @@ export class RadarEmpresaComponent implements OnInit {
     this._rdrEmpresa.getRadares(this._idEmpresa).subscribe(radares => {
       this.radarList = radares
       console.log(this.radarList)
-      this.cantidad = radares.length
-      radares.forEach((radar:any) => {
-        this.addMarker(radar)
-        this._rdr.getZonas(radar.id_Radar).subscribe(zonas => {
-          let valorHora: any[] = []
-          let valorDia: any[] = []
-          let i = 0
-          zonas.forEach(zona => {
-            this.spotter.getByDia(zona.cod_zona).then(data => {
-              valorDia.push(data[0].contador)
-            })
-            this.spotter.getByHora(zona.cod_zona).then(data => {
-              valorHora.push(data[0].contador)
-            })
-            console.log(i, 'Aqui', valorHora, valorDia)
-            i = i + 1
-
-            this.acumByHora.push(sum(valorHora))
-            this.acumByDia.push(sum(valorDia))
-          })
+      this._rdr.getRadar(this.radarList[0].id_Radar).subscribe(radar => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.center = {
+            lat: radar.latitud,
+            lng: radar.longitud,
+          }
         })
 
       })
+
+      this.rellenaTabla(radares)
+      radares.forEach((radar:any) => {
+        this._rdr.getRadar(radar.id_Radar).subscribe(radar => {
+          this.addMarker(radar)
+        })
+
+      })
+
+      this.cantidad = radares.length
+
+      this.interval = setInterval(() => {
+        this.rellenaTabla(radares)
+      }, 55000)
+
      
     })
   }
 
-  getDatos(radares: any[]) {
-    radares.forEach((radar:any) => {
-      this.addMarker(radar)
-      this._rdr.getZonas(radar.id_radar).subscribe(zonas => {
-        let valorHora = 0
-        let valorDia = 0
-        zonas.forEach(zona => {
-          this.spotter.getByDia(zona.cod_zona).then(data => valorDia = valorDia + data[0].contador)
-          this.spotter.getByHora(zona.cod_zona).then(data => valorHora = valorHora + data[0].contador)
-        })
-        this.acumByHora.push(valorHora)
-        this.acumByDia.push(valorDia)
-      })
+
+  rellenaTabla(radares: any[]) {
+    radares.forEach((radar: any) => {
+      this.spotter.getByMinutes(radar.codigo, 60).then(data => {
+        this.acumByHora.push(data[0].valor)
+      }).catch(err => console.log(err))
+      this.spotter.getByMinutes(radar.codigo, 1440).then(data => {
+        this.acumByDia.push(data[0].valor)
+      }).catch(err => console.log(err))
+      this.spotter.getByMinutes(radar.codigo, 15).then(data => {
+        this.acumBy15.push(data[0].valor)
+      }).catch(err => console.log(err))
     })
+
   }
 
   convertFecha(fecha: string) {
@@ -91,6 +110,14 @@ export class RadarEmpresaComponent implements OnInit {
         lng: dato.longitud,
       },
       title: 'Marker title ' + (this.markers.length + 1),
+      label: {
+        color: '#ffffff',
+        FontFace: 'Arial',
+        fontWeight: 'bold',
+        borderColor: '#ffffff',
+        borderWeight: '4px',
+        text: dato.nombre,
+      },
       info: `${dato.nombre}`,
       options: { animation: google.maps.Animation.BOUNCE },
     })

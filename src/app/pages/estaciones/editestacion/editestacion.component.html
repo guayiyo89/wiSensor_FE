@@ -65,6 +65,14 @@
                     <div *ngIf="f.marca.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">El modelo es obligatorio.</div>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <label>Posición Inicial</label>
+                <input type="number" formControlName="pos_inicial" placeholder="Ángulo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pos_inicial.errors }">
+                <div *ngIf="submitted && f.pos_inicial.errors">
+                    <div *ngIf="f.pos_inicial.errors.required" style="font-size: 9px; color: rgb(187, 18, 18)">Inserte un valor por favor.</div>
+                </div>
+            </div>
     
             <div class="form-group">
                 <label>Estado</label>

@@ -6,6 +6,7 @@ export class Estacion{
         public marca: string,
         public codigo: string,
         public status: number,
+        public pos_inicial: number,
         public created_at: string,
         public updated_at: string,
         public deleted_at: string,

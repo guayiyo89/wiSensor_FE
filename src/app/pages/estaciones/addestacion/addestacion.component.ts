@@ -67,6 +67,7 @@ export class AddestacionComponent implements OnInit {
       marca: ['', Validators.required],
       codigo: ['', Validators.required],
       status: ['', Validators.required],
+      pos_inicial: ['', Validators.required],
       empresa_id: ['', Validators.required],
       id_centro: ['', Validators.required]
     })
