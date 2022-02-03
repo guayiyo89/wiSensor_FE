@@ -25,7 +25,7 @@ export class EditRadarComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
   empresaList: Empresa[] = []
-  centroList: Centro[] = []
+  centroList: any[] = []
   markers: any[] = []
 
   zonas: any[] = []

@@ -44,7 +44,7 @@ export class ConfComponent implements OnInit {
   ngOnInit(): void {
     let CentroUsuario = this._usuario.usuario.id_centro;
     this.perfil_user = this._usuario.usuario.id_perfil;
-    this.empresa_user = this._usuario.usuario.id_empresa;
+    this.empresa_user = this._usuario.userIds.id_empresa;
 
     this._incidentes.GetIncidenteCentrosEmpresa(CentroUsuario).then(data => {
       this.ListIncidentes = data;
@@ -53,7 +53,9 @@ export class ConfComponent implements OnInit {
     });
 
     if(this.perfil_user < 3){
-      
+      this._incidenteRdr.getIncidentesByEmpresa(this.empresa_user).then(
+        data => this.RdrIncidentes = data
+      )
     } else{
       this._centro.getItems(CentroUsuario).subscribe(
         res => {

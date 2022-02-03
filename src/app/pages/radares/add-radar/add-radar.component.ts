@@ -24,7 +24,7 @@ export class AddRadarComponent implements OnInit {
   submitted = false;
   addForm: FormGroup;
   empresaList: Empresa[] = []
-  centroList: Centro[] = []
+  centroList: any[] = []
 
   markers: any[] = []
 

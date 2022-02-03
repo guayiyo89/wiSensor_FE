@@ -153,6 +153,8 @@ import { EventoHoraTotalComponent } from './pages/radares/evento-hora-total/even
 import { AddIncidenteRdrComponent } from './pages/incidentes/add-incidente-rdr/add-incidente-rdr.component';
 import { EditIncidenteRdrComponent } from './pages/incidentes/edit-incidente-rdr/edit-incidente-rdr.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { ViewAlertsComponent } from './pages/radares/view-alerts/view-alerts.component';
+import { ViewNoViewsComponent } from './pages/radares/view-no-views/view-no-views.component';
 
 
 @NgModule({
@@ -271,6 +273,8 @@ import { SafePipe } from './pipes/safe.pipe';
     AddIncidenteRdrComponent,
     EditIncidenteRdrComponent,
     SafePipe,
+    ViewAlertsComponent,
+    ViewNoViewsComponent,
   ],
   imports: [
     BrowserModule,

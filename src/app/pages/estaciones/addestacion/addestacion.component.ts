@@ -26,7 +26,7 @@ export class AddestacionComponent implements OnInit {
   submitted = false;
   addForm: FormGroup;
   empresaList: Empresa[] = []
-  centroList: Centro[] = []
+  centroList: any[] = []
 
   empresaUser: Empresa
 

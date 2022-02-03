@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { faBell, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { RadarService } from 'src/app/services/radar.service';
+import { RdrAlertaService } from 'src/app/services/rdr-alerta.service';
 import { SpotterService } from 'src/app/services/spotter.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -18,11 +21,18 @@ export class RadarEmpresaComponent implements OnInit {
 
   interval: any
 
+  faAlert = faExclamationTriangle
+  faBell = faBell
+
   cantidad: number = 0
+
+  numNoVistos: any[] = []
 
   acumByHora: any[] = []
   acumByDia: any[] = []
   acumBy15: any[] = []
+
+  datosRdr: any[] = []
 
   //--------------------------------------------------------MAPA
   zoom = 10
@@ -40,13 +50,15 @@ export class RadarEmpresaComponent implements OnInit {
     minZoom: 7,
   }
 
-  constructor(public _rdrEmpresa: EmpresaService, public _user: UsuarioService, public _rdr: RadarService, public spotter: SpotterService) { }
+  constructor(public _rdrEmpresa: EmpresaService, public _user: UsuarioService, public _rdr: RadarService, public spotter: SpotterService,
+    public _rdralerta: RdrAlertaService, private _modal: NgbModal) { }
 
   ngOnInit(): void {
     this._idEmpresa = this._user.userIds.id_empresa
 
     this._rdrEmpresa.getRadares(this._idEmpresa).subscribe(radares => {
       this.radarList = radares
+      this.rellenaTabla(radares)
       console.log(this.radarList)
       this._rdr.getRadar(this.radarList[0].id_Radar).subscribe(radar => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -58,7 +70,6 @@ export class RadarEmpresaComponent implements OnInit {
 
       })
 
-      this.rellenaTabla(radares)
       radares.forEach((radar:any) => {
         this._rdr.getRadar(radar.id_Radar).subscribe(radar => {
           this.addMarker(radar)
@@ -79,15 +90,16 @@ export class RadarEmpresaComponent implements OnInit {
 
   rellenaTabla(radares: any[]) {
     radares.forEach((radar: any) => {
-      this.spotter.getByMinutes(radar.codigo, 60).then(data => {
-        this.acumByHora.push(data[0].valor)
-      }).catch(err => console.log(err))
-      this.spotter.getByMinutes(radar.codigo, 1440).then(data => {
-        this.acumByDia.push(data[0].valor)
-      }).catch(err => console.log(err))
-      this.spotter.getByMinutes(radar.codigo, 15).then(data => {
-        this.acumBy15.push(data[0].valor)
-      }).catch(err => console.log(err))
+      this.datosRdr = []
+      this._rdralerta.getResumen(radar.id_Radar, radar.codigo).then(
+        resumen => {
+          console.log(resumen)
+          this.datosRdr.push(resumen[0])
+        }).catch(
+          err => {
+            console.log(err)
+          }
+        )
     })
 
   }
@@ -121,6 +133,14 @@ export class RadarEmpresaComponent implements OnInit {
       info: `${dato.nombre}`,
       options: { animation: google.maps.Animation.BOUNCE },
     })
+  }
+
+  openNoVistos(dataVistos: any){
+    this._modal.open(dataVistos, {size: 'lg'})
+  }
+
+  openTodos(data: any){
+    this._modal.open(data, {size: 'lg'})
   }
 
 

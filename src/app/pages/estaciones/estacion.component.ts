@@ -238,7 +238,7 @@ export class EstacionComponent implements OnInit {
                   }
                 )
   
-              }, 125000)
+              }, 150000)
   
               this._centro.getCentro(data.id_centro).subscribe(
                 center => {

@@ -1,26 +1,42 @@
 <div class="lateral">
     <div *ngIf="_idPerfil < 3" style="width: 100%; padding-top: 85px;">
-        <ul class="lat-menu">
-            <li *ngIf="_idPerfil == 1" class="item" [routerLink]="['/empresas']"><fa-icon [icon]="faFish" class="iconList"></fa-icon>Empresas</li>
-            <li class="item" [routerLink]="['/centros']"><fa-icon [icon]="faMapMarker" class="iconList"></fa-icon>Centros</li>
-            <li class="item" [routerLink]="['/estaciones']"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>Estaciones</li>
-            <li class="item" [routerLink]="['/genpacks']"><fa-icon [icon]="faBattery" class="iconList"></fa-icon>Genpacks</li>
-            <li *ngIf="_idPerfil == 1" class="item" [routerLink]="['/radares']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
-            <li *ngIf="_idPerfil == 2" class="item" [routerLink]="['/listRadares']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
-            <li class="item" [routerLink]="['/configuracion']"><fa-icon [icon]="faCog" class="iconList"></fa-icon>Configuración</li>
-            <li class="item" [routerLink]="['/alertas']"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>Alertas</li>
-            <li class="item" [routerLink]="['/usuarios']"><fa-icon [icon]="faUsers" class="iconList"></fa-icon>Usuarios</li>
-            <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>Cerrar Sesión</li>
+        <ul class="lat-menu" (hesitate)="showText()" [duration]="600">
+            <li *ngIf="_idPerfil == 1" class="item" [routerLink]="['/empresas']"><fa-icon [icon]="faFish" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Empresas</span></li>
+            <li class="item" [routerLink]="['/centros']"><fa-icon [icon]="faMapMarker" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Centros</span></li>
+            <li class="item" [routerLink]="['/estaciones']"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Clima</span></li>
+            <li class="item" [routerLink]="['/genpacks']"><fa-icon [icon]="faBattery" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Energía</span></li>
+            <li *ngIf="_idPerfil == 1" class="item" [routerLink]="['/radares']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Seguridad</span></li>
+            <li *ngIf="_idPerfil == 2" class="item" [routerLink]="['/listRadares']"><fa-icon [icon]="faShield" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Seguridad</span></li>
+            <li class="item" [routerLink]="['/configuracion']"><fa-icon [icon]="faCog" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Configuración</span></li>
+            <li class="item" [routerLink]="['/alertas']"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Centros</span></li>
+            <li class="item" [routerLink]="['/usuarios']"><fa-icon [icon]="faUsers" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Usuarios</span></li>
+            <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Cerrar Sesión</span></li>
         </ul>
     </div>
     <div *ngIf="_idPerfil >= 3" style="width: 100%; padding-top: 85px;">
         <ul class="lat-menu">
-            <li class="item" *ngIf="itemCentro.id_estacion != 0" [routerLink]="['/estacion', itemCentro.id_estacion]"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>Clima</li>
-            <li class="item" *ngIf="itemCentro.id_genpack != 0" [routerLink]="['/genpack', itemCentro.id_genpack]"><fa-icon [icon]="faBolt" class="iconList"></fa-icon>Energía</li>
-            <li class="item" *ngIf="itemCentro.id_radar != 0" [routerLink]="['/radar', itemCentro.id_radar]"><fa-icon [icon]="faShield" class="iconList"></fa-icon>Seguridad</li>
-            <li class="item" [routerLink]="['/alertas']"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>Alertas</li>
-            <li class="item" [routerLink]="['/configuracion']" *ngIf="_idPerfil == 3"><fa-icon [icon]="faCog" class="iconList"></fa-icon>Configuración</li>
-            <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>Cerrar Sesión</li>
+            <li class="item" *ngIf="itemCentro.id_estacion != 0" [routerLink]="['/estacion', itemCentro.id_estacion]"><fa-icon [icon]="faWeather" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Clima</span></li>
+            <li class="item" *ngIf="itemCentro.id_genpack != 0" [routerLink]="['/genpack', itemCentro.id_genpack]"><fa-icon [icon]="faBolt" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Energía</span></li>
+            <li class="item" *ngIf="itemCentro.id_radar != 0" [routerLink]="['/radar', itemCentro.id_radar]"><fa-icon [icon]="faShield" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Seguridad</span></li>
+            <li class="item" [routerLink]="['/alertas']"><fa-icon [icon]="faAlert" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Alertas</span></li>
+            <li class="item" [routerLink]="['/configuracion']" *ngIf="_idPerfil == 3"><fa-icon [icon]="faCog" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Configuración</span></li>
+            <li class="item" (click)="logOut()"><fa-icon [icon]="faLogout" class="iconList"></fa-icon>
+                <span #textMenu class="textHidden"> Cerrar Sesión</span></li>
         </ul>
     </div>
     <div *ngIf="centro" class="text-center" style="font-weight: 700; font-family: Roboto, Arial, Helvetica, sans-serif;">

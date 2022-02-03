@@ -56,27 +56,39 @@
 
 <div class="container blackness">
   <h3>Incidentes de Seguridad</h3>
-  <table class="table table-dark">
-    <tr>
-      <th>Código</th>
-      <th>Severidad</th>
-      <th>Intervalo</th>
-      <th>Descripción</th>
 
-    </tr>
-    <tr *ngFor="let incidente of RdrIncidentes">
-      <td>{{incidente.codigo}}</td>
-      <td *ngIf="incidente.severidad == 'warning'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(228, 150, 6); border-radius: 4px; padding: 3px">Advertencia</span></td>
-      <td *ngIf="incidente.severidad == 'error'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(192, 35, 7); border-radius: 4px; padding: 3px">Crítica</span></td>
-      <td>{{incidente.hora_inicio}} / {{incidente.hora_final}} </td>
-      <td>{{incidente.descripcion}}</td>
+  <p-table [value]="RdrIncidentes" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+           [globalFilterFields]="['nombre, codigo']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[10,15,20]" [showCurrentPageReport]="true">
 
-      <td>
-        <a class="btn btn-success" [routerLink]="['/editRdrIncidente', incidente.id]" ><fa-icon [icon]="faEdit"></fa-icon></a>
-        <a class="btn btn-danger" (click)="delete(incidente, incidente.id)" ><fa-icon [icon]="faTimes"></fa-icon></a>
-      </td>
-    </tr>
-  </table>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="max-width: 120px;" pSortableColumn="nombre"> Radar <p-sortIcon field="centro_nombre" style="color: thistle;"></p-sortIcon> </th>
+        <th pSortableColumn="codigo"> Código <p-sortIcon field="incidentes_codigo"></p-sortIcon> </th>
+        <th style="max-width: 120px;" pSortableColumn="hora_inicio"> Intervalo <p-sortIcon field="incidentes_valor"></p-sortIcon> </th>
+        <th style="max-width: 120px;" pSortableColumn="descripcion"> Descripción <p-sortIcon field="incidentes_descripcion"></p-sortIcon> </th>
+        <th></th>
+
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-incidente>
+      <tr class="rowth blackness">
+        <td *ngIf="perfil_user < 3">{{incidente.nombre}}</td>
+        <td *ngIf="incidente.severidad == 'warning'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(228, 150, 6); border-radius: 4px; padding: 3px">{{incidente.codigo}}</span></td>
+        <td *ngIf="incidente.severidad == 'error'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(192, 35, 7); border-radius: 4px; padding: 3px">{{incidente.codigo}}</span></td>
+        <td>{{incidente.hora_inicio}} / {{incidente.hora_final}} </td>
+        <td>{{incidente.descripcion}}</td>
+
+        <td>
+          <a class="btn btn-success" [routerLink]="['/editRdrIncidente', incidente.id]" ><fa-icon [icon]="faEdit"></fa-icon></a>
+          <a class="btn btn-danger" (click)="delete(incidente, incidente.id)" ><fa-icon [icon]="faTimes"></fa-icon></a>
+        </td>
+
+
+      </tr>
+    </ng-template>
+
+  </p-table>
 
   <button [routerLink]="['/addRdrIncidente']" class="noselect" type="button">
     <fa-icon [icon]="faPlus"></fa-icon> Agregar</button>

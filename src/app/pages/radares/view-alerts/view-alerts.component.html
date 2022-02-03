@@ -1,0 +1,78 @@
+<h3 *ngIf="radar" style="padding: 5px;">{{radar.nombre}}</h3>
+
+<p-table [value]="noVistos" [paginator]="true" [rows]="8" [totalRecords]="totalRecords"
+    [globalFilterFields]="['fecha','codigo','visto']" styleClass="p-datatable-sm" sortMode="multiple" [rowsPerPageOptions]="[5,8,10]" [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="codigo"> Código <p-sortIcon field="codigo" style="color: thistle;"></p-sortIcon> </th>
+            <th style="max-width: 100px;" pSortableColumn="tiempo"> Fecha <p-sortIcon field="tiempo"></p-sortIcon> </th>
+            <th style="max-width: 120px;" pSortableColumn="descripcion"> Descripción <p-sortIcon field="descripcion"></p-sortIcon> </th>
+            <th style="max-width: 120px;"> Visto <p-sortIcon field="visto"></p-sortIcon> </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-alert>
+        <tr class="rowth" (click)="openDetalle(data, alert)">
+            <td *ngIf="alert.severidad == 'warning'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(228, 150, 6); border-radius: 4px; padding: 3px">{{alert.codigo}}</span></td>
+            <td *ngIf="alert.severidad == 'error'"><span style="font-size: 9pt; text-transform: uppercase; background-color: rgb(192, 35, 7); border-radius: 4px; padding: 3px">{{alert.codigo}}</span></td>
+            <td>{{alert.tiempo | fecha}}</td>
+            <td>{{alert.descripcion}}</td>
+            <td *ngIf="alert.visto == 1"><fa-icon [icon]="faCheck" style="color: rgb(127, 196, 23);"></fa-icon> </td>
+            <td *ngIf="alert.visto == 0"></td>
+
+            <ng-template #data let-modal class="modal-dark bg-dark">
+                <div class="row bg-dark">
+                    <div class="col-6">
+                        <google-map
+                                height="350px"
+                                width="100%"
+                                [zoom]="zoom"
+                                [center]="center"
+                                [options]="options"
+                                >
+                                <map-marker
+                                #markerElem
+                                *ngFor="let marker of markers"
+                                [position]="marker.position"
+                                [label]="marker.label"
+                                [title]="marker.title"
+                                [options]="marker.options"
+                                ></map-marker>
+                        </google-map>
+                    </div>
+                    <div *ngIf="detalles" class="col-6 row" style="padding-top: 0.4em; font-family: Roboto, Arial, Helvetica, sans-serif;">
+                        <h3>{{alert.tiempo | fecha}}</h3>
+                        <div class="col-6">
+                            <span *ngIf="alert.severidad == 'warning'" style="font-size: 9pt; text-transform: uppercase; background-color: rgb(228, 150, 6); border-radius: 4px; padding: 3px">{{alert.codigo}}</span>
+                            <span *ngIf="alert.severidad == 'error'" style="font-size: 9pt; text-transform: uppercase; background-color: rgb(192, 35, 7); border-radius: 4px; padding: 3px">{{alert.codigo}}</span>
+                        </div>
+                        <div class="col-6">
+                            <p>{{alert.descripcion}} </p>
+                        </div>
+                        <div class="col-6">
+                            <span style="display: block;">Distancia</span>
+                            <span style="font-size: 2em; color:rgb(255, 196, 0)">{{detalles.distancia | truncar}} m</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="display: block;">Duración</span>
+                            <span style="font-size: 2em; color:rgb(255, 196, 0)">{{detalles.duracion}} s</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="display: block;">Velocidad</span>
+                            <span style="font-size: 2em; color:rgb(255, 196, 0)">{{detalles.velocidad | truncar}} m/s</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="display: block;">Desplazamiento</span>
+                            <span style="font-size: 2em; color:rgb(255, 196, 0)">{{detalles.desplazamiento | truncar}} m</span>
+                        </div>
+                    </div>
+
+                </div>
+            </ng-template>
+            
+            
+        </tr>
+    </ng-template>
+
+</p-table>

@@ -17,7 +17,7 @@
       <div class="col-md-6"><h1 *ngIf="radar">{{radar.nombre}} <span> <fa-icon (click)="openZone(dataZone)" [icon]="faInfo" style="color: rgb(255, 208, 0); cursor: pointer;"></fa-icon> </span> </h1></div>
       <div class="col-md-6">
         <button *ngIf="radar.url_video" class="noselect" (click)="miVideo()" >Video en Vivo</button>
-
+        <iframe *ngIf="radar.url_video" [src]="urlVideo | safe: 'resourceUrl'" width="250px" height="auto" frameborder="0"></iframe>
       </div>
     </div>
 

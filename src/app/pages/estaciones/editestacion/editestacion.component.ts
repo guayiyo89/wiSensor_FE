@@ -27,7 +27,7 @@ export class EditestacionComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
   empresaList: Empresa[] = []
-  centroList: Centro[] = []
+  centroList: any[] = []
   empresaUser: Empresa
 
   selectedEmp: number = 0

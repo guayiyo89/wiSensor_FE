@@ -47,7 +47,7 @@ export class EstacionesComponent implements OnInit {
           this.estacionList = data
           this.totalRecords = data.length
         }
-      )
+      ).catch(err => console.log('No hay data que mostrar'))
     }
 
   }

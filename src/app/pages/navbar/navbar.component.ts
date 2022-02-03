@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { faBell, faBolt, faCarBattery, faChartLine, faCloudSunRain, faCog, faExclamationTriangle, faFish, faMapMarkerAlt, faPowerOff, faSearch, faShieldAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { Centro } from 'src/app/interfaces/centro.model';
 import { Usuario } from 'src/app/interfaces/usuario.model';
@@ -12,8 +12,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   ]
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('textMenu') textShowed: ElementRef;
 
-  constructor( public _user: UsuarioService, public _centro: CentroService) { }
+  constructor( public _user: UsuarioService, public _centro: CentroService, private renderer2: Renderer2) { }
   
   usuario!: Usuario;
 
@@ -70,6 +71,9 @@ export class NavbarComponent implements OnInit {
     this._user.logout()
   }
 
+  showText(){
+    this.renderer2.removeStyle(this.textShowed.nativeElement, 'display')
+  }
 
 
 }

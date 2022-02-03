@@ -31,7 +31,7 @@ export class RdrAlertaService {
   }
 
   getAlertas(id:any){
-    let url = `${this.baseUrl}/incidentes/${id}`
+    let url = `${this.baseUrl}/radar/${id}`
     url += '?token=' + this._user.token;
     return this.http.get(url).toPromise().then(res => <any[]> res)
   }
@@ -40,5 +40,17 @@ export class RdrAlertaService {
     let url = `${this.baseUrl}/novistos/${id}`
     url += '?token=' + this._user.token;
     return this.http.get(url).toPromise().then(res => <any[]> res)
+  }
+
+  getNumNoVistos(id:any){
+    let url = `${this.baseUrl}/num/${id}`
+    url += '?token=' + this._user.token;
+    return this.http.get(url).toPromise().then(res => <any> res)
+  }
+
+  getResumen(id:any, cod:any){
+    let url = `${this.baseUrl}/resumen/${id}/${cod}`
+    url += '?token=' + this._user.token;
+    return this.http.get(url).toPromise().then(res => <any> res)
   }
 }
